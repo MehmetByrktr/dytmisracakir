@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Ana Sayfa | Diyetisyen Mısra Çakır{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <p class="kicker">Welcome,</p>
+
+      <h1 class="hero-title">{{ settings.hero_title | safe }}</h1>
+      <p class="hero-desc">{{ settings.hero_description }}</p>
+
+      <div class="info-strip">
+        <div class="info-box">
+          <div class="info-ico">◎</div>
+          <div>
+            <div class="info-title">Nutrition strategies</div>
+            <div class="info-sub">Kısa, net, uygulanabilir</div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-ico">◉</div>
+          <div>
+            <div class="info-title">Personal program</div>
+            <div class="info-sub">Hedefine göre plan</div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-ico">◌</div>
+          <div>
+            <div class="info-title">Find your balance</div>
+            <div class="info-sub">Denge + sürdürülebilirlik</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-photo">
+        <img src="{{ url_for('static', filename='images/' ~ settings.hero_image) }}" alt="Mısra">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="programs">
+  <h2 class="section-title">Choose your program</h2>
+  <p class="section-sub">Nasıl yardımcı olabileceğimi seç, birlikte ilerleyelim.</p>
+
+  <div class="program-grid">
+    <article class="p-card">
+      <img src="{{ url_for('static', filename='images/card-1.jpg') }}" alt="">
+      <div class="p-body">
+        <h3>Nutrition strategies</h3>
+        <p>Günlük rutinine uygun.</p>
+        <a class="btn" href="{{ url_for('public.diyet_sekilleri') }}">Learn more</a>
+      </div>
+    </article>
+
+    <article class="p-card">
+      <img src="{{ url_for('static', filename='images/card-2.jpg') }}" alt="">
+      <div class="p-body">
+        <h3>Certification courses</h3>
+        <p>Bilgi bankası & mini eğitimler.</p>
+        <a class="btn" href="{{ url_for('public.dogru_yanlis') }}">Learn more</a>
+      </div>
+    </article>
+
+    <article class="p-card">
+      <img src="{{ url_for('static', filename='images/card-3.jpg') }}" alt="">
+      <div class="p-body">
+        <h3>Women coaching</h3>
+        <p>Hormonal denge & düzen.</p>
+        <a class="btn" href="{{ url_for('public.menuler') }}">Learn more</a>
+      </div>
+    </article>
+
+    <article class="p-card">
+      <img src="{{ url_for('static', filename='images/card-4.jpg') }}" alt="">
+      <div class="p-body">
+        <h3>Menu coaching</h3>
+        <p>Pratik menü planlama.</p>
+        <a class="btn" href="{{ url_for('public.menuler') }}">Learn more</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="posts" id="dogru-yanlis">
+  <div class="posts-head">
+    <h2 class="section-title">Son paylaşılan yayımlar</h2>
+    <a class="top-link" href="{{ url_for('public.blog') }}">Tümünü gör →</a>
+  </div>
+
+  <div class="posts-grid">
+    {% for p in posts %}
+    <article class="post-card">
+      <div class="post-media">
+        <img src="{{ url_for('static', filename='images/' ~ p.image) }}" alt="">
+      </div>
+
+      <div class="post-body">
+        <div class="post-date">{{ p.created_at.strftime('%Y-%m-%d') }}</div>
+        <h3 class="post-title">{{ p.title }}</h3>
+        <p class="post-excerpt">{{ p.excerpt }}</p>
+        <a class="btn ghost" href="{{ url_for('public.blog_detail', slug=p.slug) }}">
+          Devamını oku
+        </a>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,148 @@
+
+{% extends "base.html" %}
+
+{% block title %}İletişim | Diyetisyen Mısra Çakır{% endblock %}
+{% block meta_description %}Diyetisyen Mısra Çakır ile iletişime geç, randevu talebi oluştur ve beslenme danışmanlığı hakkında bilgi al.{% endblock %}
+{% block content %}
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div>
+      <p class="kicker">İletişim</p>
+
+      <h1 class="page-title">Bana ulaş</h1>
+
+      <p class="page-desc">
+        Soruların için mesaj atabilir veya randevu formunu doldurabilirsin.
+      </p>
+
+      <div class="contact-cards">
+        <div class="glass-card">
+          <h3>Instagram</h3>
+          <p>@dyt.misracakir</p>
+
+          <a
+            class="btn ghost"
+            target="_blank"
+            href="{{ settings.instagram_url if settings and settings.instagram_url else '#' }}"
+          >
+            Git
+          </a>
+        </div>
+
+        <div class="glass-card">
+          <h3>WhatsApp</h3>
+          <p>{{ settings.phone if settings and settings.phone else '+90 XXX XXX XX XX' }}</p>
+
+          <a
+            class="btn ghost"
+            target="_blank"
+            href="{{ settings.whatsapp_url if settings and settings.whatsapp_url else '#' }}"
+          >
+            Yaz
+          </a>
+        </div>
+
+        <div class="glass-card">
+          <h3>E-posta</h3>
+          <p>{{ settings.email if settings and settings.email else 'info@misracakir.com' }}</p>
+
+          <a
+            class="btn ghost"
+            href="mailto:{{ settings.email if settings and settings.email else 'info@misracakir.com' }}"
+          >
+            Mail Gönder
+          </a>
+        </div>
+
+        <div class="glass-card">
+          <h3>Çalışma Saatleri</h3>
+          <p>{{ settings.working_hours if settings and settings.working_hours else 'Pazartesi - Cumartesi / 09:00 - 18:00' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-side">
+      <div class="glass-card">
+        <h2 id="randevu">Randevu Talebi</h2>
+
+        <form class="form" method="post" action="{{ url_for('public.iletisim') }}#randevu">
+          <input
+            type="text"
+            name="website"
+            class="honeypot"
+            tabindex="-1"
+            autocomplete="off"
+          >
+
+          <label>Ad Soyad</label>
+          <input
+            type="text"
+            name="full_name"
+            placeholder="Ad Soyad"
+            required
+          >
+
+          <label>Telefon</label>
+          <input
+            type="tel"
+            name="phone"
+            placeholder="+90..."
+            required
+          >
+
+          <label>E-posta</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="mail@..."
+          >
+
+          <label>Randevu Tipi</label>
+          <select name="appointment_type">
+            <option value="">Seçiniz</option>
+            <option value="Online">Online</option>
+            <option value="Yüz yüze">Yüz yüze</option>
+          </select>
+
+          <label>Tercih Edilen Gün</label>
+          <input
+            type="text"
+            name="preferred_day"
+            placeholder="Örn: Pazartesi, Çarşamba"
+          >
+
+          <label>Tercih Edilen Saat</label>
+          <input
+            type="text"
+            name="preferred_time"
+            placeholder="Örn: 14:00 - 18:00 arası"
+          >
+
+          <label>Hedef</label>
+          <select name="goal">
+            <option value="">Seçiniz</option>
+            <option value="Kilo verme">Kilo verme</option>
+            <option value="Kilo alma">Kilo alma</option>
+            <option value="Klinik beslenme">Klinik beslenme</option>
+            <option value="Sporcu beslenmesi">Sporcu beslenmesi</option>
+            <option value="Kadın sağlığı">Kadın sağlığı</option>
+            <option value="Genel sağlıklı beslenme">Genel sağlıklı beslenme</option>
+          </select>
+
+          <label>Mesaj</label>
+          <textarea
+            name="message"
+            rows="4"
+            placeholder="Kısaca hedefinizi yazın..."
+          ></textarea>
+
+          <button class="btn" type="submit">Gönder</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+```

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title>{% block title %}Diyetisyen Mısra Çakır{% endblock %}</title>
+
+  <meta
+    name="description"
+    content="{% block meta_description %}Diyetisyen Mısra Çakır ile bilimsel, sürdürülebilir ve kişiye özel beslenme danışmanlığı.{% endblock %}"
+  >
+
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:site_name" content="Diyetisyen Mısra Çakır">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}Diyetisyen Mısra Çakır{% endblock %}">
+  <meta
+    property="og:description"
+    content="{% block og_description %}Bilimsel, sürdürülebilir ve kişiye özel beslenme danışmanlığı.{% endblock %}"
+  >
+  <meta property="og:image" content="{{ url_for('static', filename='images/' ~ (settings.hero_image if settings else 'misra-hero.png'), _external=True) }}">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{% block twitter_title %}Diyetisyen Mısra Çakır{% endblock %}">
+  <meta
+    name="twitter:description"
+    content="{% block twitter_description %}Bilimsel, sürdürülebilir ve kişiye özel beslenme danışmanlığı.{% endblock %}"
+  >
+  <meta name="twitter:image" content="{{ url_for('static', filename='images/' ~ (settings.hero_image if settings else 'misra-hero.png'), _external=True) }}">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+  <div id="overlay" class="overlay" aria-hidden="true"></div>
+
+  <aside id="sidebar" class="sidebar" aria-label="Yan menü">
+    <div class="sidebar-head">
+      <div class="brand">
+        <div class="brand-mark">M</div>
+        <div class="brand-text">
+          <div class="brand-title">Mısra</div>
+          <div class="brand-sub">Diyetisyen</div>
+        </div>
+      </div>
+      <button id="closeSidebar" class="icon-btn" aria-label="Menüyü kapat">✕</button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="{{ url_for('public.hakkimda') }}">Hakkımda</a>
+      <a href="{{ url_for('public.iletisim') }}">İletişim</a>
+      <a href="{{ url_for('public.diyet_sekilleri') }}">Diyet Şekilleri</a>
+      <a href="{{ url_for('public.menuler') }}">Menüler</a>
+      <a href="{{ url_for('public.dogru_yanlis') }}">Doğru Bilinen Yanlışlar</a>
+      <a href="{{ url_for('public.blog') }}">Blog</a>
+    </nav>
+  </aside>
+
+  <div class="social-rail" aria-label="Sosyal medya">
+    <a class="social-item ig" href="{{ settings.instagram_url if settings else '#' }}" target="_blank">
+      <img src="{{ url_for('static', filename='images/instagram.png') }}" alt="Instagram">
+    </a>
+
+    <a class="social-item wa" href="{{ settings.whatsapp_url if settings else '#' }}" target="_blank">
+      <img src="{{ url_for('static', filename='images/whatsapp.png') }}" alt="WhatsApp">
+    </a>
+
+    <a class="social-item xx" href="{{ settings.x_url if settings else '#' }}" target="_blank">
+      <img src="{{ url_for('static', filename='images/x.png') }}" alt="X">
+    </a>
+
+    <a class="social-item tt" href="{{ settings.tiktok_url if settings else '#' }}" target="_blank">
+      <img src="{{ url_for('static', filename='images/tiktok.png') }}" alt="TikTok">
+    </a>
+  </div>
+
+  <header class="topbar">
+    <div class="top-left">
+      <button id="openSidebar" class="hamburger" aria-label="Menüyü aç">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="site-logo">
+        <span class="leaf">🌿</span>
+        <span class="site-name">Diyetisyen Mısra Çakır</span>
+      </div>
+    </div>
+
+    <div class="top-right">
+      <a class="top-link" href="{{ url_for('public.home') }}">Ana Sayfa</a>
+      <button id="themeToggle" class="chip" type="button">🌙 Mod</button>
+      <a class="chip primary" href="{{ url_for('public.iletisim') }}#randevu">Randevu Al</a>
+    </div>
+  </header>
+
+  <main class="page">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-wrapper">
+          {% for category, message in messages %}
+            <div class="flash-message {{ category }}">
+              <span>{{ message }}</span>
+              <button type="button" class="flash-close">×</button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <div class="footer-grid">
+
+      <div>
+        <h3>Diyetisyen Mısra Çakır</h3>
+        <p>
+          Bilimsel temelli, sürdürülebilir ve kişiye özel beslenme danışmanlığı.
+        </p>
+
+        <div class="footer-socials">
+          <a href="{{ settings.instagram_url if settings else '#' }}" target="_blank">Instagram</a>
+          <a href="{{ settings.whatsapp_url if settings else '#' }}" target="_blank">WhatsApp</a>
+          <a href="{{ settings.x_url if settings else '#' }}" target="_blank">X</a>
+          <a href="{{ settings.tiktok_url if settings else '#' }}" target="_blank">TikTok</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Hızlı Menü</h4>
+
+        <ul class="footer-links">
+          <li><a href="{{ url_for('public.home') }}">Ana Sayfa</a></li>
+          <li><a href="{{ url_for('public.hakkimda') }}">Hakkımda</a></li>
+          <li><a href="{{ url_for('public.diyet_sekilleri') }}">Diyet Şekilleri</a></li>
+          <li><a href="{{ url_for('public.menuler') }}">Menüler</a></li>
+          <li><a href="{{ url_for('public.dogru_yanlis') }}">Doğru Bilinen Yanlışlar</a></li>
+          <li><a href="{{ url_for('public.blog') }}">Blog</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>İletişim</h4>
+
+        <p>📍 {{ settings.address if settings else 'İstanbul / Türkiye' }}</p>
+        <p>📞 {{ settings.phone if settings else '+90 XXX XXX XX XX' }}</p>
+        <p>📧 {{ settings.email if settings else 'info@misracakir.com' }}</p>
+
+        <h4 style="margin-top:18px;">Çalışma Saatleri</h4>
+        <p>{{ settings.working_hours if settings else 'Pazartesi - Cumartesi / 09:00 - 18:00' }}</p>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      © 2026 Diyetisyen Mısra Çakır • Tüm Hakları Saklıdır.
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

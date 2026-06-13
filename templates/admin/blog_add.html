@@ -1,0 +1,129 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Blog Ekle{% endblock %}
+
+{% block content %}
+
+<section class="admin-page-head">
+  <div>
+    <p class="admin-kicker">Admin Panel</p>
+    <h2 class="admin-title">Yeni Blog Yazısı</h2>
+    <p class="admin-subtitle">
+      Yeni bir yazı oluştur, kategori ekle ve içeriği zengin metin editörü ile yaz.
+    </p>
+  </div>
+
+  <div class="admin-head-actions">
+    <a class="btn ghost" href="{{ url_for('admin.admin_blog') }}">← Blog listesine dön</a>
+  </div>
+</section>
+
+<section class="admin-form-layout">
+  <div class="admin-form-card">
+    <form method="post" class="admin-form" enctype="multipart/form-data">
+      <div class="form-group full">
+        <label>Başlık</label>
+        <input type="text" name="title" placeholder="Örn: İnsülin direncinde beslenme nasıl olmalı?" required>
+      </div>
+
+      <div class="form-group">
+        <label>Kategori</label>
+        <input type="text" name="category" placeholder="Örn: Metabolizma" required>
+      </div>
+
+      <div class="form-group">
+        <label>Blog Görseli</label>
+        <input type="file" name="image_file" accept=".jpg,.jpeg,.png,.webp">
+      </div>
+
+      <div class="form-group full">
+        <label>Kısa Açıklama</label>
+        <textarea name="excerpt" rows="4" placeholder="Kart üzerinde görünecek kısa açıklama..." required></textarea>
+      </div>
+
+      <div class="form-group full">
+        <label>İçerik</label>
+        <div id="editor" class="quill-editor"></div>
+        <input type="hidden" name="content" id="hiddenContent">
+      </div>
+
+      <div class="form-group full">
+        <label>SEO Başlığı</label>
+        <input type="text" name="seo_title" placeholder="Google'da görünecek başlık">
+      </div>
+
+      <div class="form-group full">
+        <label>Meta Description</label>
+        <textarea name="seo_description" rows="3" placeholder="Google açıklaması..."></textarea>
+      </div>
+
+      <div class="form-group full">
+        <label>Meta Keywords</label>
+        <input type="text" name="seo_keywords" placeholder="beslenme, diyet, sağlık">
+      </div>
+
+      <div class="admin-form-actions">
+        <button class="btn" type="submit">Kaydet</button>
+        <a class="btn ghost" href="{{ url_for('admin.admin_blog') }}">İptal</a>
+      </div>
+    </form>
+  </div>
+
+  <aside class="admin-side-card">
+    <h3>Yazım İpuçları</h3>
+    <ul class="admin-tips">
+      <li>Başlığı kısa ve net yaz.</li>
+      <li>Kategori adını tek tip kullan.</li>
+      <li>Kısa açıklama 1-2 cümleyi geçmesin.</li>
+      <li>Görsel adı, <strong>static/images/</strong> içindeki dosyayla aynı olmalı.</li>
+      <li>Alt başlıklar ve listeler kullanman yazıyı okunur yapar.</li>
+    </ul>
+
+    <div class="admin-preview-box">
+      <h4>SEO İpuçları</h4>
+      <div class="mini-preview">
+        <div class="mini-badge">SEO</div>
+        <h5>SEO başlığı kısa ve aranabilir olsun</h5>
+        <p>Meta description 150-160 karakter civarında olursa Google görünümü daha iyi olur.</p>
+      </div>
+    </div>
+
+    <div class="admin-preview-box">
+      <h4>Örnek Kart Görünümü</h4>
+      <div class="mini-preview">
+        <div class="mini-badge">Kategori</div>
+        <h5>Blog başlığı burada görünür</h5>
+        <p>Kısa açıklama burada görünür. Kart yapısına uygun kısa bir metin...</p>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<link href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
+
+<script>
+  const quill = new Quill('#editor', {
+    theme: 'snow',
+    placeholder: 'Blog yazısının tam içeriğini buraya yaz...',
+    modules: {
+      toolbar: [
+        [{ 'header': [1, 2, 3, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'align': [] }],
+        ['link', 'blockquote', 'code-block'],
+        ['clean']
+      ]
+    }
+  });
+
+  const form = document.querySelector('.admin-form');
+  const hiddenContent = document.getElementById('hiddenContent');
+
+  form.addEventListener('submit', function () {
+    hiddenContent.value = quill.root.innerHTML;
+  });
+</script>
+
+{% endblock %}

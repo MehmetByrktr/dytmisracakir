@@ -1,0 +1,130 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Randevu Talepleri{% endblock %}
+
+{% block content %}
+
+<section class="admin-page-head">
+  <div>
+    <p class="admin-kicker">Admin Panel</p>
+    <h2 class="admin-title">Randevu Talepleri</h2>
+    <p class="admin-subtitle">
+      Danışanlardan gelen randevu taleplerini görüntüle, filtrele ve durumlarını güncelle.
+    </p>
+  </div>
+</section>
+
+<section class="admin-filter-card">
+  <form method="get" action="{{ url_for('admin.admin_appointments') }}" class="admin-filter-form">
+    <input
+      type="text"
+      name="search"
+      value="{{ search }}"
+      placeholder="Ad, telefon, e-posta, hedef veya mesajda ara..."
+    >
+
+    <select name="status">
+      <option value="">Tüm durumlar</option>
+      {% for s in statuses %}
+      <option value="{{ s }}" {% if selected_status == s %}selected{% endif %}>
+        {{ s }}
+      </option>
+      {% endfor %}
+    </select>
+
+    <button class="btn" type="submit">Filtrele</button>
+    <a class="btn ghost" href="{{ url_for('admin.admin_appointments') }}">Temizle</a>
+  </form>
+</section>
+
+<section class="admin-table-card">
+  {% if appointments %}
+  <div class="admin-table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Kişi</th>
+          <th>İletişim</th>
+          <th>Randevu Bilgisi</th>
+          <th>Mesaj</th>
+          <th>Durum</th>
+          <th>İşlemler</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for a in appointments %}
+        <tr>
+          <td>
+            <strong>{{ a.full_name }}</strong>
+            <p class="admin-row-sub">
+              {{ a.created_at.strftime('%Y-%m-%d %H:%M') }}
+            </p>
+          </td>
+
+          <td>
+            <p class="admin-row-sub"><strong>Tel:</strong> {{ a.phone }}</p>
+            {% if a.email %}
+            <p class="admin-row-sub"><strong>Mail:</strong> {{ a.email }}</p>
+            {% endif %}
+          </td>
+
+          <td>
+            <p class="admin-row-sub"><strong>Tür:</strong> {{ a.appointment_type or '-' }}</p>
+            <p class="admin-row-sub"><strong>Gün:</strong> {{ a.preferred_day or '-' }}</p>
+            <p class="admin-row-sub"><strong>Saat:</strong> {{ a.preferred_time or '-' }}</p>
+            <p class="admin-row-sub"><strong>Hedef:</strong> {{ a.goal or '-' }}</p>
+          </td>
+
+          <td>
+            <p class="admin-row-sub">
+              {{ a.message or '-' }}
+            </p>
+          </td>
+
+          <td>
+            <form method="post" action="{{ url_for('admin.admin_appointment_status', appointment_id=a.id) }}">
+              <select name="status" class="admin-status-select" onchange="this.form.submit()">
+                <option value="Yeni" {% if a.status == "Yeni" %}selected{% endif %}>Yeni</option>
+                <option value="Görüşüldü" {% if a.status == "Görüşüldü" %}selected{% endif %}>Görüşüldü</option>
+                <option value="Onaylandı" {% if a.status == "Onaylandı" %}selected{% endif %}>Onaylandı</option>
+                <option value="İptal" {% if a.status == "İptal" %}selected{% endif %}>İptal</option>
+              </select>
+            </form>
+          </td>
+
+          <td>
+            <div class="admin-row-actions">
+              <a
+                class="btn ghost"
+                target="_blank"
+                href="https://wa.me/{{ a.phone|replace('+','')|replace(' ','')|replace('-','')|replace('(','')|replace(')','') }}?text=Merhaba%20{{ a.full_name|urlencode }},%20randevu%20talebiniz%20hakkında%20sizinle%20iletişime%20geçiyorum."
+              >
+                WhatsApp
+              </a>
+
+              <a
+                class="btn danger"
+                href="{{ url_for('admin.admin_appointment_delete', appointment_id=a.id) }}"
+                data-confirm-delete="Bu randevu talebini silmek istediğine emin misin?"
+              >
+                Sil
+              </a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% else %}
+  <div class="empty-state">
+    <h3>Randevu talebi bulunamadı.</h3>
+    <p>Arama veya durum filtresini değiştirerek tekrar deneyebilirsin.</p>
+    <a class="btn ghost" href="{{ url_for('admin.admin_appointments') }}">Filtreleri Temizle</a>
+  </div>
+  {% endif %}
+</section>
+
+{% endblock %}

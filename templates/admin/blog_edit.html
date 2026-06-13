@@ -1,0 +1,157 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Blog Düzenle{% endblock %}
+
+{% block content %}
+
+<section class="admin-page-head">
+  <div>
+    <p class="admin-kicker">Admin Panel</p>
+    <h2 class="admin-title">Blog Yazısını Düzenle</h2>
+    <p class="admin-subtitle">
+      Mevcut yazıyı güncelle, içerikleri değiştir ve tekrar kaydet.
+    </p>
+  </div>
+
+  <div class="admin-head-actions">
+    <a class="btn ghost" href="{{ url_for('admin.admin_blog') }}">← Blog listesine dön</a>
+  </div>
+</section>
+
+<section class="admin-form-layout">
+  <div class="admin-form-card">
+    <form method="post" class="admin-form" enctype="multipart/form-data">
+      <div class="form-group full">
+        <label>Başlık</label>
+        <input
+          type="text"
+          name="title"
+          value="{{ post.title }}"
+          placeholder="Örn: İnsülin direncinde beslenme nasıl olmalı?"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Kategori</label>
+        <input
+          type="text"
+          name="category"
+          value="{{ post.category }}"
+          placeholder="Örn: Metabolizma"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Blog Görseli</label>
+        <p style="margin-bottom:8px; color:var(--muted);">
+          Mevcut görsel: {{ post.image }}
+        </p>
+
+        <input type="file" name="image_file" accept=".jpg,.jpeg,.png,.webp">
+      </div>
+
+      <div class="form-group full">
+        <label>Kısa Açıklama</label>
+        <textarea name="excerpt" rows="4" required>{{ post.excerpt }}</textarea>
+      </div>
+
+      <div class="form-group full">
+        <label>İçerik</label>
+        <div id="editor" class="quill-editor"></div>
+        <input type="hidden" name="content" id="hiddenContent">
+      </div>
+
+      <div class="form-group full">
+        <label>SEO Başlığı</label>
+        <input
+          type="text"
+          name="seo_title"
+          value="{{ post.seo_title or '' }}"
+          placeholder="Google'da görünecek başlık"
+        >
+      </div>
+
+      <div class="form-group full">
+        <label>Meta Description</label>
+        <textarea
+          name="seo_description"
+          rows="3"
+          placeholder="Google açıklaması..."
+        >{{ post.seo_description or '' }}</textarea>
+      </div>
+
+      <div class="form-group full">
+        <label>Meta Keywords</label>
+        <input
+          type="text"
+          name="seo_keywords"
+          value="{{ post.seo_keywords or '' }}"
+          placeholder="beslenme, diyet, sağlık"
+        >
+      </div>
+
+      <div class="admin-form-actions">
+        <button class="btn" type="submit">Güncelle</button>
+        <a class="btn ghost" href="{{ url_for('admin.admin_blog') }}">İptal</a>
+      </div>
+    </form>
+  </div>
+
+  <aside class="admin-side-card">
+    <h3>Mevcut Yazı Bilgisi</h3>
+    <ul class="admin-tips">
+      <li><strong>ID:</strong> {{ post.id }}</li>
+      <li><strong>Kategori:</strong> {{ post.category }}</li>
+      <li><strong>Görsel:</strong> {{ post.image }}</li>
+      <li><strong>Tarih:</strong> {{ post.created_at.strftime('%Y-%m-%d %H:%M') }}</li>
+    </ul>
+
+    <div class="admin-preview-box">
+      <h4>SEO Notu</h4>
+      <div class="mini-preview">
+        <p>SEO başlığı ve açıklaması boş bırakılırsa blog başlığı ve kısa açıklama kullanılır.</p>
+      </div>
+    </div>
+
+    <div class="admin-preview-box">
+      <h4>Not</h4>
+      <div class="mini-preview">
+        <p>Güncellediğin içerik kaydedildiğinde blog listesinde yeni haliyle görünür.</p>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<link href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
+
+<script>
+  const quill = new Quill('#editor', {
+    theme: 'snow',
+    placeholder: 'Blog yazısının tam içeriğini buraya yaz...',
+    modules: {
+      toolbar: [
+        [{ 'header': [1,2,3,false] }],
+        ['bold','italic','underline','strike'],
+        [{'list':'ordered'},{'list':'bullet'}],
+        [{'align':[]}],
+        ['link','blockquote','code-block'],
+        ['clean']
+      ]
+    }
+  });
+
+  const existingContent = `{{ post.content | safe }}`;
+  quill.root.innerHTML = existingContent;
+
+  const form = document.querySelector('.admin-form');
+  const hiddenContent = document.getElementById('hiddenContent');
+
+  form.addEventListener('submit', function(){
+      hiddenContent.value = quill.root.innerHTML;
+  });
+</script>
+
+{% endblock %}

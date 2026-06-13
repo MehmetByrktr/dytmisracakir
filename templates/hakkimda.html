@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}Hakkımda | Diyetisyen Mısra Çakır{% endblock %}
+{% block meta_description %}Diyetisyen Mısra Çakır’ın beslenme danışmanlığı yaklaşımı, çalışma düzeni ve uzmanlık alanları.{% endblock %}
+{% block content %}
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div>
+      <p class="kicker">Hakkımda</p>
+
+      <h1 class="page-title">Mısra Çakır</h1>
+
+      <p class="page-desc">
+        Bilimsel yaklaşım ve sürdürülebilir alışkanlıklar ile amacım kısa süreli
+        beslenme uygulamaları değil, kişinin hayatına uyum sağlayan bir sistem oluşturmaktır.
+      </p>
+
+      <div class="mini-stats">
+        <div class="stat">
+          <div class="stat-val">1:1</div>
+          <div class="stat-lbl">Danışan takibi</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-val">Plan</div>
+          <div class="stat-lbl">Kişiye özel program</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-val">Sade</div>
+          <div class="stat-lbl">Uygulanabilir menüler</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-photo">
+      <img
+        src="{{ url_for('static', filename='images/' ~ settings.hero_image) }}"
+        alt="Mısra Çakır"
+      >
+    </div>
+  </div>
+</section>
+
+<section class="about-grid">
+  <article class="glass-card">
+    <h2>Yaklaşımım</h2>
+
+    <p>
+      Kilo yönetimi, hastalıklarda beslenme ve performans hedeflerinde kanıt temelli
+      yöntemlerle ilerlemeyi önemserim. Temel hedef, danışanın günlük yaşamına uyum
+      sağlayabilen sürdürülebilir alışkanlıklar geliştirmesidir.
+    </p>
+
+    <ul class="bullets">
+      <li>Günlük rutine uyum</li>
+      <li>Esnek tabak modeli</li>
+      <li>Takip ve geri bildirim</li>
+    </ul>
+  </article>
+
+  <article class="glass-card">
+    <h2>Hangi alanlarda?</h2>
+
+    <p>
+      Kilo kontrolü, kadın sağlığı, sporcu beslenmesi, sindirim sistemi şikayetleri
+      ve kronik hastalıklarda beslenme planlaması üzerine çalışılabilir.
+    </p>
+
+    <div class="tag-row">
+      <span class="tag">Kilo kontrolü</span>
+      <span class="tag">PCOS</span>
+      <span class="tag">İnsülin direnci</span>
+      <span class="tag">IBS</span>
+      <span class="tag">Sporcu beslenmesi</span>
+    </div>
+  </article>
+
+  <article class="glass-card wide">
+    <h2>Çalışma düzeni</h2>
+
+    <p>
+      İlk görüşmede hedefler, sağlık geçmişi ve günlük rutin değerlendirilir.
+      Ardından kişiye özel beslenme planı oluşturulur ve takip süreciyle gerekli
+      güncellemeler yapılır.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-no">1</div>
+
+        <div>
+          <div class="step-title">Değerlendirme</div>
+          <div class="step-sub">Hedefler, alışkanlıklar ve ihtiyaçlar</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">2</div>
+
+        <div>
+          <div class="step-title">Plan</div>
+          <div class="step-sub">Kişiye özel beslenme programı</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">3</div>
+
+        <div>
+          <div class="step-title">Takip</div>
+          <div class="step-sub">Güncelleme ve sürdürülebilirlik</div>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+
+{% endblock %}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% block title %}Admin Panel{% endblock %}</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    body{
+      background:#f3f3f3;
+    }
+
+    .admin-header{
+      background:#1f2937;
+      color:white;
+      padding:16px 20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+    }
+
+    .admin-header h1{
+      font-size:20px;
+      margin:0;
+      white-space:nowrap;
+    }
+
+    .admin-nav{
+      display:flex;
+      gap:15px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .admin-nav a{
+      color:white;
+      text-decoration:none;
+      font-weight:600;
+    }
+
+    .admin-nav a:hover{
+      opacity:.8;
+    }
+
+    .admin-container{
+      max-width:1100px;
+      margin:auto;
+      padding:30px 20px;
+    }
+
+    .admin-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:20px;
+      height:20px;
+      padding:0 6px;
+      margin-left:5px;
+      border-radius:999px;
+      background:#ef4444;
+      color:white;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .admin-flash-wrapper{
+      width:100%;
+      margin:0 0 20px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+  </style>
+
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+
+<header class="admin-header">
+  <h1>Admin Panel</h1>
+
+  <nav class="admin-nav">
+    <a href="{{ url_for('admin.admin_dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('admin.admin_blog') }}">Blog</a>
+    <a href="{{ url_for('admin.admin_myths') }}">Mitler</a>
+
+    <a href="{{ url_for('admin.admin_appointments') }}">
+      Randevular
+      {% if new_appointment_count and new_appointment_count > 0 %}
+        <span class="admin-badge">{{ new_appointment_count }}</span>
+      {% endif %}
+    </a>
+
+    <a href="{{ url_for('admin.admin_settings') }}">Site Ayarları</a>
+    <a href="{{ url_for('public.home') }}">Siteye Git</a>
+    <a href="{{ url_for('admin.admin_logout') }}">Çıkış</a>
+  </nav>
+</header>
+
+<main class="admin-container">
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-wrapper admin-flash-wrapper">
+        {% for category, message in messages %}
+          <div class="flash-message {{ category }}">
+            <span>{{ message }}</span>
+            <button type="button" class="flash-close">×</button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}
+  {% endblock %}
+
+</main>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+{% block extra_scripts %}{% endblock %}
+
+</body>
+</html>

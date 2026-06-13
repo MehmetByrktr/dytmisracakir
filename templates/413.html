@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Dosya Çok Büyük | Diyetisyen Mısra Çakır{% endblock %}
+
+{% block content %}
+
+<section class="error-page">
+  <div class="error-card">
+    <p class="error-code">413</p>
+
+    <h1>Dosya boyutu çok büyük.</h1>
+
+    <p>
+      Yüklemeye çalıştığın görsel izin verilen boyuttan büyük.
+      Lütfen 5 MB altında bir görsel seçerek tekrar dene.
+    </p>
+
+    <div class="error-actions">
+      <a class="btn" href="{{ url_for('admin.admin_blog') }}">Blog Paneline Dön</a>
+      <a class="btn ghost" href="{{ url_for('admin.admin_settings') }}">Site Ayarlarına Git</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
