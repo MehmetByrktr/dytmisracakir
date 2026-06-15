@@ -12,6 +12,7 @@
   >
 
   <meta name="robots" content="index, follow">
+  {% block canonical %}<link rel="canonical" href="{{ request.base_url }}">{% endblock %}
 
   <meta property="og:site_name" content="Diyetisyen Mısra Çakır">
   <meta property="og:type" content="{% block og_type %}website{% endblock %}">
@@ -21,6 +22,7 @@
     content="{% block og_description %}Bilimsel, sürdürülebilir ve kişiye özel beslenme danışmanlığı.{% endblock %}"
   >
   <meta property="og:image" content="{{ url_for('static', filename='images/' ~ (settings.hero_image if settings else 'misra-hero.png'), _external=True) }}">
+  <meta property="og:url" content="{{ request.base_url }}">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{% block twitter_title %}Diyetisyen Mısra Çakır{% endblock %}">
@@ -32,6 +34,20 @@
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Diyetisyen Mısra Çakır",
+    "jobTitle": "Diyetisyen",
+    "url": {{ request.url_root.rstrip('/') | tojson }},
+    "sameAs": [
+      {{ (settings.instagram_url if settings and settings.instagram_url else '') | tojson }},
+      {{ (settings.tiktok_url if settings and settings.tiktok_url else '') | tojson }}
+    ]
+  }
+  </script>
+
   {% block extra_head %}{% endblock %}
 </head>
 
@@ -41,7 +57,6 @@
   <aside id="sidebar" class="sidebar" aria-label="Yan menü">
     <div class="sidebar-head">
       <div class="brand">
-        <div class="brand-mark">M</div>
         <div class="brand-text">
           <div class="brand-title">Mısra</div>
           <div class="brand-sub">Diyetisyen</div>
@@ -61,19 +76,19 @@
   </aside>
 
   <div class="social-rail" aria-label="Sosyal medya">
-    <a class="social-item ig" href="{{ settings.instagram_url if settings else '#' }}" target="_blank">
+    <a class="social-item ig" href="{{ settings.instagram_url if settings else '#' }}" target="_blank" rel="noopener noreferrer">
       <img src="{{ url_for('static', filename='images/instagram.png') }}" alt="Instagram">
     </a>
 
-    <a class="social-item wa" href="{{ settings.whatsapp_url if settings else '#' }}" target="_blank">
+    <a class="social-item wa" href="{{ settings.whatsapp_url if settings else '#' }}" target="_blank" rel="noopener noreferrer">
       <img src="{{ url_for('static', filename='images/whatsapp.png') }}" alt="WhatsApp">
     </a>
 
-    <a class="social-item xx" href="{{ settings.x_url if settings else '#' }}" target="_blank">
+    <a class="social-item xx" href="{{ settings.x_url if settings else '#' }}" target="_blank" rel="noopener noreferrer">
       <img src="{{ url_for('static', filename='images/x.png') }}" alt="X">
     </a>
 
-    <a class="social-item tt" href="{{ settings.tiktok_url if settings else '#' }}" target="_blank">
+    <a class="social-item tt" href="{{ settings.tiktok_url if settings else '#' }}" target="_blank" rel="noopener noreferrer">
       <img src="{{ url_for('static', filename='images/tiktok.png') }}" alt="TikTok">
     </a>
   </div>
@@ -85,14 +100,13 @@
       </button>
 
       <div class="site-logo">
-        <span class="leaf">🌿</span>
         <span class="site-name">Diyetisyen Mısra Çakır</span>
       </div>
     </div>
 
     <div class="top-right">
       <a class="top-link" href="{{ url_for('public.home') }}">Ana Sayfa</a>
-      <button id="themeToggle" class="chip" type="button">🌙 Mod</button>
+      <button id="themeToggle" class="chip" type="button">Tema</button>
       <a class="chip primary" href="{{ url_for('public.iletisim') }}#randevu">Randevu Al</a>
     </div>
   </header>
@@ -124,10 +138,10 @@
         </p>
 
         <div class="footer-socials">
-          <a href="{{ settings.instagram_url if settings else '#' }}" target="_blank">Instagram</a>
-          <a href="{{ settings.whatsapp_url if settings else '#' }}" target="_blank">WhatsApp</a>
-          <a href="{{ settings.x_url if settings else '#' }}" target="_blank">X</a>
-          <a href="{{ settings.tiktok_url if settings else '#' }}" target="_blank">TikTok</a>
+          <a href="{{ settings.instagram_url if settings else '#' }}" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="{{ settings.whatsapp_url if settings else '#' }}" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="{{ settings.x_url if settings else '#' }}" target="_blank" rel="noopener noreferrer">X</a>
+          <a href="{{ settings.tiktok_url if settings else '#' }}" target="_blank" rel="noopener noreferrer">TikTok</a>
         </div>
       </div>
 

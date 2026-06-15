@@ -21,6 +21,7 @@
 <section class="admin-form-layout">
   <div class="admin-form-card">
     <form method="post" class="admin-form" enctype="multipart/form-data">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
       <div class="form-group full">
         <label>Başlık</label>
         <input type="text" name="title" placeholder="Örn: İnsülin direncinde beslenme nasıl olmalı?" required>
@@ -31,7 +32,7 @@
         <input type="text" name="category" placeholder="Örn: Metabolizma" required>
       </div>
 
-      <div class="form-group">
+      <div class="form-group blog-image-field">
         <label>Blog Görseli</label>
         <input type="file" name="image_file" accept=".jpg,.jpeg,.png,.webp">
       </div>
@@ -43,6 +44,62 @@
 
       <div class="form-group full">
         <label>İçerik</label>
+        <div class="blog-editor-toolbar-final blog-font-toolbar-working" data-editor-toolbar>
+          <div class="blog-editor-group blog-editor-font-group" aria-label="Yazı tipi">
+            <span class="blog-editor-group-title">Yazı tipi</span>
+            <button type="button" class="blog-editor-btn blog-editor-btn-text" data-font="default">Varsayılan</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-text" data-font="inter">Inter</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-text" data-font="serif">Serif</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-text" data-font="garamond">Garamond</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-text" data-font="mono">Mono</button>
+          </div>
+
+          <div class="blog-editor-group blog-editor-size-group" aria-label="Yazı boyutu">
+            <span class="blog-editor-group-title">Yazı boyutu</span>
+            <button type="button" class="blog-editor-btn blog-editor-btn-text" data-size="normal">Normal</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-small" data-size="14px">14</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-small" data-size="16px">16</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-small" data-size="18px">18</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-small" data-size="20px">20</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-small" data-size="24px">24</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-small" data-size="28px">28</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-small" data-size="32px">32</button>
+          </div>
+
+          <div class="blog-editor-group" aria-label="Metin tipi">
+            <span class="blog-editor-group-title">Başlık</span>
+            <button type="button" class="blog-editor-btn blog-editor-btn-text" data-block="normal">Normal</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-text" data-block="2">Başlık</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-text" data-block="3">Alt başlık</button>
+          </div>
+
+          <div class="blog-editor-group" aria-label="Yazı biçimi">
+            <button type="button" class="blog-editor-btn" data-format="bold" title="Kalın"><strong>B</strong></button>
+            <button type="button" class="blog-editor-btn" data-format="italic" title="İtalik"><em>I</em></button>
+            <button type="button" class="blog-editor-btn" data-format="underline" title="Altı çizili"><u>U</u></button>
+            <button type="button" class="blog-editor-btn" data-format="strike" title="Üstü çizili"><s>S</s></button>
+          </div>
+
+          <div class="blog-editor-group" aria-label="Liste">
+            <button type="button" class="blog-editor-btn blog-editor-btn-small" data-list="ordered" title="Numaralı liste">1·2</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-small" data-list="bullet" title="Madde işaretli liste">• •</button>
+          </div>
+
+          <div class="blog-editor-group" aria-label="Hizalama">
+            <span class="blog-editor-group-title">Hizala</span>
+            <button type="button" class="blog-editor-btn blog-editor-btn-text" data-align="left">Sol</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-text" data-align="center">Orta</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-text" data-align="right">Sağ</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-text" data-align="justify">Yasla</button>
+          </div>
+
+          <div class="blog-editor-group" aria-label="Ek araçlar">
+            <button type="button" class="blog-editor-btn blog-editor-btn-small" data-link title="Link">Link</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-small" data-format="blockquote" title="Alıntı">“”</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-small" data-format="code-block" title="Kod">&lt;/&gt;</button>
+            <button type="button" class="blog-editor-btn blog-editor-btn-small" data-clean title="Biçimi temizle">Tx</button>
+          </div>
+        </div>
         <div id="editor" class="quill-editor"></div>
         <input type="hidden" name="content" id="hiddenContent">
       </div>
@@ -103,20 +160,150 @@
 <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
 
 <script>
+  const FontClass = Quill.import('formats/font');
+  FontClass.whitelist = ['inter', 'serif', 'garamond', 'mono'];
+  Quill.register(FontClass, true);
+
+  const SizeStyle = Quill.import('attributors/style/size');
+  SizeStyle.whitelist = ['14px', '16px', '18px', '20px', '24px', '28px', '32px'];
+  Quill.register(SizeStyle, true);
+
   const quill = new Quill('#editor', {
     theme: 'snow',
     placeholder: 'Blog yazısının tam içeriğini buraya yaz...',
-    modules: {
-      toolbar: [
-        [{ 'header': [1, 2, 3, false] }],
-        ['bold', 'italic', 'underline', 'strike'],
-        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        [{ 'align': [] }],
-        ['link', 'blockquote', 'code-block'],
-        ['clean']
-      ]
-    }
+    modules: { toolbar: false }
   });
+
+  const customToolbar = document.querySelector('[data-editor-toolbar]');
+
+  function getSelectionRange() {
+    return quill.getSelection(true);
+  }
+
+  function setFont(value) {
+    quill.format('font', value === 'default' ? false : value);
+    quill.focus();
+    updateToolbarState();
+  }
+
+  function setSize(value) {
+    quill.format('size', value === 'normal' ? false : value);
+    quill.focus();
+    updateToolbarState();
+  }
+
+  function setBlock(value) {
+    quill.format('header', value === 'normal' ? false : Number(value));
+    quill.focus();
+    updateToolbarState();
+  }
+
+  function setAlign(value) {
+    quill.format('align', value === 'left' ? false : value);
+    quill.focus();
+    updateToolbarState();
+  }
+
+  function toggleInlineFormat(formatName) {
+    const current = quill.getFormat();
+    quill.format(formatName, !current[formatName]);
+    quill.focus();
+    updateToolbarState();
+  }
+
+  function toggleList(value) {
+    const current = quill.getFormat();
+    quill.format('list', current.list === value ? false : value);
+    quill.focus();
+    updateToolbarState();
+  }
+
+  function setLink() {
+    const range = getSelectionRange();
+    if (!range) return;
+
+    const current = quill.getFormat(range).link;
+    if (current) {
+      quill.format('link', false);
+    } else {
+      const url = window.prompt('Link adresini yaz:', 'https://');
+      if (url && url.trim() && url.trim() !== 'https://') {
+        quill.format('link', url.trim());
+      }
+    }
+    quill.focus();
+    updateToolbarState();
+  }
+
+  function cleanSelection() {
+    const range = getSelectionRange();
+    if (!range) return;
+
+    if (range.length === 0) {
+      quill.removeFormat(Math.max(0, range.index - 1), 1);
+    } else {
+      quill.removeFormat(range.index, range.length);
+    }
+
+    quill.focus();
+    updateToolbarState();
+  }
+
+  function updateToolbarState() {
+    if (!customToolbar) return;
+
+    const current = quill.getFormat();
+    const activeFont = current.font || 'default';
+    const activeSize = current.size || 'normal';
+    const activeBlock = current.header ? String(current.header) : 'normal';
+    const activeAlign = current.align || 'left';
+
+    customToolbar.querySelectorAll('[data-font]').forEach(btn => {
+      btn.classList.toggle('is-active', btn.dataset.font === activeFont);
+    });
+
+    customToolbar.querySelectorAll('[data-size]').forEach(btn => {
+      btn.classList.toggle('is-active', btn.dataset.size === activeSize);
+    });
+
+    customToolbar.querySelectorAll('[data-block]').forEach(btn => {
+      btn.classList.toggle('is-active', btn.dataset.block === activeBlock);
+    });
+
+    customToolbar.querySelectorAll('[data-align]').forEach(btn => {
+      btn.classList.toggle('is-active', btn.dataset.align === activeAlign);
+    });
+
+    customToolbar.querySelectorAll('[data-format]').forEach(btn => {
+      const formatName = btn.dataset.format;
+      btn.classList.toggle('is-active', !!current[formatName]);
+    });
+
+    customToolbar.querySelectorAll('[data-list]').forEach(btn => {
+      btn.classList.toggle('is-active', current.list === btn.dataset.list);
+    });
+  }
+
+  if (customToolbar) {
+    customToolbar.addEventListener('click', function (event) {
+      const button = event.target.closest('button');
+      if (!button) return;
+      event.preventDefault();
+
+      if (button.dataset.font) return setFont(button.dataset.font);
+      if (button.dataset.size) return setSize(button.dataset.size);
+      if (button.dataset.block) return setBlock(button.dataset.block);
+      if (button.dataset.align) return setAlign(button.dataset.align);
+      if (button.dataset.list) return toggleList(button.dataset.list);
+      if (button.dataset.link !== undefined) return setLink();
+      if (button.dataset.clean !== undefined) return cleanSelection();
+      if (button.dataset.format) return toggleInlineFormat(button.dataset.format);
+    });
+  }
+
+  quill.on('selection-change', updateToolbarState);
+  quill.on('text-change', updateToolbarState);
+  updateToolbarState();
 
   const form = document.querySelector('.admin-form');
   const hiddenContent = document.getElementById('hiddenContent');

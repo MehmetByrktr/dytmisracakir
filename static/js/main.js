@@ -29,11 +29,16 @@ document.addEventListener("keydown", (e) => {
 
 // Theme: localStorage
 const savedTheme = localStorage.getItem("theme");
-if (savedTheme) html.setAttribute("data-theme", savedTheme);
+if (savedTheme) {
+  html.setAttribute("data-theme", savedTheme);
+} else {
+  html.setAttribute("data-theme", "light");
+}
 
 function updateThemeButton() {
+  if (!themeToggle) return;
   const t = html.getAttribute("data-theme") || "light";
-  themeToggle.textContent = (t === "dark") ? "☀️ Mod" : "🌙 Mod";
+  themeToggle.textContent = (t === "dark") ? "Açık Tema" : "Koyu Tema";
 }
 updateThemeButton();
 
@@ -145,16 +150,41 @@ setTimeout(() => {
 }, 3500);
 
 // ADMIN DELETE CONFIRM
-const deleteButtons = document.querySelectorAll("[data-confirm-delete]");
-
-deleteButtons.forEach(button => {
-  button.addEventListener("click", function (e) {
-    const message = button.dataset.confirmDelete || "Bu işlemi yapmak istediğine emin misin?";
-
-    const confirmed = confirm(message);
-
-    if (!confirmed) {
+const deleteForms = document.querySelectorAll("form.inline-delete-form");
+deleteForms.forEach(form => {
+  form.addEventListener("submit", function (e) {
+    const trigger = form.querySelector("[data-confirm-delete]");
+    const message = trigger?.dataset.confirmDelete || "Bu işlemi yapmak istediğine emin misin?";
+    if (!confirm(message)) {
       e.preventDefault();
     }
   });
 });
+
+const legacyDeleteLinks = document.querySelectorAll("a[data-confirm-delete]");
+legacyDeleteLinks.forEach(link => {
+  link.addEventListener("click", function (e) {
+    const message = link.dataset.confirmDelete || "Bu işlemi yapmak istediğine emin misin?";
+    if (!confirm(message)) {
+      e.preventDefault();
+    }
+  });
+});
+
+// EDITORIAL THEME - SCROLL REVEAL
+const revealItems = document.querySelectorAll(".reveal-up, .glass-card, .p-card, .post-card, .blog-card, .quick-action-card");
+
+if ("IntersectionObserver" in window) {
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealItems.forEach(item => revealObserver.observe(item));
+}
+
+// EDITORIAL THEME - Hero image parallax removed for cleaner proportions

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,48 +8,66 @@
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <meta name="robots" content="noindex, nofollow">
+
   <style>
     body{
-      background:#f3f3f3;
+      background:#151515;
+      color:#f4efe7;
     }
 
     .admin-header{
-      background:#1f2937;
-      color:white;
-      padding:16px 20px;
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(21,21,21,.92);
+      color:#f4efe7;
+      padding:18px 28px;
       display:flex;
       justify-content:space-between;
       align-items:center;
-      gap:20px;
+      gap:22px;
+      border-bottom:1px solid rgba(244,239,231,.12);
+      backdrop-filter:blur(16px);
     }
 
     .admin-header h1{
-      font-size:20px;
+      font-size:15px;
       margin:0;
       white-space:nowrap;
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-weight:900;
     }
 
     .admin-nav{
       display:flex;
-      gap:15px;
+      gap:10px;
       align-items:center;
       flex-wrap:wrap;
     }
 
     .admin-nav a{
-      color:white;
+      color:#f4efe7;
       text-decoration:none;
-      font-weight:600;
+      font-weight:700;
+      font-size:13px;
+      border:1px solid rgba(244,239,231,.14);
+      border-radius:999px;
+      padding:9px 12px;
+      background:rgba(255,255,255,.04);
+      transition:.25s ease;
     }
 
     .admin-nav a:hover{
-      opacity:.8;
+      background:#f4efe7;
+      color:#151515;
+      transform:translateY(-1px);
     }
 
     .admin-container{
-      max-width:1100px;
+      max-width:1180px;
       margin:auto;
-      padding:30px 20px;
+      padding:38px 22px 70px;
     }
 
     .admin-badge{
@@ -61,8 +79,8 @@
       padding:0 6px;
       margin-left:5px;
       border-radius:999px;
-      background:#ef4444;
-      color:white;
+      background:#f4efe7;
+      color:#151515;
       font-size:12px;
       font-weight:900;
     }
@@ -74,19 +92,28 @@
       flex-direction:column;
       gap:10px;
     }
+
+    @media(max-width:780px){
+      .admin-header{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+    }
   </style>
 
   {% block extra_head %}{% endblock %}
 </head>
 
-<body>
+<body class="admin-body">
 
 <header class="admin-header">
-  <h1>Admin Panel</h1>
+  <h1>Mısra Admin</h1>
 
   <nav class="admin-nav">
     <a href="{{ url_for('admin.admin_dashboard') }}">Dashboard</a>
     <a href="{{ url_for('admin.admin_blog') }}">Blog</a>
+    <a href="{{ url_for('admin.admin_programs') }}">Danışmanlık</a>
+    <a href="{{ url_for('admin.admin_menus') }}">Menüler</a>
     <a href="{{ url_for('admin.admin_myths') }}">Mitler</a>
 
     <a href="{{ url_for('admin.admin_appointments') }}">
@@ -98,7 +125,10 @@
 
     <a href="{{ url_for('admin.admin_settings') }}">Site Ayarları</a>
     <a href="{{ url_for('public.home') }}">Siteye Git</a>
-    <a href="{{ url_for('admin.admin_logout') }}">Çıkış</a>
+    <form method="post" action="{{ url_for('admin.admin_logout') }}" class="admin-logout-form">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+      <button type="submit">Çıkış</button>
+    </form>
   </nav>
 </header>
 

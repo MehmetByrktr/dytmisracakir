@@ -21,6 +21,7 @@
 <section class="admin-form-layout">
   <div class="admin-form-card">
     <form method="post" class="admin-form">
+  <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
       <div class="form-group full">
         <label>Mit Başlığı</label>
         <input
@@ -33,6 +34,12 @@
 
       <div class="form-group full">
         <label>Açıklama</label>
+        <div class="admin-helper-ribbon" aria-label="Yazım yardımı">
+          <span class="admin-helper-chip">Kısa paragraf</span>
+          <span class="admin-helper-chip">Net açıklama</span>
+          <span class="admin-helper-chip">1–2 ana fikir</span>
+          <span class="admin-helper-chip">Aranabilir anahtar kelime</span>
+        </div>
         <textarea name="description" rows="8" required>{{ myth.description }}</textarea>
       </div>
 

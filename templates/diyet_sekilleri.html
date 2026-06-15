@@ -1,143 +1,67 @@
-
 {% extends "base.html" %}
 
-{% block title %}Diyet Şekilleri | Diyetisyen Mısra Çakır{% endblock %}
+{% block title %}Danışmanlık Alanları | Diyetisyen Mısra Çakır{% endblock %}
 {% block meta_description %}Kilo kontrolü, klinik beslenme, kadın sağlığı ve sporcu beslenmesine yönelik kişiye özel beslenme yaklaşımları.{% endblock %}
+
 {% block content %}
 
-<section class="page-hero">
-  <div class="page-hero-inner">
+<section class="page-hero compact-hero">
+  <div class="page-hero-inner balanced-hero">
     <div>
-      <p class="kicker">Diyet Şekilleri</p>
-
+      <p class="kicker">Danışmanlık Alanları</p>
       <h1 class="page-title">Hedefine göre plan</h1>
-
       <p class="page-desc">
         Kısa süreli “şok” listeler yerine; sürdürülebilir, kanıt temelli ve kişiye özel
-        yaklaşım. Aşağıdaki seçeneklerden sana uyanı seçelim.
+        yaklaşım. Aşağıdaki alanları admin panelden istediğin gibi düzenleyebilirsin.
       </p>
 
       <div class="tag-row">
-        <span class="tag">Kilo kontrolü</span>
-        <span class="tag">Klinik beslenme</span>
-        <span class="tag">Sporcu</span>
-        <span class="tag">Kadın sağlığı</span>
-        <span class="tag">Sindirim</span>
+        {% for p in programs[:5] %}
+          <span class="tag">{{ p.title }}</span>
+        {% else %}
+          <span class="tag">Kilo kontrolü</span>
+          <span class="tag">Klinik beslenme</span>
+          <span class="tag">Kadın sağlığı</span>
+        {% endfor %}
       </div>
     </div>
 
-    <div class="glass-card">
+    <div class="glass-card process-mini-card">
       <h2>Nasıl ilerliyoruz?</h2>
-
-      <div class="steps">
-        <div class="step">
-          <div class="step-no">1</div>
-
-          <div>
-            <div class="step-title">Analiz</div>
-            <div class="step-sub">Hedef, alışkanlık ve ihtiyaç değerlendirmesi</div>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-no">2</div>
-
-          <div>
-            <div class="step-title">Plan</div>
-            <div class="step-sub">Kişiye özel beslenme planı ve öneriler</div>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-no">3</div>
-
-          <div>
-            <div class="step-title">Takip</div>
-            <div class="step-sub">Güncelleme ve sürdürülebilirlik</div>
-          </div>
-        </div>
+      <div class="steps clean-steps">
+        <div class="step"><div class="step-no">01</div><div><div class="step-title">Analiz</div><div class="step-sub">Hedef ve ihtiyaç değerlendirmesi</div></div></div>
+        <div class="step"><div class="step-no">02</div><div><div class="step-title">Plan</div><div class="step-sub">Kişiye özel beslenme sistemi</div></div></div>
+        <div class="step"><div class="step-no">03</div><div><div class="step-title">Takip</div><div class="step-sub">Güncelleme ve sürdürülebilirlik</div></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="content-grid">
-  <article class="glass-card">
-    <h2>Kilo Kontrolü</h2>
+<section class="content-grid editorial-grid-clean">
+  {% for program in programs %}
+  <article class="glass-card content-card-clean">
+    <span class="card-no">{{ "%02d"|format(loop.index) }}</span>
+    <h2>{{ program.title }}</h2>
+    <p>{{ program.description }}</p>
 
-    <p>
-      Kalori kısıtlamasından çok; porsiyon kontrolü, protein-posa dengesi ve
-      alışkanlık yönetimi üzerine ilerlenir.
-    </p>
-
+    {% if program.bullet_list %}
     <ul class="bullets">
-      <li>Tabak modeli</li>
-      <li>Esnek ara öğün planlaması</li>
-      <li>Haftalık takip</li>
+      {% for bullet in program.bullet_list %}
+      <li>{{ bullet }}</li>
+      {% endfor %}
     </ul>
+    {% endif %}
 
     <a class="btn ghost" href="{{ url_for('public.iletisim') }}#randevu">
-      Başla
+      {{ program.button_text }}
     </a>
   </article>
-
-  <article class="glass-card">
-    <h2>Klinik Beslenme</h2>
-
-    <p>
-      Hastalıkla uyumlu tıbbi beslenme planlaması yapılır. Süreç doktor tanısı,
-      tetkikler ve kişinin yaşam düzeni dikkate alınarak planlanır.
-    </p>
-
-    <ul class="bullets">
-      <li>Diyabet / hipertansiyon</li>
-      <li>Gastrointestinal sorunlar</li>
-      <li>Karaciğer / böbrek hastalıkları</li>
-    </ul>
-
-    <a class="btn ghost" href="{{ url_for('public.iletisim') }}#randevu">
-      Randevu al
-    </a>
+  {% else %}
+  <article class="glass-card content-card-clean">
+    <h2>Henüz danışmanlık alanı eklenmedi.</h2>
+    <p>Admin panelden “Danışmanlık Alanları” bölümüne içerik ekleyebilirsin.</p>
   </article>
-
-  <article class="glass-card">
-    <h2>Kadın Sağlığı</h2>
-
-    <p>
-      PCOS, PMS, gebelik, emzirme ve menopoz gibi özel dönemlerde bireysel
-      ihtiyaçlara göre beslenme planı oluşturulur.
-    </p>
-
-    <ul class="bullets">
-      <li>Kan şekeri dengesi</li>
-      <li>Demir, B12 ve D vitamini takibi</li>
-      <li>Düzenli takip süreci</li>
-    </ul>
-
-    <a class="btn ghost" href="{{ url_for('public.iletisim') }}#randevu">
-      Bilgi al
-    </a>
-  </article>
-
-  <article class="glass-card">
-    <h2>Sporcu Beslenmesi</h2>
-
-    <p>
-      Performans, toparlanma ve kas kütlesi hedefleri doğrultusunda antrenman
-      düzenine uygun makro besin planlaması yapılır.
-    </p>
-
-    <ul class="bullets">
-      <li>Protein zamanlaması</li>
-      <li>Karbonhidrat periodizasyonu</li>
-      <li>Hidrasyon planı</li>
-    </ul>
-
-    <a class="btn ghost" href="{{ url_for('public.iletisim') }}#randevu">
-      Başvur
-    </a>
-  </article>
+  {% endfor %}
 </section>
 
 {% endblock %}
-```

@@ -33,6 +33,18 @@
   </div>
 
   <div class="dash-card">
+    <span class="dash-label">Danışmanlık Alanı</span>
+    <strong>{{ diet_program_count }}</strong>
+    <p>Diyet şekilleri sayfasındaki alanlar</p>
+  </div>
+
+  <div class="dash-card">
+    <span class="dash-label">Menü Örneği</span>
+    <strong>{{ menu_count }}</strong>
+    <p>Menüler sayfasındaki örnekler</p>
+  </div>
+
+  <div class="dash-card">
     <span class="dash-label">Toplam Randevu</span>
     <strong>{{ appointment_count }}</strong>
     <p>Gelen tüm randevu talepleri</p>
@@ -130,6 +142,18 @@
     <span>✍️</span>
     <strong>Yeni Blog Yazısı</strong>
     <p>Yeni içerik oluştur</p>
+  </a>
+
+  <a href="{{ url_for('admin.admin_program_add') }}" class="quick-action-card">
+    <span>🥗</span>
+    <strong>Danışmanlık Alanı</strong>
+    <p>Diyet şekilleri ekle</p>
+  </a>
+
+  <a href="{{ url_for('admin.admin_menu_add') }}" class="quick-action-card">
+    <span>🍽️</span>
+    <strong>Yeni Menü</strong>
+    <p>Menü örneği ekle</p>
   </a>
 
   <a href="{{ url_for('admin.admin_myth_add') }}" class="quick-action-card">

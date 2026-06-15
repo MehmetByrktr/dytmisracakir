@@ -15,12 +15,43 @@ class BlogPost(db.Model):
     seo_description = db.Column(db.String(300), nullable=True)
     seo_keywords = db.Column(db.String(300), nullable=True)
 
+
 class Myth(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), nullable=False)
     description = db.Column(db.Text, nullable=False)
     keywords = db.Column(db.String(250), nullable=False, default="beslenme")
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+class DietProgram(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(180), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    bullets = db.Column(db.Text, nullable=True)  # Her satır bir madde
+    button_text = db.Column(db.String(80), nullable=False, default="Randevu al")
+    order_no = db.Column(db.Integer, nullable=False, default=1)
+    is_active = db.Column(db.Boolean, nullable=False, default=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    @property
+    def bullet_list(self):
+        return [b.strip() for b in (self.bullets or "").splitlines() if b.strip()]
+
+
+class MenuExample(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(180), nullable=False)
+    category = db.Column(db.String(100), nullable=True)
+    meals = db.Column(db.Text, nullable=False)  # Her satır: Öğün: Açıklama
+    button_text = db.Column(db.String(80), nullable=False, default="Randevu al")
+    order_no = db.Column(db.Integer, nullable=False, default=1)
+    is_active = db.Column(db.Boolean, nullable=False, default=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    @property
+    def meal_list(self):
+        return [m.strip() for m in (self.meals or "").splitlines() if m.strip()]
 
 
 class Appointment(db.Model):

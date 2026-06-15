@@ -2,135 +2,64 @@
 
 {% block title %}Menüler | Diyetisyen Mısra Çakır{% endblock %}
 {% block meta_description %}Kişiye özel beslenme planlarına örnek olabilecek pratik ve dengeli menü fikirleri.{% endblock %}
+
 {% block content %}
 
-<section class="page-hero">
-  <div class="page-hero-inner">
+<section class="page-hero compact-hero">
+  <div class="page-hero-inner balanced-hero">
     <div>
       <p class="kicker">Menüler</p>
-
       <h1 class="page-title">Pratik örnekler</h1>
-
       <p class="page-desc">
-        Buradaki menüler örnek niteliğindedir. Danışanlarda beslenme planları
-        kişinin sağlık durumu, hedefi ve günlük rutinine göre özel olarak hazırlanır.
+        Buradaki menüler örnek niteliğindedir. Admin panelden yeni menü ekleyebilir,
+        mevcut menüleri düzenleyebilir veya pasifleştirebilirsin.
       </p>
     </div>
 
-    <div class="glass-card">
+    <div class="glass-card menu-category-card">
       <h2>Menü Kategorileri</h2>
-
       <div class="tag-row">
-        <span class="tag">Kilo kontrolü</span>
-        <span class="tag">Yüksek protein</span>
-        <span class="tag">Vejetaryen</span>
-        <span class="tag">Düşük GI</span>
-        <span class="tag">Glutensiz</span>
+        {% for c in categories %}
+          <span class="tag">{{ c }}</span>
+        {% else %}
+          <span class="tag">Kilo kontrolü</span>
+          <span class="tag">Yüksek protein</span>
+        {% endfor %}
       </div>
-
-      <p style="margin-top:10px;color:var(--muted);font-size:12px;">
-        Bu menüler genel örnektir; kişiye özel plan için randevu oluşturabilirsin.
-      </p>
+      <p class="hint">Kategoriler admin paneldeki menü kayıtlarından otomatik gelir.</p>
     </div>
   </div>
 </section>
 
-<section class="menu-grid">
-  <article class="glass-card">
-    <h2>1 Günlük Örnek Menü</h2>
+<section class="menu-grid editorial-grid-clean">
+  {% for menu in menus %}
+  <article class="glass-card menu-card-clean">
+    <span class="card-no">{{ "%02d"|format(loop.index) }}</span>
+    <h2>{{ menu.title }}</h2>
+    {% if menu.category %}<p class="menu-category-label">{{ menu.category }}</p>{% endif %}
 
     <div class="menu-block">
+      {% for meal in menu.meal_list %}
       <div class="menu-row">
-        <strong>Kahvaltı:</strong> Yumurta + tam tahıllı ekmek + yeşillik
+        {% if ':' in meal %}
+          <strong>{{ meal.split(':', 1)[0] }}:</strong>{{ meal.split(':', 1)[1] }}
+        {% else %}
+          {{ meal }}
+        {% endif %}
       </div>
-
-      <div class="menu-row">
-        <strong>Ara Öğün:</strong> Yoğurt + meyve
-      </div>
-
-      <div class="menu-row">
-        <strong>Öğle:</strong> Tavuk / kurubaklagil + salata
-      </div>
-
-      <div class="menu-row">
-        <strong>Ara Öğün:</strong> Kuruyemiş
-      </div>
-
-      <div class="menu-row">
-        <strong>Akşam:</strong> Sebze yemeği + yoğurt
-      </div>
+      {% endfor %}
     </div>
 
     <a class="btn ghost" href="{{ url_for('public.iletisim') }}#randevu">
-      Buna benzer plan iste
+      {{ menu.button_text }}
     </a>
   </article>
-
-  <article class="glass-card">
-    <h2>Yüksek Protein Menü</h2>
-
-    <div class="menu-block">
-      <div class="menu-row">
-        <strong>Kahvaltı:</strong> Omlet + lor peyniri + yeşillik
-      </div>
-
-      <div class="menu-row">
-        <strong>Öğle:</strong> Et / tavuk / balık + salata
-      </div>
-
-      <div class="menu-row">
-        <strong>Akşam:</strong> Kurubaklagil + yoğurt
-      </div>
-    </div>
-
-    <a class="btn ghost" href="{{ url_for('public.iletisim') }}#randevu">
-      Randevu al
-    </a>
+  {% else %}
+  <article class="glass-card menu-card-clean">
+    <h2>Henüz menü eklenmedi.</h2>
+    <p>Admin panelden “Menüler” bölümüne yeni örnek menüler ekleyebilirsin.</p>
   </article>
-
-  <article class="glass-card">
-    <h2>Vejetaryen Menü</h2>
-
-    <div class="menu-block">
-      <div class="menu-row">
-        <strong>Kahvaltı:</strong> Yulaf + süt / yoğurt + meyve
-      </div>
-
-      <div class="menu-row">
-        <strong>Öğle:</strong> Nohut + bulgur + salata
-      </div>
-
-      <div class="menu-row">
-        <strong>Akşam:</strong> Mercimek yemeği + zeytinyağlı sebze
-      </div>
-    </div>
-
-    <a class="btn ghost" href="{{ url_for('public.iletisim') }}#randevu">
-      Bilgi al
-    </a>
-  </article>
-
-  <article class="glass-card">
-    <h2>Düşük GI Menü</h2>
-
-    <div class="menu-block">
-      <div class="menu-row">
-        <strong>Kahvaltı:</strong> Tam tahıllı ekmek + protein kaynağı
-      </div>
-
-      <div class="menu-row">
-        <strong>Öğle:</strong> Protein + posa içeriği yüksek sebze / salata
-      </div>
-
-      <div class="menu-row">
-        <strong>Akşam:</strong> Sebze yemeği + yoğurt
-      </div>
-    </div>
-
-    <a class="btn ghost" href="{{ url_for('public.iletisim') }}#randevu">
-      Danış
-    </a>
-  </article>
+  {% endfor %}
 </section>
 
 {% endblock %}

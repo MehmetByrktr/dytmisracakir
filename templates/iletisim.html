@@ -23,7 +23,7 @@
 
           <a
             class="btn ghost"
-            target="_blank"
+            target="_blank" rel="noopener noreferrer"
             href="{{ settings.instagram_url if settings and settings.instagram_url else '#' }}"
           >
             Git
@@ -36,7 +36,7 @@
 
           <a
             class="btn ghost"
-            target="_blank"
+            target="_blank" rel="noopener noreferrer"
             href="{{ settings.whatsapp_url if settings and settings.whatsapp_url else '#' }}"
           >
             Yaz
@@ -67,6 +67,7 @@
         <h2 id="randevu">Randevu Talebi</h2>
 
         <form class="form" method="post" action="{{ url_for('public.iletisim') }}#randevu">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
           <input
             type="text"
             name="website"

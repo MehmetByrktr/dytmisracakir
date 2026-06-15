@@ -1,0 +1,37 @@
+{% extends "admin/admin_base.html" %}
+{% block title %}Danışmanlık Alanları{% endblock %}
+{% block content %}
+<section class="admin-page-head">
+  <div>
+    <p class="admin-kicker">Admin Panel</p>
+    <h2 class="admin-title">Danışmanlık Alanları</h2>
+    <p class="admin-subtitle">Diyet şekilleri / danışmanlık alanlarını buradan yönet.</p>
+  </div>
+  <div class="admin-head-actions">
+    <a class="btn" href="{{ url_for('admin.admin_program_add') }}">+ Yeni Alan Ekle</a>
+  </div>
+</section>
+<section class="admin-table-card">
+  {% if programs %}
+  <div class="admin-table-wrap"><table class="admin-table">
+    <thead><tr><th>Sıra</th><th>Başlık</th><th>Açıklama</th><th>Durum</th><th>İşlemler</th></tr></thead>
+    <tbody>
+      {% for p in programs %}
+      <tr>
+        <td>{{ p.order_no }}</td>
+        <td><strong>{{ p.title }}</strong><p class="admin-row-sub">{{ p.button_text }}</p></td>
+        <td><p class="admin-row-sub">{{ p.description }}</p></td>
+        <td><span class="badge">{{ 'Aktif' if p.is_active else 'Pasif' }}</span></td>
+        <td><div class="admin-row-actions">
+          <a class="btn ghost" href="{{ url_for('admin.admin_program_edit', program_id=p.id) }}">Düzenle</a>
+          <form method="post" action="{{ url_for('admin.admin_program_delete', program_id=p.id) }}" class="inline-delete-form"><input type="hidden" name="_csrf_token" value="{{ csrf_token() }}"><button class="btn danger" type="submit" data-confirm-delete="Bu alanı silmek istediğine emin misin?">Sil</button></form>
+        </div></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table></div>
+  {% else %}
+  <div class="empty-state"><h3>Henüz alan yok.</h3><p>Yeni danışmanlık alanı ekleyebilirsin.</p></div>
+  {% endif %}
+</section>
+{% endblock %}

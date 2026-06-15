@@ -4,3 +4,5 @@ __pycache__/
 instance/
 site.db
 .vscode/
+.DS_Store
+*.log

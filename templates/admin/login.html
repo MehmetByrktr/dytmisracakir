@@ -1,39 +1,41 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Admin Giriş</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta name="robots" content="noindex, nofollow">
 </head>
-<body>
-  <main class="page">
-    <section class="page-hero">
-      <div class="page-hero-inner">
-        <div class="glass-card" style="max-width:480px; margin:60px auto;">
-          <h1 class="page-title" style="font-size:32px;">Admin Giriş</h1>
+<body class="admin-login-body">
+  <main class="admin-login-shell">
+    <section class="admin-login-card reveal-up">
+      <p class="editorial-brand">Diyetisyen Mısra Çakır</p>
+      <h1>Admin Giriş</h1>
+      <p>İçerikleri, randevuları ve site ayarlarını yönetmek için giriş yap.</p>
 
-          {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-              {% for category, message in messages %}
-                <p class="{% if category == 'error' %}error-msg{% else %}success-msg{% endif %}">
-                  {{ message }}
-                </p>
-              {% endfor %}
-            {% endif %}
-          {% endwith %}
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-wrapper admin-flash-wrapper">
+            {% for category, message in messages %}
+              <div class="flash-message {{ category }}">
+                <span>{{ message }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
 
-          <form method="post" class="form" style="margin-top:20px;">
-            <label>Kullanıcı Adı</label>
-            <input type="text" name="username" required>
+      <form method="post" class="form admin-login-form">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+        <label>Kullanıcı Adı</label>
+        <input type="text" name="username" autocomplete="username" required>
 
-            <label>Şifre</label>
-            <input type="password" name="password" required>
+        <label>Şifre</label>
+        <input type="password" name="password" autocomplete="current-password" required>
 
-            <button class="btn" type="submit">Giriş Yap</button>
-          </form>
-        </div>
-      </div>
+        <button class="btn" type="submit">Giriş Yap</button>
+      </form>
     </section>
   </main>
 </body>

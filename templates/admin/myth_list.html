@@ -28,7 +28,7 @@
     >
 
     <button class="btn" type="submit">Ara</button>
-    <a class="btn ghost" href="{{ url_for('admin.admin_myths') }}">Temizle</a>
+    <button class="btn ghost" type="button" onclick="window.location.href='{{ url_for('admin.admin_myths') }}'">Temizle</button>
   </form>
 </section>
 
@@ -74,13 +74,16 @@
                 Düzenle
               </a>
 
-              <a
-                class="btn danger"
-                href="{{ url_for('admin.admin_myth_delete', myth_id=m.id) }}"
-                data-confirm-delete="Bu doğru/yanlış bilgisini silmek istediğine emin misin?"
-              >
-                Sil
-              </a>
+              <form method="post" action="{{ url_for('admin.admin_myth_delete', myth_id=m.id) }}" class="inline-delete-form">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                <button
+                  class="btn danger"
+                  type="submit"
+                  data-confirm-delete="Bu doğru/yanlış bilgisini silmek istediğine emin misin?"
+                >
+                  Sil
+                </button>
+              </form>
             </div>
           </td>
         </tr>
@@ -93,7 +96,7 @@
   <div class="empty-state">
     <h3>Sonuç bulunamadı.</h3>
     <p>Arama kelimesini değiştirerek tekrar deneyebilirsin.</p>
-    <a class="btn ghost" href="{{ url_for('admin.admin_myths') }}">Aramayı Temizle</a>
+    <button class="btn ghost" type="button" onclick="window.location.href='{{ url_for('admin.admin_myths') }}'">Aramayı Temizle</button>
   </div>
   {% endif %}
 </section>
