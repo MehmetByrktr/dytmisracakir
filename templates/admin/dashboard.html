@@ -1,0 +1,239 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<section class="admin-page-head">
+  <div>
+    <p class="admin-kicker">Admin Panel</p>
+    <h2 class="admin-title">Dashboard</h2>
+    <p class="admin-subtitle">
+      Site içeriklerini, randevu taleplerini ve son hareketleri buradan takip edebilirsin.
+    </p>
+  </div>
+
+  <div class="admin-head-actions">
+    <a class="btn" href="{{ url_for('admin.admin_blog_add') }}">+ Blog Ekle</a>
+    <a class="btn ghost" href="{{ url_for('admin.admin_settings') }}">Site Ayarları</a>
+  </div>
+</section>
+
+<section class="dashboard-grid">
+  <div class="dash-card">
+    <span class="dash-label">Blog Yazısı</span>
+    <strong>{{ blog_count }}</strong>
+    <p>Toplam yayınlanan blog içeriği</p>
+  </div>
+
+  <div class="dash-card">
+    <span class="dash-label">Doğru/Yanlış</span>
+    <strong>{{ myth_count }}</strong>
+    <p>Bilgi kartı sayısı</p>
+  </div>
+
+  <div class="dash-card">
+    <span class="dash-label">Danışmanlık Alanı</span>
+    <strong>{{ diet_program_count }}</strong>
+    <p>Diyet şekilleri sayfasındaki alanlar</p>
+  </div>
+
+  <div class="dash-card">
+    <span class="dash-label">Menü Örneği</span>
+    <strong>{{ menu_count }}</strong>
+    <p>Menüler sayfasındaki örnekler</p>
+  </div>
+
+  <div class="dash-card">
+    <span class="dash-label">Toplam Randevu</span>
+    <strong>{{ appointment_count }}</strong>
+    <p>Gelen tüm randevu talepleri</p>
+  </div>
+
+  <div class="dash-card important">
+    <span class="dash-label">Yeni Randevu</span>
+    <strong>{{ new_appointments }}</strong>
+    <p>Henüz işlem yapılmamış talepler</p>
+  </div>
+
+  <div class="dash-card">
+    <span class="dash-label">Onaylandı</span>
+    <strong>{{ approved_appointments }}</strong>
+    <p>Onaylanan randevular</p>
+  </div>
+
+  <div class="dash-card">
+    <span class="dash-label">İptal</span>
+    <strong>{{ cancelled_appointments }}</strong>
+    <p>İptal edilen talepler</p>
+  </div>
+</section>
+
+<section class="dashboard-charts">
+  <div class="admin-table-card chart-card">
+    <div class="dashboard-section-head">
+      <div>
+        <h3>İçerik Dağılımı</h3>
+        <p>Yayındaki yönetilebilir içeriklerin genel görünümü</p>
+      </div>
+    </div>
+
+    <div class="mini-bar-chart">
+      <div class="bar-row">
+        <span>Blog</span>
+        <div class="bar-track"><div class="bar-fill" style="width: {{ ((blog_count / max_content_count) * 100) if max_content_count else 0 }}%"></div></div>
+        <strong>{{ blog_count }}</strong>
+      </div>
+      <div class="bar-row">
+        <span>Doğru/Yanlış</span>
+        <div class="bar-track"><div class="bar-fill" style="width: {{ ((myth_count / max_content_count) * 100) if max_content_count else 0 }}%"></div></div>
+        <strong>{{ myth_count }}</strong>
+      </div>
+      <div class="bar-row">
+        <span>Danışmanlık</span>
+        <div class="bar-track"><div class="bar-fill" style="width: {{ ((diet_program_count / max_content_count) * 100) if max_content_count else 0 }}%"></div></div>
+        <strong>{{ diet_program_count }}</strong>
+      </div>
+      <div class="bar-row">
+        <span>Menüler</span>
+        <div class="bar-track"><div class="bar-fill" style="width: {{ ((menu_count / max_content_count) * 100) if max_content_count else 0 }}%"></div></div>
+        <strong>{{ menu_count }}</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-table-card chart-card">
+    <div class="dashboard-section-head">
+      <div>
+        <h3>Randevu Durumları</h3>
+        <p>Yeni, onaylanan ve iptal edilen talepler</p>
+      </div>
+    </div>
+
+    <div class="mini-bar-chart appointment-chart">
+      <div class="bar-row">
+        <span>Yeni</span>
+        <div class="bar-track"><div class="bar-fill warn" style="width: {{ ((new_appointments / max_appointment_count) * 100) if max_appointment_count else 0 }}%"></div></div>
+        <strong>{{ new_appointments }}</strong>
+      </div>
+      <div class="bar-row">
+        <span>Onaylandı</span>
+        <div class="bar-track"><div class="bar-fill ok" style="width: {{ ((approved_appointments / max_appointment_count) * 100) if max_appointment_count else 0 }}%"></div></div>
+        <strong>{{ approved_appointments }}</strong>
+      </div>
+      <div class="bar-row">
+        <span>İptal</span>
+        <div class="bar-track"><div class="bar-fill danger" style="width: {{ ((cancelled_appointments / max_appointment_count) * 100) if max_appointment_count else 0 }}%"></div></div>
+        <strong>{{ cancelled_appointments }}</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dashboard-two-col">
+
+  <div class="admin-table-card">
+    <div class="dashboard-section-head">
+      <div>
+        <h3>Son Randevu Talepleri</h3>
+        <p>En son gelen 5 randevu talebi</p>
+      </div>
+
+      <a class="btn ghost" href="{{ url_for('admin.admin_appointments') }}">Tümünü Gör</a>
+    </div>
+
+    {% if recent_appointments %}
+      <div class="mini-list">
+        {% for a in recent_appointments %}
+        <div class="mini-list-item">
+          <div>
+            <strong>{{ a.full_name }}</strong>
+            <p>{{ a.phone }} • {{ a.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+          </div>
+
+          <span class="status-pill status-{{ a.status|lower|replace('ı','i')|replace('ü','u')|replace('ö','o') }}">
+            {{ a.status }}
+          </span>
+        </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state small">
+        <p>Henüz randevu talebi yok.</p>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="admin-table-card">
+    <div class="dashboard-section-head">
+      <div>
+        <h3>Son Blog Yazıları</h3>
+        <p>En son eklenen 5 blog içeriği</p>
+      </div>
+
+      <a class="btn ghost" href="{{ url_for('admin.admin_blog') }}">Tümünü Gör</a>
+    </div>
+
+    {% if recent_posts %}
+      <div class="mini-list">
+        {% for p in recent_posts %}
+        <div class="mini-list-item">
+          <div>
+            <strong>{{ p.title }}</strong>
+            <p>{{ p.category }} • {{ p.created_at.strftime('%Y-%m-%d') }}</p>
+          </div>
+
+          <a class="btn ghost" href="{{ url_for('admin.admin_blog_edit', post_id=p.id) }}">
+            Düzenle
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state small">
+        <p>Henüz blog yazısı yok.</p>
+      </div>
+    {% endif %}
+  </div>
+
+</section>
+
+<section class="quick-actions">
+  <a href="{{ url_for('admin.admin_blog_add') }}" class="quick-action-card">
+    <span>✍️</span>
+    <strong>Yeni Blog Yazısı</strong>
+    <p>Yeni içerik oluştur</p>
+  </a>
+
+  <a href="{{ url_for('admin.admin_program_add') }}" class="quick-action-card">
+    <span>🥗</span>
+    <strong>Danışmanlık Alanı</strong>
+    <p>Diyet şekilleri ekle</p>
+  </a>
+
+  <a href="{{ url_for('admin.admin_menu_add') }}" class="quick-action-card">
+    <span>🍽️</span>
+    <strong>Yeni Menü</strong>
+    <p>Menü örneği ekle</p>
+  </a>
+
+  <a href="{{ url_for('admin.admin_myth_add') }}" class="quick-action-card">
+    <span>💡</span>
+    <strong>Yeni Bilgi Kartı</strong>
+    <p>Doğru bilinen yanlış ekle</p>
+  </a>
+
+  <a href="{{ url_for('admin.admin_appointments') }}" class="quick-action-card">
+    <span>📅</span>
+    <strong>Randevular</strong>
+    <p>Talepleri kontrol et</p>
+  </a>
+
+  <a href="{{ url_for('admin.admin_settings') }}" class="quick-action-card">
+    <span>⚙️</span>
+    <strong>Site Ayarları</strong>
+    <p>Ana sayfa ve iletişim bilgileri</p>
+  </a>
+</section>
+
+{% endblock %}

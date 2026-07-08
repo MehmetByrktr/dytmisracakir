@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+
+{% block title %}Ana Sayfa | Diyetisyen Mısra Çakır{% endblock %}
+{% block meta_description %}Diyetisyen Mısra Çakır ile bilimsel, sürdürülebilir ve kişiye özel beslenme danışmanlığı; danışmanlık alanları, süreç ve güncel blog içerikleri.{% endblock %}
+
+{% block content %}
+
+<section class="hero editorial-hero refined-hero home-hero">
+  <div class="editorial-hero-inner refined-hero-inner home-hero-inner">
+    <div class="editorial-visual home-visual reveal-up">
+      <p class="editorial-brand">Diyetisyen Mısra Çakır</p>
+
+      <div class="editorial-photo refined-photo home-photo">
+        <img src="{{ media_url(settings.hero_image) }}" alt="Mısra Çakır">
+
+        <div class="editorial-caption photo-caption">
+          <span>01 / Bilimsel yaklaşım</span>
+          <span>02 / Kişiye özel takip</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="refined-copy home-copy reveal-up delay-1">
+      <p class="kicker">Beslenme danışmanlığı</p>
+
+      <h1 class="hero-title editorial-title refined-title home-title">
+        {{ settings.hero_title | safe }}
+      </h1>
+
+      <p class="hero-desc editorial-desc refined-desc home-desc">
+        {{ settings.hero_description }}
+      </p>
+
+      <div class="refined-note home-note">
+        <p>
+          Kısa süreli listeler yerine; sağlık geçmişine, günlük rutinine ve hedeflerine
+          uyum sağlayan sürdürülebilir bir beslenme sistemi oluşturulmaktadır.
+        </p>
+      </div>
+
+      <div class="refined-stats home-steps-mini">
+        <div>
+          <strong>01</strong>
+          <span>İlk değerlendirme</span>
+        </div>
+
+        <div>
+          <strong>02</strong>
+          <span>Kişiye özel plan</span>
+        </div>
+
+        <div>
+          <strong>03</strong>
+          <span>Düzenli takip</span>
+        </div>
+      </div>
+
+      <div class="hero-actions refined-actions home-actions">
+        <a class="btn" href="{{ url_for('public.iletisim') }}#randevu">Randevu Talebi Oluştur</a>
+        <a class="btn ghost" href="{{ url_for('public.hakkimda') }}">Yaklaşımı İncele</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="editorial-band reveal-up">
+  <div class="band-number">01</div>
+  <div>
+    <p class="kicker">Danışmanlık alanları</p>
+    <h2 class="section-title">Hedefine göre sade, uygulanabilir ve takip edilebilir bir süreç.</h2>
+  </div>
+</section>
+
+<section class="programs editorial-programs reveal-up">
+  <div class="program-grid">
+    <article class="p-card editorial-card">
+      <img src="{{ url_for('static', filename='images/card-1.jpg') }}" alt="Kilo kontrolü">
+      <div class="p-body">
+        <span class="card-no">01</span>
+        <h3>Kilo kontrolü</h3>
+        <p>Günlük rutine uygun, sürdürülebilir beslenme adımları.</p>
+        <a class="btn ghost" href="{{ url_for('public.diyet_sekilleri') }}">İncele</a>
+      </div>
+    </article>
+
+    <article class="p-card editorial-card">
+      <img src="{{ url_for('static', filename='images/card-2.jpg') }}" alt="Klinik beslenme">
+      <div class="p-body">
+        <span class="card-no">02</span>
+        <h3>Klinik beslenme</h3>
+        <p>Sağlık durumu, tetkikler ve hedeflere göre planlanan takip.</p>
+        <a class="btn ghost" href="{{ url_for('public.diyet_sekilleri') }}">İncele</a>
+      </div>
+    </article>
+
+    <article class="p-card editorial-card">
+      <img src="{{ url_for('static', filename='images/card-3.jpg') }}" alt="Kadın sağlığı">
+      <div class="p-body">
+        <span class="card-no">03</span>
+        <h3>Kadın sağlığı</h3>
+        <p>Özel dönemler, hormonal denge ve yaşam rutiniyle uyumlu plan.</p>
+        <a class="btn ghost" href="{{ url_for('public.diyet_sekilleri') }}">İncele</a>
+      </div>
+    </article>
+
+    <article class="p-card editorial-card">
+      <img src="{{ url_for('static', filename='images/card-4.jpg') }}" alt="Menü planlama">
+      <div class="p-body">
+        <span class="card-no">04</span>
+        <h3>Menü planlama</h3>
+        <p>Pratik, sade ve kişiye özel menü planlama yaklaşımı.</p>
+        <a class="btn ghost" href="{{ url_for('public.menuler') }}">İncele</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="process-section editorial-process reveal-up">
+  <div class="process-card">
+    <span class="band-number">02</span>
+    <p class="kicker">Süreç</p>
+    <h2 class="section-title">Nasıl çalışıyoruz?</h2>
+    <p class="section-sub">
+      İlk görüşmeden takibe kadar süreç, kişinin yaşam düzenine uyum sağlayacak şekilde ilerletilir.
+    </p>
+  </div>
+
+  <div class="process-grid">
+    <div class="process-item">
+      <span>01</span>
+      <h3>İlk görüşme</h3>
+      <p>Hedef, sağlık geçmişi, günlük rutin ve beslenme alışkanlıkları değerlendirilir.</p>
+    </div>
+
+    <div class="process-item">
+      <span>02</span>
+      <h3>Kişiye özel plan</h3>
+      <p>Uygulanabilir ve sürdürülebilir beslenme sistemi kişiye özel hazırlanır.</p>
+    </div>
+
+    <div class="process-item">
+      <span>03</span>
+      <h3>Takip ve güncelleme</h3>
+      <p>Geri bildirimlere göre plan güncellenir ve süreç hedefe göre şekillendirilir.</p>
+    </div>
+  </div>
+</section>
+
+<section class="trust-section reveal-up">
+  <div class="trust-copy">
+    <p class="kicker">Yaklaşım</p>
+    <h2 class="section-title">Daha az karmaşa, daha net bir beslenme düzeni.</h2>
+  </div>
+
+  <div class="trust-grid">
+    <article class="trust-card">
+      <span>01</span>
+      <h3>Kanıt temelli</h3>
+      <p>Popüler listeler yerine bilimsel ve uygulanabilir yöntemler önceliklendirilir.</p>
+    </article>
+
+    <article class="trust-card">
+      <span>02</span>
+      <h3>Esnek takip</h3>
+      <p>Plan, günlük yaşam düzenine göre şekillenir ve gerektiğinde güncellenir.</p>
+    </article>
+
+    <article class="trust-card">
+      <span>03</span>
+      <h3>Sürdürülebilirlik</h3>
+      <p>Hedef, kısa süreli kısıtlamalar değil uzun vadeli alışkanlık kazanımıdır.</p>
+    </article>
+  </div>
+</section>
+
+<section class="posts editorial-posts reveal-up" id="dogru-yanlis">
+  <div class="posts-head">
+    <div>
+      <span class="band-number">03</span>
+      <p class="kicker">Blog</p>
+      <h2 class="section-title">Son paylaşılan yazılar</h2>
+    </div>
+
+    <a class="btn ghost" href="{{ url_for('public.blog') }}">Tümünü gör</a>
+  </div>
+
+  <div class="posts-grid">
+    {% for p in posts %}
+    <article class="post-card editorial-post-card">
+      <div class="post-media">
+        <img src="{{ media_url(p.image) }}" alt="{{ p.title }}">
+      </div>
+
+      <div class="post-body">
+        <div class="post-date">{{ p.created_at.strftime('%Y-%m-%d') }}</div>
+        <h3 class="post-title">{{ p.title }}</h3>
+        <p class="post-excerpt">{{ p.excerpt }}</p>
+        <a class="btn ghost" href="{{ url_for('public.blog_detail', slug=p.slug) }}">
+          Devamını oku
+        </a>
+      </div>
+    </article>
+    {% else %}
+    <article class="glass-card">
+      <h3>Henüz blog yazısı eklenmedi.</h3>
+      <p>Yeni yazılar eklendiğinde burada görünecek.</p>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="home-faq reveal-up">
+  <div>
+    <p class="kicker">Sık sorulanlar</p>
+    <h2 class="section-title">Başlamadan önce merak edilenler</h2>
+  </div>
+
+  <div class="faq-list-clean">
+    <details>
+      <summary>İlk görüşmede neler değerlendirilir?</summary>
+      <p>Hedefler, sağlık geçmişi, beslenme alışkanlıkları, günlük rutin ve uygulanabilirlik birlikte değerlendirilir.</p>
+    </details>
+
+    <details>
+      <summary>Planlar kişiye özel mi hazırlanır?</summary>
+      <p>Evet. Planlar kişinin hedefi, yaşam düzeni, sağlık durumu ve beslenme alışkanlıklarına göre hazırlanır.</p>
+    </details>
+
+    <details>
+      <summary>Online danışmanlık mümkün mü?</summary>
+      <p>Evet. Randevu formundan online görüşme talebi oluşturulabilir.</p>
+    </details>
+  </div>
+</section>
+
+<section class="home-cta reveal-up">
+  <p class="kicker">Randevu</p>
+  <h2 class="section-title">Beslenme düzenini daha sade ve sürdürülebilir hale getirelim.</h2>
+  <a class="btn" href="{{ url_for('public.iletisim') }}#randevu">Randevu Talebi Oluştur</a>
+</section>
+
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Blog Yönetimi{% endblock %}
+
+{% block content %}
+
+<section class="admin-page-head">
+  <div>
+    <p class="admin-kicker">Admin Panel</p>
+    <h2 class="admin-title">Blog Yazıları</h2>
+    <p class="admin-subtitle">
+      Blog yazılarını görüntüle, filtrele, düzenle veya sil.
+    </p>
+  </div>
+
+  <div class="admin-head-actions">
+    <a class="btn" href="{{ url_for('admin.admin_blog_add') }}">+ Yeni Blog Ekle</a>
+  </div>
+</section>
+
+<section class="admin-filter-card">
+  <form method="get" action="{{ url_for('admin.admin_blog') }}" class="admin-filter-form">
+    <input
+      type="text"
+      name="search"
+      value="{{ search }}"
+      placeholder="Başlık, açıklama veya içerikte ara..."
+    >
+
+    <select name="category">
+      <option value="">Tüm kategoriler</option>
+      {% for c in categories %}
+      <option value="{{ c }}" {% if selected_category == c %}selected{% endif %}>
+        {{ c }}
+      </option>
+      {% endfor %}
+    </select>
+
+    <button class="btn" type="submit">Filtrele</button>
+    <button class="btn ghost" type="button" onclick="window.location.href='{{ url_for('admin.admin_blog') }}'">Temizle</button>
+  </form>
+</section>
+
+<section class="admin-table-card">
+  {% if posts %}
+  <div class="admin-table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Görsel</th>
+          <th>Başlık</th>
+          <th>Kategori</th>
+          <th>Tarih</th>
+          <th>İşlemler</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for p in posts %}
+        <tr>
+          <td>
+            <img
+              class="admin-thumb"
+              src="{{ media_url(p.image) }}"
+              alt="{{ p.title }}"
+            >
+          </td>
+
+          <td>
+            <strong>{{ p.title }}</strong>
+            <p class="admin-row-sub">{{ p.excerpt }}</p>
+          </td>
+
+          <td>
+            <span class="badge">{{ p.category }}</span>
+          </td>
+
+          <td>
+            {{ p.created_at.strftime('%Y-%m-%d') }}
+          </td>
+
+          <td>
+            <div class="admin-row-actions">
+              <a
+                class="btn ghost"
+                target="_blank" rel="noopener noreferrer"
+                href="{{ url_for('public.blog_detail', slug=p.slug) }}"
+              >
+                Gör
+              </a>
+
+              <a
+                class="btn ghost"
+                href="{{ url_for('admin.admin_blog_edit', post_id=p.id) }}"
+              >
+                Düzenle
+              </a>
+
+              <form method="post" action="{{ url_for('admin.admin_blog_delete', post_id=p.id) }}" class="inline-delete-form">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                <button
+                  class="btn danger"
+                  type="submit"
+                  data-confirm-delete="Bu blog yazısını silmek istediğine emin misin?"
+                >
+                  Sil
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% else %}
+  <div class="empty-state">
+    <h3>Blog yazısı bulunamadı.</h3>
+    <p>Arama veya kategori filtresini değiştirerek tekrar deneyebilirsin.</p>
+    <button class="btn ghost" type="button" onclick="window.location.href='{{ url_for('admin.admin_blog') }}'">Filtreleri Temizle</button>
+  </div>
+  {% endif %}
+</section>
+
+{% endblock %}

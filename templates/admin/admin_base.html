@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% block title %}Admin Panel{% endblock %}</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta name="robots" content="noindex, nofollow">
+{% block extra_head %}{% endblock %}
+</head>
+
+<body class="admin-body admin-layout-body">
+
+<div class="admin-shell">
+  <aside class="admin-sidebar" aria-label="Admin menü">
+    <div class="admin-brand-row">
+      <a class="admin-brand" href="{{ url_for('admin.admin_dashboard') }}">
+        <img class="admin-brand-icon" src="{{ media_url(settings.site_icon if settings and settings.site_icon else 'misra-icon.png') }}" alt="">
+        <span>
+          <strong>Mısra</strong>
+          <em>Admin Panel</em>
+        </span>
+      </a>
+    </div>
+
+    <nav class="admin-sidebar-nav">
+      <a class="{% if request.endpoint == 'admin.admin_dashboard' %}active{% endif %}" href="{{ url_for('admin.admin_dashboard') }}">
+        <span class="admin-nav-icon">⌂</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a class="{% if request.endpoint in ['admin.admin_blog','admin.admin_blog_add','admin.admin_blog_edit'] %}active{% endif %}" href="{{ url_for('admin.admin_blog') }}">
+        <span class="admin-nav-icon">✎</span>
+        <span>Blog</span>
+      </a>
+
+      <a class="{% if request.endpoint in ['admin.admin_programs','admin.admin_program_add','admin.admin_program_edit'] %}active{% endif %}" href="{{ url_for('admin.admin_programs') }}">
+        <span class="admin-nav-icon">◇</span>
+        <span>Danışmanlık</span>
+      </a>
+
+      <a class="{% if request.endpoint in ['admin.admin_menus','admin.admin_menu_add','admin.admin_menu_edit'] %}active{% endif %}" href="{{ url_for('admin.admin_menus') }}">
+        <span class="admin-nav-icon">☰</span>
+        <span>Menüler</span>
+      </a>
+
+      <a class="{% if request.endpoint in ['admin.admin_myths','admin.admin_myth_add','admin.admin_myth_edit'] %}active{% endif %}" href="{{ url_for('admin.admin_myths') }}">
+        <span class="admin-nav-icon">?</span>
+        <span>Mitler</span>
+      </a>
+
+      <a class="{% if request.endpoint == 'admin.admin_appointments' %}active{% endif %}" href="{{ url_for('admin.admin_appointments') }}">
+        <span class="admin-nav-icon">✉</span>
+        <span>Randevular</span>
+        {% if new_appointment_count and new_appointment_count > 0 %}
+          <span class="admin-badge">{{ new_appointment_count }}</span>
+        {% endif %}
+      </a>
+
+      <a class="{% if request.endpoint == 'admin.admin_settings' %}active{% endif %}" href="{{ url_for('admin.admin_settings') }}">
+        <span class="admin-nav-icon">⚙</span>
+        <span>Site Ayarları</span>
+      </a>
+    </nav>
+
+    <div class="admin-sidebar-footer">
+      <a class="admin-external-link" href="{{ url_for('public.home') }}" target="_blank" rel="noopener noreferrer">
+        <span class="admin-nav-icon">↗</span>
+        <span>Siteye Git</span>
+      </a>
+
+      <form method="post" action="{{ url_for('admin.admin_logout') }}" class="admin-logout-form">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+        <button type="submit">
+          <span class="admin-nav-icon">⎋</span>
+          <span>Çıkış</span>
+        </button>
+      </form>
+    </div>
+  </aside>
+
+  <main class="admin-content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-wrapper admin-flash-wrapper">
+          {% for category, message in messages %}
+            <div class="flash-message {{ category }}">
+              <span>{{ message }}</span>
+              <button type="button" class="flash-close">×</button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}
+    {% endblock %}
+  </main>
+</div>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+{% block extra_scripts %}{% endblock %}
+
+</body>
+</html>
