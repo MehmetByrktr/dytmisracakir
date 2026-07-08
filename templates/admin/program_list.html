@@ -14,11 +14,12 @@
 <section class="admin-table-card">
   {% if programs %}
   <div class="admin-table-wrap"><table class="admin-table">
-    <thead><tr><th>Sıra</th><th>Başlık</th><th>Açıklama</th><th>Durum</th><th>İşlemler</th></tr></thead>
+    <thead><tr><th>Sıra</th><th>Fotoğraf</th><th>Başlık</th><th>Açıklama</th><th>Durum</th><th>İşlemler</th></tr></thead>
     <tbody>
       {% for p in programs %}
       <tr>
         <td>{{ p.order_no }}</td>
+        <td>{% if p.image %}<img class="admin-thumb" src="{{ media_url(p.image) }}" alt="{{ p.title }}">{% endif %}</td>
         <td><strong>{{ p.title }}</strong><p class="admin-row-sub">{{ p.button_text }}</p></td>
         <td><p class="admin-row-sub">{{ p.description }}</p></td>
         <td><span class="badge">{{ 'Aktif' if p.is_active else 'Pasif' }}</span></td>

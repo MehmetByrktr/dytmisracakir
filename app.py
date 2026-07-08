@@ -16,6 +16,7 @@ def ensure_schema_upgrades():
 
     inspector = inspect(db.engine)
     table_names = inspector.get_table_names()
+    dialect = db.engine.dialect.name
 
     def _columns(table_name):
         return {column["name"] for column in inspector.get_columns(table_name)}
@@ -25,6 +26,11 @@ def ensure_schema_upgrades():
             with db.engine.begin() as connection:
                 connection.execute(text(f"ALTER TABLE {table_name} ADD COLUMN {ddl}"))
 
+    def _alter_varchar(table_name, column_name, size=500):
+        if dialect == "postgresql" and table_name in table_names and column_name in _columns(table_name):
+            with db.engine.begin() as connection:
+                connection.execute(text(f"ALTER TABLE {table_name} ALTER COLUMN {column_name} TYPE VARCHAR({size})"))
+
     if "blog_post" in table_names:
         _add_column("blog_post", "excerpt", "excerpt TEXT DEFAULT ''")
         _add_column("blog_post", "content", "content TEXT")
@@ -32,16 +38,25 @@ def ensure_schema_upgrades():
         _add_column("blog_post", "seo_title", "seo_title VARCHAR(250)")
         _add_column("blog_post", "seo_description", "seo_description VARCHAR(300)")
         _add_column("blog_post", "seo_keywords", "seo_keywords VARCHAR(300)")
+        _alter_varchar("blog_post", "image", 500)
 
         with db.engine.begin() as connection:
             connection.execute(text("UPDATE blog_post SET excerpt = COALESCE(NULLIF(excerpt, ''), title) WHERE excerpt IS NULL OR excerpt = ''"))
             connection.execute(text("UPDATE blog_post SET image = 'post-1.jpg' WHERE image IS NULL OR image = ''"))
+
+    if "diet_program" in table_names:
+        _add_column("diet_program", "image", "image VARCHAR(500) DEFAULT 'card-1.jpg'")
+        _alter_varchar("diet_program", "image", 500)
+        with db.engine.begin() as connection:
+            connection.execute(text("UPDATE diet_program SET image = 'card-1.jpg' WHERE image IS NULL OR image = ''"))
 
     if "site_settings" in table_names:
         _add_column("site_settings", "site_icon", "site_icon VARCHAR(500) DEFAULT 'misra-icon.png'")
         _add_column("site_settings", "counseling_kicker", "counseling_kicker VARCHAR(150) DEFAULT 'Danışmanlık alanları'")
         _add_column("site_settings", "counseling_title", "counseling_title VARCHAR(350) DEFAULT 'Hedefine göre sade, uygulanabilir ve takip edilebilir bir süreç.'")
         _add_column("site_settings", "counseling_description", "counseling_description TEXT DEFAULT 'Danışmanlık kartları admin paneldeki Danışmanlık Alanları bölümünden yönetilir.'")
+        _alter_varchar("site_settings", "hero_image", 500)
+        _alter_varchar("site_settings", "site_icon", 500)
 
         with db.engine.begin() as connection:
             connection.execute(text("UPDATE site_settings SET site_icon = 'misra-icon.png' WHERE site_icon IS NULL OR site_icon = ''"))

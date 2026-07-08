@@ -3701,3 +3701,114 @@ input::placeholder,textarea::placeholder{color:rgba(39,36,42,.42) !important;}
   border:1.5px solid rgba(82,107,91,.28) !important;
   background:#fff !important;
 }
+
+
+/* =========================================================
+   V13 — Hard fixes: blog filter no overflow, settings favicon visibility,
+   editable counseling images, remove homepage crowded sections
+   ========================================================= */
+
+/* Blog sayfası hero/filter taşmasını kesin çöz */
+.blog-filter-card{
+  width:100% !important;
+  max-width:100% !important;
+  overflow:hidden !important;
+  box-sizing:border-box !important;
+}
+
+.blog-filter-card .blog-filter-form{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap:14px !important;
+  align-items:center !important;
+  width:100% !important;
+  max-width:100% !important;
+}
+
+.blog-filter-card .blog-filter-form input{
+  flex:1 1 240px !important;
+  min-width:0 !important;
+}
+
+.blog-filter-card .blog-filter-form select{
+  flex:1 1 210px !important;
+  min-width:0 !important;
+}
+
+.blog-filter-card .blog-filter-form button,
+.blog-filter-card .blog-filter-form a.btn{
+  flex:0 0 auto !important;
+  min-width:118px !important;
+  max-width:170px !important;
+  white-space:nowrap !important;
+}
+
+@media(max-width:980px){
+  .page-hero-inner:has(.blog-filter-card){
+    grid-template-columns:1fr !important;
+  }
+
+  .blog-filter-card .blog-filter-form button,
+  .blog-filter-card .blog-filter-form a.btn{
+    flex:1 1 140px !important;
+    max-width:100% !important;
+  }
+}
+
+@media(max-width:620px){
+  .blog-filter-card .blog-filter-form{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+  }
+
+  .blog-filter-card .blog-filter-form input,
+  .blog-filter-card .blog-filter-form select,
+  .blog-filter-card .blog-filter-form button,
+  .blog-filter-card .blog-filter-form a.btn{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+  }
+}
+
+/* Admin danışmanlık görsel önizleme */
+.admin-thumb{
+  width:72px !important;
+  height:52px !important;
+  object-fit:cover !important;
+  border-radius:12px !important;
+  border:1.4px solid rgba(82,107,91,.24) !important;
+  box-shadow:0 10px 22px rgba(82,107,91,.10) !important;
+  display:block !important;
+}
+
+.admin-current-image{
+  margin:8px 0 12px !important;
+}
+
+.admin-current-image img{
+  width:180px !important;
+  height:110px !important;
+  object-fit:cover !important;
+  border-radius:16px !important;
+  border:1.5px solid rgba(82,107,91,.28) !important;
+  box-shadow:0 14px 32px rgba(82,107,91,.12) !important;
+}
+
+/* Site ayarları favicon alanı daha görünür */
+.site-icon-upload-box label{
+  font-size:15px !important;
+  font-weight:900 !important;
+  color:var(--admin-green,#526b5b) !important;
+}
+
+.site-icon-upload-box{
+  border-color:rgba(82,107,91,.38) !important;
+  background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(247,243,238,.88)) !important;
+}
+
+/* Ana sayfadan kaldırılan bölümlerin eski CSS etkisi kalırsa görünmesin */
+.home .process-section,
+.home .trust-section{
+  display:none !important;
+}

@@ -3,10 +3,17 @@
 {% block content %}
 <section class="admin-page-head"><div><p class="admin-kicker">Admin Panel</p><h2 class="admin-title">Alanı Düzenle</h2></div><a class="btn ghost" href="{{ url_for('admin.admin_programs') }}">← Listeye dön</a></section>
 <section class="admin-form-layout"><div class="admin-form-card">
-<form method="post" class="admin-form">
+<form method="post" class="admin-form" enctype="multipart/form-data">
   <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
   <div class="form-group full"><label>Başlık</label><input name="title" value="{{ program.title }}" required></div>
   <div class="form-group full"><label>Açıklama</label><textarea name="description" rows="4" required>{{ program.description }}</textarea></div>
+  <div class="form-group full">
+    <label>Kart Fotoğrafı</label>
+    {% if program.image %}
+    <div class="admin-current-image"><img src="{{ media_url(program.image) }}" alt="{{ program.title }}"></div>
+    {% endif %}
+    <input type="file" name="image" accept=".jpg,.jpeg,.png,.webp">
+  </div>
   <div class="form-group full"><label>Maddeler</label><textarea name="bullets" rows="5">{{ program.bullets or '' }}</textarea></div>
   <div class="form-group"><label>Buton Yazısı</label><input name="button_text" value="{{ program.button_text }}"></div>
   <div class="form-group"><label>Sıra</label><input type="number" name="order_no" value="{{ program.order_no }}"></div>

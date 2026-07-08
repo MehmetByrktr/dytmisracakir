@@ -429,9 +429,17 @@ def admin_program_add():
             flash("Başlık ve açıklama alanları zorunludur.", "error")
             return redirect(url_for("admin.admin_program_add"))
 
+        uploaded_program_image = None
+        try:
+            uploaded_program_image = save_image(request.files.get("image"))
+        except Exception:
+            current_app.logger.exception("Danışmanlık görseli yüklenirken hata oluştu.")
+            flash("Danışmanlık görseli yüklenemedi. Görsel formatını veya Cloudinary ayarlarını kontrol et.", "error")
+
         program = DietProgram(
             title=title,
             description=description,
+            image=uploaded_program_image or request.form.get("current_image", "").strip() or "card-1.jpg",
             bullets=request.form.get("bullets", "").strip(),
             button_text=request.form.get("button_text", "Randevu al").strip() or "Randevu al",
             order_no=request.form.get("order_no", 1, type=int) or 1,
@@ -460,6 +468,15 @@ def admin_program_edit(program_id):
 
         program.title = title
         program.description = description
+
+        try:
+            uploaded_program_image = save_image(request.files.get("image"))
+            if uploaded_program_image:
+                program.image = uploaded_program_image
+        except Exception:
+            current_app.logger.exception("Danışmanlık görseli yüklenirken hata oluştu.")
+            flash("Danışmanlık görseli yüklenemedi. Görsel formatını veya Cloudinary ayarlarını kontrol et.", "error")
+
         program.bullets = request.form.get("bullets", "").strip()
         program.button_text = request.form.get("button_text", "Randevu al").strip() or "Randevu al"
         program.order_no = request.form.get("order_no", 1, type=int) or 1
@@ -579,8 +596,13 @@ def admin_settings():
         settings.address = request.form.get("address", "").strip()
         settings.working_hours = request.form.get("working_hours", "").strip()
 
-        db.session.commit()
-        flash("Site ayarları güncellendi.", "success")
+        try:
+            db.session.commit()
+            flash("Site ayarları güncellendi.", "success")
+        except Exception:
+            db.session.rollback()
+            current_app.logger.exception("Site ayarları kaydedilirken hata oluştu.")
+            flash("Site ayarları kaydedilemedi. Veritabanı kolonları veya görsel URL uzunluğu güncellenmeli. Render'da son sürümü redeploy et.", "error")
         return redirect(url_for("admin.admin_settings"))
 
     return render_template("admin/settings.html", settings=settings)

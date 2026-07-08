@@ -86,7 +86,7 @@
     {% if home_programs %}
       {% for program in home_programs %}
       <article class="p-card editorial-card">
-        <img src="{{ url_for('static', filename='images/card-' ~ loop.index ~ '.jpg') }}" alt="{{ program.title }}">
+        <img src="{{ media_url(program.image or ('card-' ~ loop.index ~ '.jpg')) }}" alt="{{ program.title }}">
         <div class="p-body">
           <span class="card-no">{{ "%02d"|format(loop.index) }}</span>
           <h3>{{ program.title }}</h3>
@@ -111,63 +111,7 @@
   </div>
 </section>
 
-<section class="process-section editorial-process reveal-up">
-  <div class="process-card">
-    <span class="band-number">02</span>
-    <p class="kicker">Süreç</p>
-    <h2 class="section-title">Nasıl çalışıyoruz?</h2>
-    <p class="section-sub">
-      İlk görüşmeden takibe kadar süreç, kişinin yaşam düzenine uyum sağlayacak şekilde ilerletilir.
-    </p>
-  </div>
 
-  <div class="process-grid">
-    <div class="process-item">
-      <span>01</span>
-      <h3>İlk görüşme</h3>
-      <p>Hedef, sağlık geçmişi, günlük rutin ve beslenme alışkanlıkları değerlendirilir.</p>
-    </div>
-
-    <div class="process-item">
-      <span>02</span>
-      <h3>Kişiye özel plan</h3>
-      <p>Uygulanabilir ve sürdürülebilir beslenme sistemi kişiye özel hazırlanır.</p>
-    </div>
-
-    <div class="process-item">
-      <span>03</span>
-      <h3>Takip ve güncelleme</h3>
-      <p>Geri bildirimlere göre plan güncellenir ve süreç hedefe göre şekillendirilir.</p>
-    </div>
-  </div>
-</section>
-
-<section class="trust-section reveal-up">
-  <div class="trust-copy">
-    <p class="kicker">Yaklaşım</p>
-    <h2 class="section-title">Daha az karmaşa, daha net bir beslenme düzeni.</h2>
-  </div>
-
-  <div class="trust-grid">
-    <article class="trust-card">
-      <span>01</span>
-      <h3>Kanıt temelli</h3>
-      <p>Popüler listeler yerine bilimsel ve uygulanabilir yöntemler önceliklendirilir.</p>
-    </article>
-
-    <article class="trust-card">
-      <span>02</span>
-      <h3>Esnek takip</h3>
-      <p>Plan, günlük yaşam düzenine göre şekillenir ve gerektiğinde güncellenir.</p>
-    </article>
-
-    <article class="trust-card">
-      <span>03</span>
-      <h3>Sürdürülebilirlik</h3>
-      <p>Hedef, kısa süreli kısıtlamalar değil uzun vadeli alışkanlık kazanımıdır.</p>
-    </article>
-  </div>
-</section>
 
 <section class="posts editorial-posts reveal-up" id="dogru-yanlis">
   <div class="posts-head">
