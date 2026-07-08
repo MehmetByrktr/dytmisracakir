@@ -32,7 +32,10 @@
   >
   <meta name="twitter:image" content="{{ media_url(settings.hero_image if settings else 'misra-hero.png', external=True) }}">
 
-  <link rel="icon" href="{{ media_url(settings.site_icon if settings and settings.site_icon else 'misra-icon.png') }}">
+  {% set favicon_url = media_url(settings.site_icon if settings and settings.site_icon else 'misra-icon.png') %}
+  <link rel="icon" type="image/png" href="{{ favicon_url }}">
+  <link rel="shortcut icon" href="{{ favicon_url }}">
+  <link rel="apple-touch-icon" href="{{ favicon_url }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
   <script type="application/ld+json">

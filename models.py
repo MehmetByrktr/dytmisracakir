@@ -95,3 +95,15 @@ class SiteSettings(db.Model):
     email = db.Column(db.String(150), nullable=True, default="info@misracakir.com")
     address = db.Column(db.String(250), nullable=True, default="İstanbul / Türkiye")
     working_hours = db.Column(db.String(250), nullable=True, default="Pazartesi - Cumartesi / 09:00 - 18:00")
+
+    counseling_kicker = db.Column(db.String(150), nullable=True, default="Danışmanlık alanları")
+    counseling_title = db.Column(
+        db.String(350),
+        nullable=True,
+        default="Hedefine göre sade, uygulanabilir ve takip edilebilir bir süreç."
+    )
+    counseling_description = db.Column(
+        db.Text,
+        nullable=True,
+        default="Danışmanlık kartları admin paneldeki Danışmanlık Alanları bölümünden yönetilir."
+    )

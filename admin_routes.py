@@ -6,7 +6,7 @@ from werkzeug.security import check_password_hash
 
 from extensions import db
 from models import BlogPost, Myth, Appointment, DietProgram, MenuExample
-from utils import make_unique_slug, save_image, get_settings, sanitize_rich_content, sanitize_basic_html
+from utils import make_unique_slug, save_image, save_site_icon, get_settings, sanitize_rich_content, sanitize_basic_html
 
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")

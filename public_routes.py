@@ -6,7 +6,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 
 from extensions import db
 from models import BlogPost, Myth, Appointment, DietProgram, MenuExample
-from utils import get_settings
+from utils import get_settings, media_url
 
 public_bp = Blueprint("public", __name__)
 
@@ -35,8 +35,18 @@ def _rate_limited():
 @public_bp.route("/")
 def home():
     posts = BlogPost.query.order_by(BlogPost.created_at.desc()).limit(4).all()
+    home_programs = DietProgram.query.filter_by(is_active=True).order_by(
+        DietProgram.order_no.asc(),
+        DietProgram.created_at.desc()
+    ).limit(4).all()
     settings = get_settings()
-    return render_template("index.html", posts=posts, settings=settings)
+    return render_template("index.html", posts=posts, settings=settings, home_programs=home_programs)
+
+
+@public_bp.route("/favicon.ico")
+def favicon():
+    settings = get_settings()
+    return redirect(media_url(settings.site_icon if settings and settings.site_icon else "misra-icon.png"), code=302)
 
 
 @public_bp.route("/hakkimda")

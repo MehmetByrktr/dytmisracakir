@@ -43,9 +43,39 @@
         </div>
       </div>
 
+
       <div class="settings-section">
         <div class="settings-section-title">
           <span>02</span>
+          <h3>Danışmanlık Alanları</h3>
+        </div>
+
+        <div class="settings-grid one">
+          <div class="settings-field">
+            <label>Bölüm Mini Başlığı</label>
+            <input type="text" name="counseling_kicker" value="{{ settings.counseling_kicker or 'Danışmanlık alanları' }}">
+          </div>
+
+          <div class="settings-field">
+            <label>Bölüm Büyük Başlığı</label>
+            <textarea name="counseling_title" rows="3">{{ settings.counseling_title or 'Hedefine göre sade, uygulanabilir ve takip edilebilir bir süreç.' }}</textarea>
+          </div>
+
+          <div class="settings-field">
+            <label>Bölüm Açıklaması</label>
+            <textarea name="counseling_description" rows="3">{{ settings.counseling_description or '' }}</textarea>
+            <small>Kartların başlık/açıklama/butonları Admin Panel > Danışmanlık bölümünden düzenlenir.</small>
+          </div>
+
+          <div class="settings-inline-note">
+            <a class="btn ghost" href="{{ url_for('admin.admin_programs') }}">Danışmanlık kartlarını düzenle</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">
+          <span>03</span>
           <h3>Görsel</h3>
         </div>
 
@@ -61,19 +91,19 @@
         <div class="settings-file-box site-icon-upload-box">
           <div>
             <label>Site İkonu / Logo</label>
-            <p>Navbar ve tarayıcı ikonunda kullanılır. Mevcut ikon: <strong>{{ settings.site_icon or 'misra-icon.png' }}</strong></p>
+            <p>Navbar, tarayıcı faviconu ve Google’da görünen site ikonu için kullanılır. Yüklenen ikon otomatik kare PNG’ye çevrilir. Mevcut ikon: <strong>{{ settings.site_icon or 'misra-icon.png' }}</strong></p>
           </div>
 
           <div class="site-icon-preview-admin">
             <img src="{{ media_url(settings.site_icon if settings and settings.site_icon else 'misra-icon.png') }}" alt="Mevcut site ikonu">
-            <input type="file" name="site_icon" accept=".jpg,.jpeg,.png,.webp">
+            <input type="file" name="site_icon" accept=".jpg,.jpeg,.png,.webp,.ico">
           </div>
         </div>
       </div>
 
       <div class="settings-section">
         <div class="settings-section-title">
-          <span>03</span>
+          <span>04</span>
           <h3>Sosyal Medya</h3>
         </div>
 
@@ -102,7 +132,7 @@
 
       <div class="settings-section">
         <div class="settings-section-title">
-          <span>04</span>
+          <span>05</span>
           <h3>İletişim</h3>
         </div>
 

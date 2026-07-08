@@ -3611,3 +3611,93 @@ input::placeholder,textarea::placeholder{color:rgba(39,36,42,.42) !important;}
 .trust-card > span{
   color:var(--misra-green,#526b5b) !important;
 }
+
+
+/* =========================================================
+   V12 — Blog filter overflow + homepage counseling settings + icon admin polish
+   ========================================================= */
+
+/* Blog arama kartı taşmasın: butonlar kart içinde kalsın */
+.page-hero .glass-card:has(.blog-filter-form){
+  overflow:visible !important;
+  max-width:100% !important;
+}
+
+.blog-filter-form{
+  display:grid !important;
+  grid-template-columns:minmax(220px,1fr) minmax(190px,260px) minmax(118px,auto) minmax(112px,auto) !important;
+  gap:14px !important;
+  align-items:center !important;
+  width:100% !important;
+}
+
+.blog-filter-form input,
+.blog-filter-form select,
+.blog-filter-form .btn,
+.blog-filter-form button{
+  width:100% !important;
+  max-width:100% !important;
+  box-sizing:border-box !important;
+  white-space:nowrap !important;
+}
+
+.blog-filter-form .btn,
+.blog-filter-form button{
+  min-height:52px !important;
+  padding-inline:18px !important;
+  justify-content:center !important;
+}
+
+.blog-filter-form a.btn.ghost{
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+}
+
+/* Dar alanda 2 satıra insin, sağ sosyal barın altına taşmasın */
+@media(max-width:1180px){
+  .blog-filter-form{
+    grid-template-columns:1fr 1fr !important;
+  }
+}
+
+@media(max-width:720px){
+  .blog-filter-form{
+    grid-template-columns:1fr !important;
+  }
+}
+
+/* Danışmanlık band açıklaması */
+.counseling-band-desc{
+  max-width:760px !important;
+  margin-top:14px !important;
+  color:#6d6770 !important;
+  line-height:1.65 !important;
+}
+
+/* Ana sayfa danışmanlık kartları admin verisiyle gelince uzun metinlerde taşmasın */
+.editorial-programs .p-card,
+.editorial-programs .p-body{
+  min-width:0 !important;
+}
+
+.editorial-programs .p-body h3,
+.editorial-programs .p-body p{
+  overflow-wrap:anywhere !important;
+}
+
+/* Site ayarları içindeki yönlendirme notu */
+.admin-body .settings-inline-note{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  padding:12px 0 0 !important;
+}
+
+.admin-body .site-icon-preview-admin img{
+  width:64px !important;
+  height:64px !important;
+  object-fit:cover !important;
+  border-radius:18px !important;
+  border:1.5px solid rgba(82,107,91,.28) !important;
+  background:#fff !important;
+}

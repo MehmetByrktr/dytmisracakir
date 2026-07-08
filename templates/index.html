@@ -66,52 +66,48 @@
 <section class="editorial-band reveal-up">
   <div class="band-number">01</div>
   <div>
-    <p class="kicker">Danışmanlık alanları</p>
-    <h2 class="section-title">Hedefine göre sade, uygulanabilir ve takip edilebilir bir süreç.</h2>
+    <p class="kicker">{{ settings.counseling_kicker or 'Danışmanlık alanları' }}</p>
+    <h2 class="section-title">{{ settings.counseling_title or 'Hedefine göre sade, uygulanabilir ve takip edilebilir bir süreç.' }}</h2>
+    {% if settings.counseling_description %}
+    <p class="section-sub counseling-band-desc">{{ settings.counseling_description }}</p>
+    {% endif %}
   </div>
 </section>
 
 <section class="programs editorial-programs reveal-up">
   <div class="program-grid">
-    <article class="p-card editorial-card">
-      <img src="{{ url_for('static', filename='images/card-1.jpg') }}" alt="Kilo kontrolü">
-      <div class="p-body">
-        <span class="card-no">01</span>
-        <h3>Kilo kontrolü</h3>
-        <p>Günlük rutine uygun, sürdürülebilir beslenme adımları.</p>
-        <a class="btn ghost" href="{{ url_for('public.diyet_sekilleri') }}">İncele</a>
-      </div>
-    </article>
+    {% set fallback_cards = [
+      ('Kilo kontrolü', 'Günlük rutine uygun, sürdürülebilir beslenme adımları.', 'card-1.jpg', url_for('public.diyet_sekilleri')),
+      ('Klinik beslenme', 'Sağlık durumu, tetkikler ve hedeflere göre planlanan takip.', 'card-2.jpg', url_for('public.diyet_sekilleri')),
+      ('Kadın sağlığı', 'Özel dönemler, hormonal denge ve yaşam rutiniyle uyumlu plan.', 'card-3.jpg', url_for('public.diyet_sekilleri')),
+      ('Menü planlama', 'Pratik, sade ve kişiye özel menü planlama yaklaşımı.', 'card-4.jpg', url_for('public.menuler'))
+    ] %}
 
-    <article class="p-card editorial-card">
-      <img src="{{ url_for('static', filename='images/card-2.jpg') }}" alt="Klinik beslenme">
-      <div class="p-body">
-        <span class="card-no">02</span>
-        <h3>Klinik beslenme</h3>
-        <p>Sağlık durumu, tetkikler ve hedeflere göre planlanan takip.</p>
-        <a class="btn ghost" href="{{ url_for('public.diyet_sekilleri') }}">İncele</a>
-      </div>
-    </article>
-
-    <article class="p-card editorial-card">
-      <img src="{{ url_for('static', filename='images/card-3.jpg') }}" alt="Kadın sağlığı">
-      <div class="p-body">
-        <span class="card-no">03</span>
-        <h3>Kadın sağlığı</h3>
-        <p>Özel dönemler, hormonal denge ve yaşam rutiniyle uyumlu plan.</p>
-        <a class="btn ghost" href="{{ url_for('public.diyet_sekilleri') }}">İncele</a>
-      </div>
-    </article>
-
-    <article class="p-card editorial-card">
-      <img src="{{ url_for('static', filename='images/card-4.jpg') }}" alt="Menü planlama">
-      <div class="p-body">
-        <span class="card-no">04</span>
-        <h3>Menü planlama</h3>
-        <p>Pratik, sade ve kişiye özel menü planlama yaklaşımı.</p>
-        <a class="btn ghost" href="{{ url_for('public.menuler') }}">İncele</a>
-      </div>
-    </article>
+    {% if home_programs %}
+      {% for program in home_programs %}
+      <article class="p-card editorial-card">
+        <img src="{{ url_for('static', filename='images/card-' ~ loop.index ~ '.jpg') }}" alt="{{ program.title }}">
+        <div class="p-body">
+          <span class="card-no">{{ "%02d"|format(loop.index) }}</span>
+          <h3>{{ program.title }}</h3>
+          <p>{{ program.description }}</p>
+          <a class="btn ghost" href="{{ url_for('public.diyet_sekilleri') }}">{{ program.button_text or 'İncele' }}</a>
+        </div>
+      </article>
+      {% endfor %}
+    {% else %}
+      {% for title, desc, img, link in fallback_cards %}
+      <article class="p-card editorial-card">
+        <img src="{{ url_for('static', filename='images/' ~ img) }}" alt="{{ title }}">
+        <div class="p-body">
+          <span class="card-no">{{ "%02d"|format(loop.index) }}</span>
+          <h3>{{ title }}</h3>
+          <p>{{ desc }}</p>
+          <a class="btn ghost" href="{{ link }}">İncele</a>
+        </div>
+      </article>
+      {% endfor %}
+    {% endif %}
   </div>
 </section>
 

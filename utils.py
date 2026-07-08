@@ -132,6 +132,67 @@ def save_image(file):
     return filename
 
 
+def save_site_icon(file):
+    """Save favicon/site icon safely as a square PNG."""
+    if not file or file.filename == "":
+        return None
+
+    safe_original = secure_filename(file.filename)
+    if not safe_original or "." not in safe_original:
+        return None
+
+    ext = os.path.splitext(safe_original)[1].lower().lstrip(".")
+    if ext not in current_app.config["ALLOWED_EXTENSIONS"]:
+        return None
+
+    file.stream.seek(0)
+    try:
+        image = Image.open(file.stream)
+        image.load()
+    except (UnidentifiedImageError, OSError, ValueError):
+        file.stream.seek(0)
+        return None
+
+    image = image.convert("RGBA")
+    width, height = image.size
+    side = min(width, height)
+    left = max((width - side) // 2, 0)
+    top = max((height - side) // 2, 0)
+    image = image.crop((left, top, left + side, top + side))
+    image = image.resize((512, 512), Image.LANCZOS)
+
+    buffer = BytesIO()
+    image.save(buffer, format="PNG", optimize=True)
+    buffer.seek(0)
+
+    filename = f"site-icon-{uuid.uuid4().hex}.png"
+
+    if _cloudinary_ready():
+        cloudinary.config(
+            cloud_name=current_app.config["CLOUDINARY_CLOUD_NAME"],
+            api_key=current_app.config["CLOUDINARY_API_KEY"],
+            api_secret=current_app.config["CLOUDINARY_API_SECRET"],
+            secure=True,
+        )
+        result = cloudinary.uploader.upload(
+            buffer,
+            folder=current_app.config.get("CLOUDINARY_FOLDER", "dyt-misra-cakir"),
+            public_id=filename.rsplit(".", 1)[0],
+            resource_type="image",
+            format="png",
+            overwrite=False,
+            unique_filename=False,
+        )
+        return result.get("secure_url")
+
+    upload_folder = current_app.config["UPLOAD_FOLDER"]
+    os.makedirs(upload_folder, exist_ok=True)
+    image_path = os.path.join(upload_folder, filename)
+    with open(image_path, "wb") as f:
+        f.write(buffer.getvalue())
+    return filename
+
+
 def media_url(value, external=False):
     if not value:
         return ""

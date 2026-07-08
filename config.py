@@ -70,7 +70,7 @@ class Config:
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
     UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", os.path.join(BASE_DIR, "static", "images"))
     UPLOAD_URL_PREFIX = os.getenv("UPLOAD_URL_PREFIX", "images").strip("/")
-    ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp"}
+    ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp", "ico"}
     MAX_CONTENT_LENGTH = int(os.getenv("MAX_CONTENT_LENGTH", os.getenv("MAX_UPLOAD_MB", "6")))
     if MAX_CONTENT_LENGTH < 1024:
         MAX_CONTENT_LENGTH = MAX_CONTENT_LENGTH * 1024 * 1024
