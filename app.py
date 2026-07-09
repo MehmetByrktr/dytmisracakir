@@ -3,7 +3,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from config import Config
 from extensions import db
 from models import BlogPost, Myth, Appointment, DietProgram, MenuExample, SiteSettings
-from utils import get_settings, slugify, media_url
+from utils import get_settings, slugify, media_url, get_content
 from public_routes import public_bp
 from admin_routes import admin_bp
 import hmac
@@ -83,7 +83,7 @@ def create_app():
         except Exception:
             settings = None
 
-        return dict(settings=settings, media_url=media_url)
+        return dict(settings=settings, media_url=media_url, content=get_content)
 
     @app.context_processor
     def inject_admin_counts():

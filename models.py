@@ -108,3 +108,11 @@ class SiteSettings(db.Model):
         nullable=True,
         default="Danışmanlık kartları admin paneldeki Danışmanlık Alanları bölümünden yönetilir."
     )
+
+
+class SiteContent(db.Model):
+    """Generic key/value text bank so every page text can be edited from the admin panel."""
+    id = db.Column(db.Integer, primary_key=True)
+    key = db.Column(db.String(120), unique=True, nullable=False)
+    value = db.Column(db.Text, nullable=True)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

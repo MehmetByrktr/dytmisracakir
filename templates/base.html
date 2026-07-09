@@ -84,6 +84,12 @@
       <img src="{{ url_for('static', filename='images/instagram.png') }}" alt="Instagram">
     </a>
 
+    {% if settings and settings.whatsapp_url and 'XXXXXXXXXX' not in settings.whatsapp_url %}
+    <a class="social-item wa" href="{{ settings.whatsapp_url }}" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+      <img src="{{ url_for('static', filename='images/whatsapp.png') }}" alt="WhatsApp">
+    </a>
+    {% endif %}
+
     <a class="social-item mail" href="mailto:{{ settings.email if settings and settings.email else 'info@misracakir.com' }}" aria-label="E-posta">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm0 3.1v.2l8 5 8-5v-.2L12 13 4 8.1Z"/></svg>
     </a>
@@ -91,6 +97,12 @@
     <a class="social-item tt" href="{{ settings.tiktok_url if settings else '#' }}" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
       <img src="{{ url_for('static', filename='images/tiktok.png') }}" alt="TikTok">
     </a>
+
+    {% if settings and settings.x_url and settings.x_url.rstrip('/') != 'https://x.com' %}
+    <a class="social-item x" href="{{ settings.x_url }}" target="_blank" rel="noopener noreferrer" aria-label="X">
+      <img src="{{ url_for('static', filename='images/x.png') }}" alt="X">
+    </a>
+    {% endif %}
 
     <button class="social-item scroll-top" id="scrollTopButton" type="button" aria-label="Yukarı çık">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5.2 4.8 12.4l1.7 1.7 4.3-4.3v9h2.4v-9l4.3 4.3 1.7-1.7L12 5.2Z"/></svg>
@@ -105,7 +117,7 @@
 
       <a class="site-logo brand-with-icon" href="{{ url_for('public.home') }}" aria-label="Ana sayfa">
         <img class="site-icon" src="{{ media_url(settings.site_icon if settings and settings.site_icon else 'misra-icon.png') }}" alt="Diyetisyen Mısra Çakır ikon">
-        <span class="site-name">Diyetisyen Mısra Çakır</span>
+        <span class="site-name">{{ content('site_brand_name') }}</span>
       </a>
     </div>
 
@@ -138,13 +150,16 @@
     <div class="footer-grid">
 
       <div>
-        <h3>Diyetisyen Mısra Çakır</h3>
+        <h3>{{ content('site_brand_name') }}</h3>
         <p>
-          Bilimsel temelli, sürdürülebilir ve kişiye özel beslenme danışmanlığı.
+          {{ content('footer_about') }}
         </p>
 
         <div class="footer-socials">
           <a href="{{ settings.instagram_url if settings else '#' }}" target="_blank" rel="noopener noreferrer">Instagram</a>
+          {% if settings and settings.whatsapp_url and 'XXXXXXXXXX' not in settings.whatsapp_url %}
+          <a href="{{ settings.whatsapp_url }}" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          {% endif %}
           <a href="mailto:{{ settings.email if settings and settings.email else 'info@misracakir.com' }}">E-posta</a>
           <a href="{{ settings.tiktok_url if settings else '#' }}" target="_blank" rel="noopener noreferrer">TikTok</a>
         </div>
@@ -177,7 +192,7 @@
     </div>
 
     <div class="footer-bottom">
-      © 2026 Diyetisyen Mısra Çakır • Tüm Hakları Saklıdır.
+      {{ content('footer_copyright') }}
     </div>
   </footer>
 

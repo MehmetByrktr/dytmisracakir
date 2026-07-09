@@ -8,12 +8,12 @@
 <section class="page-hero">
   <div class="page-hero-inner">
     <div>
-      <p class="kicker">İletişim</p>
+      <p class="kicker">{{ content('contact_kicker') }}</p>
 
-      <h1 class="page-title">Bana ulaş</h1>
+      <h1 class="page-title">{{ content('contact_title') }}</h1>
 
       <p class="page-desc">
-        Soruların için mesaj atabilir veya randevu formunu doldurabilirsin.
+        {{ content('contact_desc') }}
       </p>
 
       <div class="contact-cards">
@@ -29,6 +29,21 @@
             Git
           </a>
         </div>
+
+        {% if settings and settings.whatsapp_url and 'XXXXXXXXXX' not in settings.whatsapp_url %}
+        <div class="glass-card">
+          <h3>WhatsApp</h3>
+          <p>Hızlı mesaj için</p>
+
+          <a
+            class="btn ghost"
+            target="_blank" rel="noopener noreferrer"
+            href="{{ settings.whatsapp_url }}"
+          >
+            Git
+          </a>
+        </div>
+        {% endif %}
 
         <div class="glass-card">
           <h3>TikTok</h3>

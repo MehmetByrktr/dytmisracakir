@@ -5,8 +5,11 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from werkzeug.security import check_password_hash
 
 from extensions import db
-from models import BlogPost, Myth, Appointment, DietProgram, MenuExample
-from utils import make_unique_slug, save_image, save_site_icon, get_settings, sanitize_rich_content, sanitize_basic_html
+from models import BlogPost, Myth, Appointment, DietProgram, MenuExample, SiteContent
+from utils import (
+    make_unique_slug, save_image, save_site_icon, get_settings,
+    sanitize_rich_content, sanitize_basic_html, CONTENT_DEFAULTS, get_all_content,
+)
 
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
@@ -576,33 +579,72 @@ def admin_settings():
     settings = get_settings()
 
     if request.method == "POST":
-        settings.hero_title = sanitize_basic_html(request.form.get("hero_title", "").strip()) or settings.hero_title
-        settings.hero_description = bleach_text(request.form.get("hero_description", "").strip()) or settings.hero_description
-
-        uploaded_image = save_image(request.files.get("hero_image"))
-        if uploaded_image:
-            settings.hero_image = uploaded_image
-
-        uploaded_icon = save_image(request.files.get("site_icon"))
-        if uploaded_icon:
-            settings.site_icon = uploaded_icon
-
-        settings.instagram_url = request.form.get("instagram_url", "").strip()
-        settings.whatsapp_url = request.form.get("whatsapp_url", "").strip()
-        settings.x_url = request.form.get("x_url", "").strip()
-        settings.tiktok_url = request.form.get("tiktok_url", "").strip()
-        settings.phone = request.form.get("phone", "").strip()
-        settings.email = request.form.get("email", "").strip()
-        settings.address = request.form.get("address", "").strip()
-        settings.working_hours = request.form.get("working_hours", "").strip()
-
         try:
+            settings.hero_title = sanitize_basic_html(request.form.get("hero_title", "").strip()) or settings.hero_title
+            settings.hero_description = bleach_text(request.form.get("hero_description", "").strip()) or settings.hero_description
+
+            uploaded_image = save_image(request.files.get("hero_image"))
+            if uploaded_image:
+                settings.hero_image = uploaded_image
+
+            uploaded_icon = save_site_icon(request.files.get("site_icon"))
+            if uploaded_icon:
+                settings.site_icon = uploaded_icon
+
+            settings.instagram_url = request.form.get("instagram_url", "").strip()
+            settings.whatsapp_url = request.form.get("whatsapp_url", "").strip()
+            settings.x_url = request.form.get("x_url", "").strip()
+            settings.tiktok_url = request.form.get("tiktok_url", "").strip()
+            settings.phone = request.form.get("phone", "").strip()
+            settings.email = request.form.get("email", "").strip()
+            settings.address = request.form.get("address", "").strip()
+            settings.working_hours = request.form.get("working_hours", "").strip()
+            settings.counseling_kicker = request.form.get("counseling_kicker", "").strip() or settings.counseling_kicker
+            settings.counseling_title = request.form.get("counseling_title", "").strip() or settings.counseling_title
+            settings.counseling_description = request.form.get("counseling_description", "").strip()
+
             db.session.commit()
             flash("Site ayarları güncellendi.", "success")
         except Exception:
             db.session.rollback()
             current_app.logger.exception("Site ayarları kaydedilirken hata oluştu.")
-            flash("Site ayarları kaydedilemedi. Veritabanı kolonları veya görsel URL uzunluğu güncellenmeli. Render'da son sürümü redeploy et.", "error")
+            flash("Site ayarları kaydedilemedi. Lütfen görsel formatını/boyutunu kontrol edip tekrar dene. Sorun sürerse yöneticine haber ver.", "error")
         return redirect(url_for("admin.admin_settings"))
 
     return render_template("admin/settings.html", settings=settings)
+
+
+@admin_bp.route("/content", methods=["GET", "POST"])
+@login_required
+def admin_content():
+    """Sitedeki her sayfanin metin bloklarini tek ekrandan duzenleme."""
+    if request.method == "POST":
+        try:
+            for key in CONTENT_DEFAULTS:
+                if key in request.form:
+                    value = request.form.get(key, "").strip()
+                    row = SiteContent.query.filter_by(key=key).first()
+                    if not row:
+                        row = SiteContent(key=key)
+                        db.session.add(row)
+                    row.value = sanitize_basic_html(value)
+            db.session.commit()
+            flash("Sayfa metinleri güncellendi.", "success")
+        except Exception:
+            db.session.rollback()
+            current_app.logger.exception("Sayfa metinleri kaydedilirken hata olustu.")
+            flash("Metinler kaydedilemedi. Lütfen tekrar dene.", "error")
+        return redirect(url_for("admin.admin_content"))
+
+    current_values = get_all_content()
+
+    groups = {}
+    for key, (group, label, field_type, default) in CONTENT_DEFAULTS.items():
+        groups.setdefault(group, []).append({
+            "key": key,
+            "label": label,
+            "type": field_type,
+            "value": current_values.get(key, default),
+        })
+
+    return render_template("admin/content.html", groups=groups)

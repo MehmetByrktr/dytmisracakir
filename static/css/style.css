@@ -380,8 +380,10 @@ button.btn.danger:hover{
 .social-item img{width:18px;height:18px;object-fit:contain}
 .social-item svg{width:18px;height:18px;fill:currentColor}
 .social-item.ig{background:var(--plum);color:#fff}
+.social-item.wa{background:#2fae60;color:#fff}
 .social-item.mail{background:var(--lavender);color:#fff}
 .social-item.tt{background:var(--sage-dark);color:#fff}
+.social-item.x{background:var(--ink);color:#fff}
 .social-item.scroll-top{background:var(--sage);color:#1e2a22}
 .social-item:hover{transform:translateY(-3px) scale(1.03);opacity:1}
 
@@ -476,9 +478,22 @@ button.btn.danger:hover{
 .appointment-message-card{
   background:var(--card);
   color:var(--ink);
-  border:1px solid var(--line);
+  border:1px solid var(--line-strong);
+  border-radius:18px;
   box-shadow:var(--shadow-soft);
+  transition:box-shadow .25s ease, transform .25s ease, border-color .25s ease;
   min-width:0;
+}
+.glass-card:hover,
+.p-card:hover,
+.post-card:hover,
+.blog-card:hover,
+.content-card-clean:hover,
+.menu-card-clean:hover,
+.trust-card:hover{
+  box-shadow:var(--shadow);
+  border-color:var(--line-strong);
+  transform:translateY(-2px);
 }
 .glass-card{padding:28px}
 .glass-card p,

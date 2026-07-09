@@ -21,7 +21,7 @@
     </div>
 
     <div class="refined-copy home-copy reveal-up delay-1">
-      <p class="kicker">Beslenme danışmanlığı</p>
+      <p class="kicker">{{ content('home_kicker') }}</p>
 
       <h1 class="hero-title editorial-title refined-title home-title">
         {{ settings.hero_title | safe }}
@@ -33,8 +33,7 @@
 
       <div class="refined-note home-note">
         <p>
-          Kısa süreli listeler yerine; sağlık geçmişine, günlük rutinine ve hedeflerine
-          uyum sağlayan sürdürülebilir bir beslenme sistemi oluşturulmaktadır.
+          {{ content('home_note') }}
         </p>
       </div>
 
@@ -118,7 +117,7 @@
     <div>
       <span class="band-number">03</span>
       <p class="kicker">Blog</p>
-      <h2 class="section-title">Son paylaşılan yazılar</h2>
+      <h2 class="section-title">{{ content('home_blog_title') }}</h2>
     </div>
 
     <a class="btn ghost" href="{{ url_for('public.blog') }}">Tümünü gör</a>
@@ -152,30 +151,30 @@
 <section class="home-faq reveal-up">
   <div>
     <p class="kicker">Sık sorulanlar</p>
-    <h2 class="section-title">Başlamadan önce merak edilenler</h2>
+    <h2 class="section-title">{{ content('home_faq_title') }}</h2>
   </div>
 
   <div class="faq-list-clean">
     <details>
-      <summary>İlk görüşmede neler değerlendirilir?</summary>
-      <p>Hedefler, sağlık geçmişi, beslenme alışkanlıkları, günlük rutin ve uygulanabilirlik birlikte değerlendirilir.</p>
+      <summary>{{ content('home_faq_q1') }}</summary>
+      <p>{{ content('home_faq_a1') }}</p>
     </details>
 
     <details>
-      <summary>Planlar kişiye özel mi hazırlanır?</summary>
-      <p>Evet. Planlar kişinin hedefi, yaşam düzeni, sağlık durumu ve beslenme alışkanlıklarına göre hazırlanır.</p>
+      <summary>{{ content('home_faq_q2') }}</summary>
+      <p>{{ content('home_faq_a2') }}</p>
     </details>
 
     <details>
-      <summary>Online danışmanlık mümkün mü?</summary>
-      <p>Evet. Randevu formundan online görüşme talebi oluşturulabilir.</p>
+      <summary>{{ content('home_faq_q3') }}</summary>
+      <p>{{ content('home_faq_a3') }}</p>
     </details>
   </div>
 </section>
 
 <section class="home-cta reveal-up">
   <p class="kicker">Randevu</p>
-  <h2 class="section-title">Beslenme düzenini daha sade ve sürdürülebilir hale getirelim.</h2>
+  <h2 class="section-title">{{ content('home_cta_title') }}</h2>
   <a class="btn" href="{{ url_for('public.iletisim') }}#randevu">Randevu Talebi Oluştur</a>
 </section>
 

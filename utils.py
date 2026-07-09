@@ -11,13 +11,87 @@ from werkzeug.utils import secure_filename
 from flask import current_app, url_for
 
 from extensions import db
-from models import SiteSettings, BlogPost
+from models import SiteSettings, BlogPost, SiteContent
 
 try:
     import cloudinary
     import cloudinary.uploader
 except Exception:  # pragma: no cover
     cloudinary = None
+
+
+# =========================================================
+# Sayfa metinleri (Site Ayarlari > Icerik Yonetimi)
+# field type: "text" (tek satir) | "textarea" (cok satir)
+# key -> (grup etiketi, alan etiketi, alan tipi, varsayilan metin)
+# =========================================================
+CONTENT_DEFAULTS = {
+    "site_brand_name": ("Genel", "Site adi (menude ve baslikta gorunur)", "text", "Diyetisyen Misra Cakir"),
+    "footer_about": ("Genel", "Footer tanitim yazisi", "textarea", "Bilimsel temelli, surdurulebilir ve kisiye ozel beslenme danismanligi."),
+    "footer_copyright": ("Genel", "Footer telif satiri", "text", "\u00a9 2026 Diyetisyen Misra Cakir - Tum Haklari Saklidir."),
+
+    "home_kicker": ("Ana Sayfa", "Hero ust etiket", "text", "Beslenme danismanligi"),
+    "home_note": ("Ana Sayfa", "Hero alt not kutusu", "textarea", "Kisa sureli listeler yerine; saglik gecmisine, gunluk rutinine ve hedeflerine uyum saglayan surdurulebilir bir beslenme sistemi olusturulmaktadir."),
+    "home_blog_title": ("Ana Sayfa", "Blog bolum basligi", "text", "Son paylasilan yazilar"),
+    "home_faq_title": ("Ana Sayfa", "S.S.S. bolum basligi", "text", "Baslamadan once merak edilenler"),
+    "home_faq_q1": ("Ana Sayfa", "S.S.S. 1 - Soru", "text", "Ilk gorusmede neler degerlendirilir?"),
+    "home_faq_a1": ("Ana Sayfa", "S.S.S. 1 - Cevap", "textarea", "Hedefler, saglik gecmisi, beslenme aliskanliklari, gunluk rutin ve uygulanabilirlik birlikte degerlendirilir."),
+    "home_faq_q2": ("Ana Sayfa", "S.S.S. 2 - Soru", "text", "Planlar kisiye ozel mi hazirlanir?"),
+    "home_faq_a2": ("Ana Sayfa", "S.S.S. 2 - Cevap", "textarea", "Evet. Planlar kisinin hedefi, yasam duzeni, saglik durumu ve beslenme aliskanliklarina gore hazirlanir."),
+    "home_faq_q3": ("Ana Sayfa", "S.S.S. 3 - Soru", "text", "Online danismanlik mumkun mu?"),
+    "home_faq_a3": ("Ana Sayfa", "S.S.S. 3 - Cevap", "textarea", "Evet. Randevu formundan online gorusme talebi olusturulabilir."),
+    "home_cta_title": ("Ana Sayfa", "Alt randevu cagri basligi", "textarea", "Beslenme duzenini daha sade ve surdurulebilir hale getirelim."),
+
+    "about_kicker": ("Hakkimda", "Ust etiket", "text", "Hakkimda"),
+    "about_title": ("Hakkimda", "Baslik", "text", "Misra Cakir"),
+    "about_desc": ("Hakkimda", "Aciklama", "textarea", "Bilimsel yaklasim ve surdurulebilir aliskanliklar ile amacim kisa sureli beslenme uygulamalari degil, kisinin hayatina uyum saglayan bir sistem olusturmaktir."),
+    "about_approach_title": ("Hakkimda", "1. Kart Basligi", "text", "Yaklasimim"),
+    "about_approach_text": ("Hakkimda", "1. Kart Metni", "textarea", "Kilo yonetimi, hastaliklarda beslenme ve performans hedeflerinde kanit temelli yontemlerle ilerlemeyi onemserim. Temel hedef, danisanin gunluk yasamina uyum saglayabilen surdurulebilir aliskanliklar gelistirmesidir."),
+    "about_areas_title": ("Hakkimda", "2. Kart Basligi", "text", "Hangi alanlarda?"),
+    "about_areas_text": ("Hakkimda", "2. Kart Metni", "textarea", "Kilo kontrolu, kadin sagligi, sporcu beslenmesi, sindirim sistemi sikayetleri ve kronik hastaliklarda beslenme planlamasi uzerine calisilabilir."),
+    "about_process_title": ("Hakkimda", "3. Kart Basligi", "text", "Calisma duzeni"),
+    "about_process_text": ("Hakkimda", "3. Kart Metni", "textarea", "Ilk gorusmede hedefler, saglik gecmisi ve gunluk rutin degerlendirilir. Ardindan kisiye ozel beslenme plani olusturulur ve takip surecinde gerekli guncellemeler yapilir."),
+
+    "diyet_kicker": ("Danismanlik Alanlari", "Ust etiket", "text", "Danismanlik Alanlari"),
+    "diyet_title": ("Danismanlik Alanlari", "Baslik", "text", "Hedefine gore plan"),
+    "diyet_desc": ("Danismanlik Alanlari", "Aciklama", "textarea", "Kisa sureli \u201csok\u201d listeler yerine; surdurulebilir, kanit temelli ve kisiye ozel yaklasim."),
+
+    "myths_kicker": ("Dogru Bilinen Yanlislar", "Ust etiket", "text", "Dogru Bilinen Yanlislar"),
+    "myths_title": ("Dogru Bilinen Yanlislar", "Baslik", "text", "Mitleri temizleyelim"),
+    "myths_desc": ("Dogru Bilinen Yanlislar", "Aciklama", "textarea", "Beslenmede en sik duyulan yanlis bilgiler ve bilimsel aciklamalari."),
+
+    "menu_kicker": ("Menuler", "Ust etiket", "text", "Menuler"),
+    "menu_title": ("Menuler", "Baslik", "text", "Pratik ornekler"),
+    "menu_desc": ("Menuler", "Aciklama", "textarea", "Buradaki menuler ornek niteligindedir. Admin panelden yeni menu ekleyebilir, mevcut menuleri duzenleyebilir veya pasiflestirebilirsin."),
+
+    "contact_kicker": ("Iletisim", "Ust etiket", "text", "Iletisim"),
+    "contact_title": ("Iletisim", "Baslik", "text", "Bana ulas"),
+    "contact_desc": ("Iletisim", "Aciklama", "textarea", "Sorularin icin mesaj atabilir veya randevu formunu doldurabilirsin."),
+}
+
+
+def get_content(key):
+    """Return the stored value for a content key, or its default text."""
+    default = CONTENT_DEFAULTS.get(key, (None, None, None, ""))[3]
+    try:
+        row = SiteContent.query.filter_by(key=key).first()
+    except Exception:
+        return default
+    if row and row.value:
+        return row.value
+    return default
+
+
+def get_all_content():
+    """Return {key: value} for every known content key (DB value or default)."""
+    try:
+        rows = {row.key: row.value for row in SiteContent.query.all()}
+    except Exception:
+        rows = {}
+    return {
+        key: (rows.get(key) or meta[3])
+        for key, meta in CONTENT_DEFAULTS.items()
+    }
 
 
 ALLOWED_HTML_TAGS = [
@@ -73,7 +147,9 @@ def _verify_image(file):
     try:
         image = Image.open(BytesIO(payload))
         image.verify()
-    except (UnidentifiedImageError, OSError, ValueError):
+    except Exception:
+        # Bozuk dosya, desteklenmeyen format veya asiri buyuk gorsel (decompression bomb)
+        # dahil her turlu gecersiz gorsel burada sessizce reddedilir; admin paneli 500'e dusmez.
         file.stream.seek(0)
         return False
 
@@ -91,106 +167,118 @@ def _cloudinary_ready():
 
 
 def save_image(file):
-    if not file or file.filename == "":
+    """Gorsel yukler. Basarisiz olursa None doner, ASLA exception firlatmaz -
+    bozuk bir dosya cagiran sayfayi 500'e dusuremez."""
+    try:
+        if not file or file.filename == "":
+            return None
+
+        if not allowed_file(file.filename):
+            return None
+
+        safe_original = secure_filename(file.filename)
+        if not safe_original or "." not in safe_original:
+            return None
+
+        _, ext = os.path.splitext(safe_original)
+        ext = ext.lower()
+
+        if not _verify_image(file):
+            return None
+
+        if _cloudinary_ready():
+            cloudinary.config(
+                cloud_name=current_app.config["CLOUDINARY_CLOUD_NAME"],
+                api_key=current_app.config["CLOUDINARY_API_KEY"],
+                api_secret=current_app.config["CLOUDINARY_API_SECRET"],
+                secure=True,
+            )
+            result = cloudinary.uploader.upload(
+                file,
+                folder=current_app.config.get("CLOUDINARY_FOLDER", "dyt-misra-cakir"),
+                resource_type="image",
+                overwrite=False,
+                unique_filename=True,
+            )
+            return result.get("secure_url")
+
+        upload_folder = current_app.config["UPLOAD_FOLDER"]
+        os.makedirs(upload_folder, exist_ok=True)
+
+        filename = f"upload-{uuid.uuid4().hex}{ext}"
+        image_path = os.path.join(upload_folder, filename)
+        file.save(image_path)
+        return filename
+    except Exception:
+        current_app.logger.exception("Gorsel kaydedilirken beklenmeyen bir hata olustu.")
         return None
-
-    if not allowed_file(file.filename):
-        return None
-
-    safe_original = secure_filename(file.filename)
-    if not safe_original or "." not in safe_original:
-        return None
-
-    _, ext = os.path.splitext(safe_original)
-    ext = ext.lower()
-
-    if not _verify_image(file):
-        return None
-
-    if _cloudinary_ready():
-        cloudinary.config(
-            cloud_name=current_app.config["CLOUDINARY_CLOUD_NAME"],
-            api_key=current_app.config["CLOUDINARY_API_KEY"],
-            api_secret=current_app.config["CLOUDINARY_API_SECRET"],
-            secure=True,
-        )
-        result = cloudinary.uploader.upload(
-            file,
-            folder=current_app.config.get("CLOUDINARY_FOLDER", "dyt-misra-cakir"),
-            resource_type="image",
-            overwrite=False,
-            unique_filename=True,
-        )
-        return result.get("secure_url")
-
-    upload_folder = current_app.config["UPLOAD_FOLDER"]
-    os.makedirs(upload_folder, exist_ok=True)
-
-    filename = f"upload-{uuid.uuid4().hex}{ext}"
-    image_path = os.path.join(upload_folder, filename)
-    file.save(image_path)
-    return filename
 
 
 def save_site_icon(file):
-    """Save favicon/site icon safely as a square PNG."""
-    if not file or file.filename == "":
-        return None
-
-    safe_original = secure_filename(file.filename)
-    if not safe_original or "." not in safe_original:
-        return None
-
-    ext = os.path.splitext(safe_original)[1].lower().lstrip(".")
-    if ext not in current_app.config["ALLOWED_EXTENSIONS"]:
-        return None
-
-    file.stream.seek(0)
+    """Favicon/site ikonunu kare PNG olarak guvenli sekilde kaydeder.
+    Basarisiz olursa None doner, ASLA exception firlatmaz."""
     try:
-        image = Image.open(file.stream)
-        image.load()
-    except (UnidentifiedImageError, OSError, ValueError):
+        if not file or file.filename == "":
+            return None
+
+        safe_original = secure_filename(file.filename)
+        if not safe_original or "." not in safe_original:
+            return None
+
+        ext = os.path.splitext(safe_original)[1].lower().lstrip(".")
+        if ext not in current_app.config["ALLOWED_EXTENSIONS"]:
+            return None
+
         file.stream.seek(0)
+        try:
+            image = Image.open(file.stream)
+            image.load()
+        except Exception:
+            file.stream.seek(0)
+            return None
+
+        image = image.convert("RGBA")
+        width, height = image.size
+        side = min(width, height)
+        left = max((width - side) // 2, 0)
+        top = max((height - side) // 2, 0)
+        image = image.crop((left, top, left + side, top + side))
+        resample = getattr(Image, "Resampling", Image).LANCZOS
+        image = image.resize((512, 512), resample)
+
+        buffer = BytesIO()
+        image.save(buffer, format="PNG", optimize=True)
+        buffer.seek(0)
+
+        filename = f"site-icon-{uuid.uuid4().hex}.png"
+
+        if _cloudinary_ready():
+            cloudinary.config(
+                cloud_name=current_app.config["CLOUDINARY_CLOUD_NAME"],
+                api_key=current_app.config["CLOUDINARY_API_KEY"],
+                api_secret=current_app.config["CLOUDINARY_API_SECRET"],
+                secure=True,
+            )
+            result = cloudinary.uploader.upload(
+                buffer,
+                folder=current_app.config.get("CLOUDINARY_FOLDER", "dyt-misra-cakir"),
+                public_id=filename.rsplit(".", 1)[0],
+                resource_type="image",
+                format="png",
+                overwrite=False,
+                unique_filename=False,
+            )
+            return result.get("secure_url")
+
+        upload_folder = current_app.config["UPLOAD_FOLDER"]
+        os.makedirs(upload_folder, exist_ok=True)
+        image_path = os.path.join(upload_folder, filename)
+        with open(image_path, "wb") as f:
+            f.write(buffer.getvalue())
+        return filename
+    except Exception:
+        current_app.logger.exception("Site ikonu kaydedilirken beklenmeyen bir hata olustu.")
         return None
-
-    image = image.convert("RGBA")
-    width, height = image.size
-    side = min(width, height)
-    left = max((width - side) // 2, 0)
-    top = max((height - side) // 2, 0)
-    image = image.crop((left, top, left + side, top + side))
-    image = image.resize((512, 512), Image.LANCZOS)
-
-    buffer = BytesIO()
-    image.save(buffer, format="PNG", optimize=True)
-    buffer.seek(0)
-
-    filename = f"site-icon-{uuid.uuid4().hex}.png"
-
-    if _cloudinary_ready():
-        cloudinary.config(
-            cloud_name=current_app.config["CLOUDINARY_CLOUD_NAME"],
-            api_key=current_app.config["CLOUDINARY_API_KEY"],
-            api_secret=current_app.config["CLOUDINARY_API_SECRET"],
-            secure=True,
-        )
-        result = cloudinary.uploader.upload(
-            buffer,
-            folder=current_app.config.get("CLOUDINARY_FOLDER", "dyt-misra-cakir"),
-            public_id=filename.rsplit(".", 1)[0],
-            resource_type="image",
-            format="png",
-            overwrite=False,
-            unique_filename=False,
-        )
-        return result.get("secure_url")
-
-    upload_folder = current_app.config["UPLOAD_FOLDER"]
-    os.makedirs(upload_folder, exist_ok=True)
-    image_path = os.path.join(upload_folder, filename)
-    with open(image_path, "wb") as f:
-        f.write(buffer.getvalue())
-    return filename
 
 
 def media_url(value, external=False):

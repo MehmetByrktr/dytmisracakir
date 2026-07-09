@@ -63,6 +63,11 @@
         <span class="admin-nav-icon">⚙</span>
         <span>Site Ayarları</span>
       </a>
+
+      <a class="{% if request.endpoint == 'admin.admin_content' %}active{% endif %}" href="{{ url_for('admin.admin_content') }}">
+        <span class="admin-nav-icon">✐</span>
+        <span>Sayfa Metinleri</span>
+      </a>
     </nav>
 
     <div class="admin-sidebar-footer">
