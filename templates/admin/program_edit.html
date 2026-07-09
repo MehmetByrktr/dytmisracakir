@@ -11,8 +11,12 @@
     <label>Kart Fotoğrafı</label>
     {% if has_media(program.image) %}
     <div class="admin-current-image"><img src="{{ media_url(program.image) }}" alt="{{ program.title }}"></div>
+    <label class="check-row image-remove-row"><input type="checkbox" name="remove_image"> Mevcut fotoğrafı kaldır</label>
+    {% else %}
+    <small>Şu anda bu kartta fotoğraf yok; sitede hafif placeholder gösteriliyor.</small>
     {% endif %}
     <input type="file" name="image" accept=".jpg,.jpeg,.png,.webp">
+    <small>Yeni fotoğraf seçersen kart fotoğrafı bununla değiştirilir.</small>
   </div>
   <div class="form-group full"><label>Maddeler</label><textarea name="bullets" rows="5">{{ program.bullets or '' }}</textarea></div>
   <div class="form-group"><label>Buton Yazısı</label><input name="button_text" value="{{ program.button_text }}"></div>

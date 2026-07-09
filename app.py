@@ -65,6 +65,55 @@ def ensure_schema_upgrades():
             connection.execute(text("UPDATE site_settings SET counseling_title = 'Hedefine göre sade, uygulanabilir ve takip edilebilir bir süreç.' WHERE counseling_title IS NULL OR counseling_title = ''"))
 
 
+
+
+def ensure_default_admin_content():
+    """Seed minimal editable content so homepage cards are always admin-controlled.
+    This only inserts records when the table is completely empty."""
+    created = False
+
+    if DietProgram.query.count() == 0:
+        default_programs = [
+            DietProgram(
+                title="Kilo kontrolü",
+                description="Günlük rutine uygun, sürdürülebilir beslenme adımları.",
+                bullets="Tabak modeli\nEsnek ara öğün planlaması\nHaftalık takip",
+                button_text="İncele",
+                order_no=1,
+                is_active=True,
+            ),
+            DietProgram(
+                title="Klinik beslenme",
+                description="Sağlık durumu, tetkikler ve hedeflere göre planlanan takip.",
+                bullets="Tetkik değerlendirmesi\nKişiye özel plan\nDüzenli takip",
+                button_text="İncele",
+                order_no=2,
+                is_active=True,
+            ),
+            DietProgram(
+                title="Kadın sağlığı",
+                description="Özel dönemler, hormonal denge ve yaşam rutiniyle uyumlu plan.",
+                bullets="PCOS / PMS\nGebelik ve emzirme\nMenopoz dönemi",
+                button_text="İncele",
+                order_no=3,
+                is_active=True,
+            ),
+            DietProgram(
+                title="Menü planlama",
+                description="Pratik, sade ve kişiye özel menü planlama yaklaşımı.",
+                bullets="Haftalık menü\nAlışveriş planı\nPratik tarif önerileri",
+                button_text="İncele",
+                order_no=4,
+                is_active=True,
+            ),
+        ]
+        db.session.add_all(default_programs)
+        created = True
+
+    if created:
+        db.session.commit()
+
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
@@ -251,10 +300,10 @@ def create_app():
 
         if DietProgram.query.count() == 0:
             sample_programs = [
-                DietProgram(title="Kilo Kontrolü", description="Porsiyon kontrolü, protein-posa dengesi ve sürdürülebilir alışkanlık yönetimi üzerine ilerlenir.", bullets="Tabak modeli\nEsnek ara öğün planlaması\nHaftalık takip", button_text="Başla", order_no=1),
-                DietProgram(title="Klinik Beslenme", description="Doktor tanısı, tetkikler ve yaşam düzeni dikkate alınarak tıbbi beslenme planı oluşturulur.", bullets="Diyabet / hipertansiyon\nGastrointestinal sorunlar\nKaraciğer / böbrek hastalıkları", button_text="Randevu al", order_no=2),
-                DietProgram(title="Kadın Sağlığı", description="PCOS, PMS, gebelik, emzirme ve menopoz gibi özel dönemlerde bireysel ihtiyaçlara göre planlama yapılır.", bullets="Kan şekeri dengesi\nDemir, B12 ve D vitamini takibi\nDüzenli takip", button_text="Bilgi al", order_no=3),
-                DietProgram(title="Sporcu Beslenmesi", description="Performans, toparlanma ve kas kütlesi hedeflerine göre makro besin planlaması yapılır.", bullets="Protein zamanlaması\nKarbonhidrat periodizasyonu\nHidrasyon planı", button_text="Başvur", order_no=4),
+                DietProgram(title="Kilo kontrolü", description="Günlük rutine uygun, sürdürülebilir beslenme adımları.", bullets="Tabak modeli\nEsnek ara öğün planlaması\nHaftalık takip", button_text="İncele", order_no=1),
+                DietProgram(title="Klinik beslenme", description="Sağlık durumu, tetkikler ve hedeflere göre planlanan takip.", bullets="Tetkik değerlendirmesi\nKişiye özel plan\nDüzenli takip", button_text="İncele", order_no=2),
+                DietProgram(title="Kadın sağlığı", description="Özel dönemler, hormonal denge ve yaşam rutiniyle uyumlu plan.", bullets="PCOS / PMS\nGebelik ve emzirme\nMenopoz dönemi", button_text="İncele", order_no=3),
+                DietProgram(title="Menü planlama", description="Pratik, sade ve kişiye özel menü planlama yaklaşımı.", bullets="Haftalık menü\nAlışveriş planı\nPratik tarif önerileri", button_text="İncele", order_no=4),
             ]
             db.session.add_all(sample_programs)
 
@@ -277,6 +326,12 @@ def create_app():
         db.create_all()
         if app.config.get("RUN_SCHEMA_UPGRADES"):
             ensure_schema_upgrades()
+        if app.config.get("AUTO_SEED_DEFAULT_CONTENT"):
+            try:
+                ensure_default_admin_content()
+            except Exception:
+                db.session.rollback()
+                app.logger.exception("Varsayılan admin içerikleri oluşturulurken hata oluştu.")
 
     return app
 

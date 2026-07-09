@@ -482,13 +482,16 @@ def admin_program_edit(program_id):
         program.title = title
         program.description = description
 
-        try:
-            uploaded_program_image = save_image(request.files.get("image"))
-            if uploaded_program_image:
-                program.image = uploaded_program_image
-        except Exception:
-            current_app.logger.exception("Danışmanlık görseli yüklenirken hata oluştu.")
-            flash("Danışmanlık görseli yüklenemedi. Görsel formatını veya Cloudinary ayarlarını kontrol et.", "error")
+        if request.form.get("remove_image"):
+            program.image = ""
+        else:
+            try:
+                uploaded_program_image = save_image(request.files.get("image"))
+                if uploaded_program_image:
+                    program.image = uploaded_program_image
+            except Exception:
+                current_app.logger.exception("Danışmanlık görseli yüklenirken hata oluştu.")
+                flash("Danışmanlık görseli yüklenemedi. Görsel formatını veya Cloudinary ayarlarını kontrol et.", "error")
 
         program.bullets = request.form.get("bullets", "").strip()
         program.button_text = request.form.get("button_text", "Randevu al").strip() or "Randevu al"
