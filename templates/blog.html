@@ -61,10 +61,14 @@
   {% for b in blog_posts %}
   <article class="blog-card">
     <div class="blog-media">
+      {% if has_media(b.image) %}
       <img
         src="{{ media_url(b.image) }}"
         alt="{{ b.title }}"
-       loading="lazy" decoding="async">
+        loading="lazy" decoding="async">
+      {% else %}
+      <div class="media-placeholder blog-placeholder"><span>{{ b.category }}</span></div>
+      {% endif %}
     </div>
 
     <div class="blog-body">

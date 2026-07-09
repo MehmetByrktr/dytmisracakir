@@ -6,7 +6,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 
 from extensions import db
 from models import BlogPost, Myth, Appointment, DietProgram, MenuExample
-from utils import get_settings, get_cached_settings, cache_get_or_set, model_to_namespace, media_url
+from utils import get_settings, get_cached_settings, cache_get_or_set, model_to_namespace, media_url, has_media, first_media
 
 public_bp = Blueprint("public", __name__)
 
@@ -26,19 +26,17 @@ def _with_version(url, version):
 
 
 def _favicon_value(settings):
-    return (
-        getattr(settings, "favicon_image", None)
-        or getattr(settings, "site_icon", None)
-        or getattr(settings, "site_logo", None)
-        or "misra-icon.png"
+    return first_media(
+        getattr(settings, "favicon_image", None),
+        getattr(settings, "site_icon", None),
+        getattr(settings, "site_logo", None),
     )
 
 
 def _logo_value(settings):
-    return (
-        getattr(settings, "site_logo", None)
-        or getattr(settings, "site_icon", None)
-        or "misra-icon.png"
+    return first_media(
+        getattr(settings, "site_logo", None),
+        getattr(settings, "site_icon", None),
     )
 
 
@@ -136,6 +134,8 @@ def home():
 def favicon():
     settings = get_settings()
     icon_url = media_url(_favicon_value(settings))
+    if not icon_url:
+        return Response(status=204)
     return redirect(_with_version(icon_url, _icon_version(settings)), code=302)
 
 
@@ -143,6 +143,8 @@ def favicon():
 def site_icon_png():
     settings = get_settings()
     icon_url = media_url(_favicon_value(settings))
+    if not icon_url:
+        return Response(status=204)
     return redirect(_with_version(icon_url, _icon_version(settings)), code=302)
 
 
@@ -150,6 +152,8 @@ def site_icon_png():
 def site_logo_png():
     settings = get_settings()
     logo_url = media_url(_logo_value(settings))
+    if not logo_url:
+        return Response(status=204)
     return redirect(_with_version(logo_url, _icon_version(settings)), code=302)
 
 

@@ -68,8 +68,9 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-    UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", os.path.join(BASE_DIR, "static", "images"))
-    UPLOAD_URL_PREFIX = os.getenv("UPLOAD_URL_PREFIX", "images").strip("/")
+    DATA_DIR = os.getenv("DATA_DIR", os.path.join(BASE_DIR, "instance"))
+    UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", os.path.join(DATA_DIR, "uploads"))
+    UPLOAD_URL_PREFIX = os.getenv("UPLOAD_URL_PREFIX", "uploads").strip("/")
     ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp", "ico"}
     MAX_CONTENT_LENGTH = int(os.getenv("MAX_CONTENT_LENGTH", os.getenv("MAX_UPLOAD_MB", "6")))
     if MAX_CONTENT_LENGTH < 1024:
@@ -101,3 +102,5 @@ class Config:
 
     # Public site cache: settings / homepage / list pages
     PUBLIC_CACHE_TTL_SECONDS = int(os.getenv("PUBLIC_CACHE_TTL_SECONDS", "300"))
+    STATIC_VERSION = os.getenv("STATIC_VERSION", os.getenv("RENDER_GIT_COMMIT", "1"))
+    RUN_SCHEMA_UPGRADES = _bool_env("RUN_SCHEMA_UPGRADES", False)

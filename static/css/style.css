@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,600;1,600&display=swap');
 
 /* =========================================================
    DYT. MISRA CAKIR — CLEAN UI THEME V6
@@ -3954,4 +3954,98 @@ img{
     max-width:280px !important;
     justify-content:center !important;
   }
+}
+
+/* =========================================================
+   Lightweight media system — Mehmet site mantığına yaklaştırma
+   Hazır görsel yoksa statik ağır dosya yüklenmez; aynı kart/UI alanı korunur.
+   ========================================================= */
+.site-icon-fallback{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:.02em;
+  color:var(--plum);
+  background:linear-gradient(135deg,#fff, var(--cream));
+}
+
+.media-placeholder{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  position:relative;
+  color:rgba(101,66,88,.72);
+  background:
+    radial-gradient(circle at 22% 18%, rgba(167,143,169,.22), transparent 32%),
+    radial-gradient(circle at 84% 82%, rgba(160,177,143,.28), transparent 34%),
+    linear-gradient(135deg, var(--cream), var(--card-2));
+  border:1px solid var(--line);
+}
+.media-placeholder::before,
+.media-placeholder::after{
+  content:"";
+  position:absolute;
+  width:160px;
+  height:160px;
+  border-radius:999px;
+  border:1px solid rgba(101,66,88,.10);
+  transform:rotate(18deg);
+}
+.media-placeholder::before{left:-52px;top:-48px}
+.media-placeholder::after{right:-58px;bottom:-56px}
+.media-placeholder span{
+  position:relative;
+  z-index:1;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.hero-placeholder{
+  min-height:420px;
+  height:min(62vh,610px);
+  box-shadow:var(--shadow);
+}
+.hero-placeholder span,
+.about-placeholder span{
+  font-family:var(--font-head);
+  font-size:clamp(54px,8vw,94px);
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:none;
+  color:rgba(101,66,88,.28);
+}
+.card-placeholder{height:180px}
+.post-placeholder{height:100%;min-height:220px}
+.blog-placeholder{height:240px}
+.about-placeholder{min-height:460px;max-height:560px;box-shadow:var(--shadow)}
+.related-placeholder{height:150px}
+
+.p-card > .media-placeholder,
+.blog-media > .media-placeholder,
+.post-media > .media-placeholder,
+.related-media > .media-placeholder{
+  border-left:0;
+  border-right:0;
+  border-top:0;
+}
+
+@media(max-width:980px){
+  .hero-placeholder{height:auto;min-height:360px}
+  .about-placeholder{min-height:340px}
+}
+.admin-thumb-placeholder{
+  display:inline-flex!important;
+  width:58px!important;
+  height:48px!important;
+  min-width:58px!important;
+  border-radius:12px!important;
+}
+.admin-thumb-placeholder span{
+  font-size:9px!important;
+  letter-spacing:.08em!important;
 }

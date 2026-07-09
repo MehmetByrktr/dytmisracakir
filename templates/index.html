@@ -11,7 +11,13 @@
       <p class="editorial-brand">Diyetisyen Mısra Çakır</p>
 
       <div class="editorial-photo refined-photo home-photo">
-        <img src="{{ media_url(settings.hero_image) }}" alt="Mısra Çakır">
+        {% if settings and has_media(settings.hero_image) %}
+        <img src="{{ media_url(settings.hero_image) }}" alt="Mısra Çakır" fetchpriority="high" decoding="async">
+        {% else %}
+        <div class="media-placeholder hero-placeholder" aria-label="Mısra Çakır görsel alanı">
+          <span>MC</span>
+        </div>
+        {% endif %}
 
         <div class="editorial-caption photo-caption">
           <span>01 / Bilimsel yaklaşım</span>
@@ -76,16 +82,20 @@
 <section class="programs editorial-programs reveal-up">
   <div class="program-grid">
     {% set fallback_cards = [
-      ('Kilo kontrolü', 'Günlük rutine uygun, sürdürülebilir beslenme adımları.', 'card-1.jpg', url_for('public.diyet_sekilleri')),
-      ('Klinik beslenme', 'Sağlık durumu, tetkikler ve hedeflere göre planlanan takip.', 'card-2.jpg', url_for('public.diyet_sekilleri')),
-      ('Kadın sağlığı', 'Özel dönemler, hormonal denge ve yaşam rutiniyle uyumlu plan.', 'card-3.jpg', url_for('public.diyet_sekilleri')),
-      ('Menü planlama', 'Pratik, sade ve kişiye özel menü planlama yaklaşımı.', 'card-4.jpg', url_for('public.menuler'))
+      ('Kilo kontrolü', 'Günlük rutine uygun, sürdürülebilir beslenme adımları.', url_for('public.diyet_sekilleri')),
+      ('Klinik beslenme', 'Sağlık durumu, tetkikler ve hedeflere göre planlanan takip.', url_for('public.diyet_sekilleri')),
+      ('Kadın sağlığı', 'Özel dönemler, hormonal denge ve yaşam rutiniyle uyumlu plan.', url_for('public.diyet_sekilleri')),
+      ('Menü planlama', 'Pratik, sade ve kişiye özel menü planlama yaklaşımı.', url_for('public.menuler'))
     ] %}
 
     {% if home_programs %}
       {% for program in home_programs %}
       <article class="p-card editorial-card">
-        <img src="{{ media_url(program.image or ('card-' ~ loop.index ~ '.jpg')) }}" alt="{{ program.title }}" loading="lazy" decoding="async">
+        {% if has_media(program.image) %}
+          <img src="{{ media_url(program.image) }}" alt="{{ program.title }}" loading="lazy" decoding="async">
+        {% else %}
+          <div class="media-placeholder card-placeholder"><span>{{ "%02d"|format(loop.index) }}</span></div>
+        {% endif %}
         <div class="p-body">
           <span class="card-no">{{ "%02d"|format(loop.index) }}</span>
           <h3>{{ program.title }}</h3>
@@ -95,9 +105,9 @@
       </article>
       {% endfor %}
     {% else %}
-      {% for title, desc, img, link in fallback_cards %}
+      {% for title, desc, link in fallback_cards %}
       <article class="p-card editorial-card">
-        <img src="{{ url_for('static', filename='images/' ~ img) }}" alt="{{ title }}" loading="lazy" decoding="async">
+        <div class="media-placeholder card-placeholder"><span>{{ "%02d"|format(loop.index) }}</span></div>
         <div class="p-body">
           <span class="card-no">{{ "%02d"|format(loop.index) }}</span>
           <h3>{{ title }}</h3>
@@ -127,7 +137,11 @@
     {% for p in posts %}
     <article class="post-card editorial-post-card">
       <div class="post-media">
-        <img src="{{ media_url(p.image) }}" alt="{{ p.title }}" loading="lazy" decoding="async">
+        {% if has_media(p.image) %}
+          <img src="{{ media_url(p.image) }}" alt="{{ p.title }}" loading="lazy" decoding="async">
+        {% else %}
+          <div class="media-placeholder post-placeholder"><span>Blog</span></div>
+        {% endif %}
       </div>
 
       <div class="post-body">

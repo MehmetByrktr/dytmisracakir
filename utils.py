@@ -22,6 +22,47 @@ except Exception:  # pragma: no cover
     cloudinary = None
 
 
+LEGACY_PLACEHOLDER_IMAGES = {
+    "misra-hero.png",
+    "bg-watercolor.png",
+    "post-1.jpg",
+    "post-2.jpg",
+    "card-1.jpg",
+    "card-2.jpg",
+    "card-3.jpg",
+    "card-4.jpg",
+}
+
+
+def _clean_media_value(value):
+    return str(value or "").strip().replace("\\", "/")
+
+
+def has_media(value):
+    """Return True only for real uploaded/remote media, not legacy bundled placeholders."""
+    value = _clean_media_value(value)
+    if not value:
+        return False
+    if value.startswith(("http://", "https://", "data:", "/uploads/", "/static/")):
+        return True
+
+    normalized = value
+    for prefix in ("app/static/", "static/", "static/images/", "images/"):
+        if normalized.startswith(prefix):
+            normalized = normalized[len(prefix):]
+            break
+
+    return normalized.rsplit("/", 1)[-1] not in LEGACY_PLACEHOLDER_IMAGES
+
+
+def first_media(*values):
+    """Pick the first value that resolves to real uploaded/remote media."""
+    for value in values:
+        if has_media(value):
+            return value
+    return ""
+
+
 # =========================================================
 # Sayfa metinleri (Site Ayarlari > Icerik Yonetimi)
 # field type: "text" (tek satir) | "textarea" (cok satir)
@@ -228,7 +269,8 @@ def save_image(file):
         filename = f"upload-{uuid.uuid4().hex}{ext}"
         image_path = os.path.join(upload_folder, filename)
         file.save(image_path)
-        return filename
+        upload_prefix = current_app.config.get("UPLOAD_URL_PREFIX", "uploads").strip("/")
+        return f"{upload_prefix}/{filename}" if upload_prefix else filename
     except Exception:
         current_app.logger.exception("Gorsel kaydedilirken beklenmeyen bir hata olustu.")
         return None
@@ -295,24 +337,44 @@ def save_site_icon(file):
         image_path = os.path.join(upload_folder, filename)
         with open(image_path, "wb") as f:
             f.write(buffer.getvalue())
-        return filename
+        upload_prefix = current_app.config.get("UPLOAD_URL_PREFIX", "uploads").strip("/")
+        return f"{upload_prefix}/{filename}" if upload_prefix else filename
     except Exception:
         current_app.logger.exception("Site ikonu kaydedilirken beklenmeyen bir hata olustu.")
         return None
 
 
 def media_url(value, external=False):
-    if not value:
+    value = _clean_media_value(value)
+    if not value or not has_media(value):
         return ""
 
-    value = str(value).strip().replace("\\", "/")
     if value.startswith(("http://", "https://", "data:")):
         return value
 
+    if value.startswith("/uploads/"):
+        filename = value.split("/uploads/", 1)[1]
+        return url_for("uploaded_file", filename=filename, _external=external)
+
     if value.startswith("/static/"):
+        # url_for is not needed here, but keep absolute external URLs for OG tags when requested.
+        if external:
+            return url_for("static", filename=value.split("/static/", 1)[1], _external=True)
         return value
 
-    for prefix in ("static/images/", "images/"):
+    for prefix in ("app/static/", "static/"):
+        if value.startswith(prefix):
+            value = value[len(prefix):]
+            break
+
+    upload_prefix = current_app.config.get("UPLOAD_URL_PREFIX", "uploads").strip("/")
+    if upload_prefix and value.startswith(f"{upload_prefix}/"):
+        return url_for("uploaded_file", filename=value.split("/", 1)[1], _external=external)
+
+    if "/uploads/" in value:
+        return url_for("uploaded_file", filename=value.split("/uploads/", 1)[1], _external=external)
+
+    for prefix in ("images/", "static/images/"):
         if value.startswith(prefix):
             value = value.split("/", 1)[1]
             break

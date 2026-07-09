@@ -34,10 +34,15 @@
     </div>
 
     <div class="about-photo">
+      {% if settings and has_media(settings.hero_image) %}
       <img
         src="{{ media_url(settings.hero_image) }}"
         alt="Mısra Çakır"
+        loading="lazy" decoding="async"
       >
+      {% else %}
+      <div class="media-placeholder about-placeholder"><span>MC</span></div>
+      {% endif %}
     </div>
   </div>
 </section>

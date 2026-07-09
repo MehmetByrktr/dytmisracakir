@@ -216,7 +216,7 @@ def admin_blog_add():
         seo_keywords = request.form.get("seo_keywords", "").strip()
 
         image_file = request.files.get("image_file")
-        image = save_image(image_file) or "post-1.jpg"
+        image = save_image(image_file) or ""
 
         new_post = BlogPost(
             title=title,
@@ -451,7 +451,7 @@ def admin_program_add():
         program = DietProgram(
             title=title,
             description=description,
-            image=uploaded_program_image or request.form.get("current_image", "").strip() or "card-1.jpg",
+            image=uploaded_program_image or request.form.get("current_image", "").strip(),
             bullets=request.form.get("bullets", "").strip(),
             button_text=request.form.get("button_text", "Randevu al").strip() or "Randevu al",
             order_no=request.form.get("order_no", 1, type=int) or 1,

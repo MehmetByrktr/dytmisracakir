@@ -19,7 +19,7 @@
       {% for p in programs %}
       <tr>
         <td>{{ p.order_no }}</td>
-        <td>{% if p.image %}<img class="admin-thumb" src="{{ media_url(p.image) }}" alt="{{ p.title }}">{% endif %}</td>
+        <td>{% if has_media(p.image) %}<img class="admin-thumb" src="{{ media_url(p.image) }}" alt="{{ p.title }}">{% else %}<span class="admin-thumb media-placeholder admin-thumb-placeholder"><span>Alan</span></span>{% endif %}</td>
         <td><strong>{{ p.title }}</strong><p class="admin-row-sub">{{ p.button_text }}</p></td>
         <td><p class="admin-row-sub">{{ p.description }}</p></td>
         <td><span class="badge">{{ 'Aktif' if p.is_active else 'Pasif' }}</span></td>

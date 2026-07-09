@@ -1,9 +1,9 @@
-from flask import Flask, render_template, session, redirect, url_for, flash, request, abort, make_response
+from flask import Flask, render_template, session, redirect, url_for, flash, request, abort, send_from_directory
 from werkzeug.middleware.proxy_fix import ProxyFix
 from config import Config
 from extensions import db
 from models import BlogPost, Myth, Appointment, DietProgram, MenuExample, SiteSettings
-from utils import get_settings, get_cached_settings, slugify, media_url, get_content
+from utils import get_settings, get_cached_settings, slugify, media_url, get_content, has_media, first_media
 from public_routes import public_bp
 from admin_routes import admin_bp
 import hmac
@@ -34,7 +34,7 @@ def ensure_schema_upgrades():
     if "blog_post" in table_names:
         _add_column("blog_post", "excerpt", "excerpt TEXT DEFAULT ''")
         _add_column("blog_post", "content", "content TEXT")
-        _add_column("blog_post", "image", "image VARCHAR(500) DEFAULT 'post-1.jpg'")
+        _add_column("blog_post", "image", "image VARCHAR(500) DEFAULT ''")
         _add_column("blog_post", "seo_title", "seo_title VARCHAR(250)")
         _add_column("blog_post", "seo_description", "seo_description VARCHAR(300)")
         _add_column("blog_post", "seo_keywords", "seo_keywords VARCHAR(300)")
@@ -42,18 +42,14 @@ def ensure_schema_upgrades():
 
         with db.engine.begin() as connection:
             connection.execute(text("UPDATE blog_post SET excerpt = COALESCE(NULLIF(excerpt, ''), title) WHERE excerpt IS NULL OR excerpt = ''"))
-            connection.execute(text("UPDATE blog_post SET image = 'post-1.jpg' WHERE image IS NULL OR image = ''"))
 
     if "diet_program" in table_names:
-        _add_column("diet_program", "image", "image VARCHAR(500) DEFAULT 'card-1.jpg'")
+        _add_column("diet_program", "image", "image VARCHAR(500) DEFAULT ''")
         _alter_varchar("diet_program", "image", 500)
-        with db.engine.begin() as connection:
-            connection.execute(text("UPDATE diet_program SET image = 'card-1.jpg' WHERE image IS NULL OR image = ''"))
-
     if "site_settings" in table_names:
-        _add_column("site_settings", "site_icon", "site_icon VARCHAR(500) DEFAULT 'misra-icon.png'")
-        _add_column("site_settings", "site_logo", "site_logo VARCHAR(500) DEFAULT 'misra-icon.png'")
-        _add_column("site_settings", "favicon_image", "favicon_image VARCHAR(500) DEFAULT 'misra-icon.png'")
+        _add_column("site_settings", "site_icon", "site_icon VARCHAR(500) DEFAULT ''")
+        _add_column("site_settings", "site_logo", "site_logo VARCHAR(500) DEFAULT ''")
+        _add_column("site_settings", "favicon_image", "favicon_image VARCHAR(500) DEFAULT ''")
         _add_column("site_settings", "site_icon_updated_at", "site_icon_updated_at TIMESTAMP")
         _add_column("site_settings", "counseling_kicker", "counseling_kicker VARCHAR(150) DEFAULT 'Danışmanlık alanları'")
         _add_column("site_settings", "counseling_title", "counseling_title VARCHAR(350) DEFAULT 'Hedefine göre sade, uygulanabilir ve takip edilebilir bir süreç.'")
@@ -64,9 +60,6 @@ def ensure_schema_upgrades():
         _alter_varchar("site_settings", "favicon_image", 500)
 
         with db.engine.begin() as connection:
-            connection.execute(text("UPDATE site_settings SET site_icon = 'misra-icon.png' WHERE site_icon IS NULL OR site_icon = ''"))
-            connection.execute(text("UPDATE site_settings SET site_logo = COALESCE(NULLIF(site_logo, ''), site_icon, 'misra-icon.png') WHERE site_logo IS NULL OR site_logo = ''"))
-            connection.execute(text("UPDATE site_settings SET favicon_image = COALESCE(NULLIF(favicon_image, ''), site_icon, 'misra-icon.png') WHERE favicon_image IS NULL OR favicon_image = ''"))
             connection.execute(text("UPDATE site_settings SET site_icon_updated_at = CURRENT_TIMESTAMP WHERE site_icon_updated_at IS NULL"))
             connection.execute(text("UPDATE site_settings SET counseling_kicker = 'Danışmanlık alanları' WHERE counseling_kicker IS NULL OR counseling_kicker = ''"))
             connection.execute(text("UPDATE site_settings SET counseling_title = 'Hedefine göre sade, uygulanabilir ve takip edilebilir bir süreç.' WHERE counseling_title IS NULL OR counseling_title = ''"))
@@ -91,10 +84,22 @@ def create_app():
         except Exception:
             settings = None
 
-        return dict(settings=settings, media_url=media_url, content=get_content)
+        return dict(
+            settings=settings,
+            media_url=media_url,
+            has_media=has_media,
+            first_media=first_media,
+            content=get_content,
+            static_version=app.config.get("STATIC_VERSION", "1"),
+        )
 
     @app.context_processor
     def inject_admin_counts():
+        # Public sayfalarda her istekte randevu sayacı için DB sorgusu atma.
+        # Mehmet sitesindeki daha hafif mantığa yaklaştırıldı: sayaç sadece admin UI'da gerekir.
+        if not request.path.startswith("/admin"):
+            return dict(new_appointment_count=0)
+
         try:
             new_count = Appointment.query.filter_by(status="Yeni").count()
         except Exception:
@@ -192,6 +197,10 @@ def create_app():
     def healthz():
         return {"ok": True}, 200
 
+    @app.route("/uploads/<path:filename>")
+    def uploaded_file(filename):
+        return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
+
     @app.route("/init-db")
     def init_db():
         if not session.get("admin_logged_in"):
@@ -212,7 +221,7 @@ def create_app():
                     category="Metabolizma",
                     excerpt="Ferritin, hemoglobin ve emilim konusundaki en sık hatalar...",
                     content="<p>Bu yazının detay içeriği burada olacak.</p>",
-                    image="post-1.jpg"
+                    image=""
                 ),
                 BlogPost(
                     title="Kışın bağışıklık için tabak modeli",
@@ -220,7 +229,7 @@ def create_app():
                     category="Bağışıklık",
                     excerpt="Protein, posa ve mikrobesin dengesiyle pratik öneriler...",
                     content="<p>Bu yazının detay içeriği burada olacak.</p>",
-                    image="post-2.jpg"
+                    image=""
                 )
             ]
             db.session.add_all(sample_posts)
@@ -266,7 +275,8 @@ def create_app():
 
     with app.app_context():
         db.create_all()
-        ensure_schema_upgrades()
+        if app.config.get("RUN_SCHEMA_UPGRADES"):
+            ensure_schema_upgrades()
 
     return app
 

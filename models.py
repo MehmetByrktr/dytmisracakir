@@ -9,7 +9,7 @@ class BlogPost(db.Model):
     category = db.Column(db.String(100), nullable=False)
     excerpt = db.Column(db.Text, nullable=False)
     content = db.Column(db.Text, nullable=True)
-    image = db.Column(db.String(500), nullable=False, default="post-1.jpg")
+    image = db.Column(db.String(500), nullable=True, default="")
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     seo_title = db.Column(db.String(250), nullable=True)
     seo_description = db.Column(db.String(300), nullable=True)
@@ -28,7 +28,7 @@ class DietProgram(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(180), nullable=False)
     description = db.Column(db.Text, nullable=False)
-    image = db.Column(db.String(500), nullable=True, default="card-1.jpg")
+    image = db.Column(db.String(500), nullable=True, default="")
     bullets = db.Column(db.Text, nullable=True)  # Her satır bir madde
     button_text = db.Column(db.String(80), nullable=False, default="Randevu al")
     order_no = db.Column(db.Integer, nullable=False, default=1)
@@ -84,10 +84,10 @@ class SiteSettings(db.Model):
         nullable=False,
         default="Bilimsel, sürdürülebilir ve kişiye özel beslenme planlarıyla daha iyi hisset."
     )
-    hero_image = db.Column(db.String(500), nullable=False, default="misra-hero.png")
-    site_icon = db.Column(db.String(500), nullable=True, default="misra-icon.png")
-    site_logo = db.Column(db.String(500), nullable=True, default="misra-icon.png")
-    favicon_image = db.Column(db.String(500), nullable=True, default="misra-icon.png")
+    hero_image = db.Column(db.String(500), nullable=True, default="")
+    site_icon = db.Column(db.String(500), nullable=True, default="")
+    site_logo = db.Column(db.String(500), nullable=True, default="")
+    favicon_image = db.Column(db.String(500), nullable=True, default="")
     site_icon_updated_at = db.Column(db.DateTime, nullable=True, default=datetime.utcnow)
 
     instagram_url = db.Column(db.String(250), nullable=True, default="https://instagram.com/dyt.misracakir")

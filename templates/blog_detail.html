@@ -12,11 +12,11 @@
 
 {% block extra_head %}
 {% set blog_url = url_for('public.blog_detail', slug=post.slug, _external=True) %}
-{% set blog_image = media_url(post.image, external=True) %}
+{% set blog_image = media_url(post.image, external=True) if has_media(post.image) else "" %}
 
 <meta property="og:url" content="{{ blog_url }}">
-<meta property="og:image" content="{{ blog_image }}">
-<meta name="twitter:image" content="{{ blog_image }}">
+{% if blog_image %}<meta property="og:image" content="{{ blog_image }}">{% endif %}
+{% if blog_image %}<meta name="twitter:image" content="{{ blog_image }}">{% endif %}
 
 <script type="application/ld+json">
 {
@@ -24,7 +24,7 @@
   "@type": "BlogPosting",
   "headline": {{ (post.seo_title or post.title) | tojson }},
   "description": {{ (post.seo_description or post.excerpt) | tojson }},
-  "image": {{ blog_image | tojson }},
+  {% if blog_image %}"image": {{ blog_image | tojson }},{% endif %}
   "datePublished": "{{ post.created_at.strftime('%Y-%m-%d') }}",
   "dateModified": "{{ post.created_at.strftime('%Y-%m-%d') }}",
   "author": {
@@ -49,9 +49,11 @@
 
 <section class="blog-detail-hero">
   <div class="blog-detail-card">
+    {% if has_media(post.image) %}
     <div class="blog-detail-image">
-      <img src="{{ media_url(post.image) }}" alt="{{ post.title }}">
+      <img src="{{ media_url(post.image) }}" alt="{{ post.title }}" loading="eager" decoding="async">
     </div>
+    {% endif %}
 
     <div class="blog-detail-meta">
       <span class="badge">{{ post.category }}</span>

@@ -59,11 +59,15 @@
         {% for p in posts %}
         <tr>
           <td>
+            {% if has_media(p.image) %}
             <img
               class="admin-thumb"
               src="{{ media_url(p.image) }}"
               alt="{{ p.title }}"
             >
+            {% else %}
+            <span class="admin-thumb media-placeholder admin-thumb-placeholder"><span>Blog</span></span>
+            {% endif %}
           </td>
 
           <td>

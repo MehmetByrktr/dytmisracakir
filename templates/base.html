@@ -21,7 +21,8 @@
     property="og:description"
     content="{% block og_description %}Bilimsel, sürdürülebilir ve kişiye özel beslenme danışmanlığı.{% endblock %}"
   >
-  <meta property="og:image" content="{{ media_url(settings.hero_image if settings else 'misra-hero.png', external=True) }}">
+  {% set social_image = media_url(settings.hero_image, external=True) if settings and has_media(settings.hero_image) else '' %}
+  {% if social_image %}<meta property="og:image" content="{{ social_image }}">{% endif %}
   <meta property="og:url" content="{{ request.base_url }}">
 
   <meta name="twitter:card" content="summary_large_image">
@@ -30,11 +31,15 @@
     name="twitter:description"
     content="{% block twitter_description %}Bilimsel, sürdürülebilir ve kişiye özel beslenme danışmanlığı.{% endblock %}"
   >
-  <meta name="twitter:image" content="{{ media_url(settings.hero_image if settings else 'misra-hero.png', external=True) }}">  {% set icon_v = settings.site_icon_updated_at.strftime('%Y%m%d%H%M%S') if settings and settings.site_icon_updated_at else '1' %}
-  <link rel="icon" type="image/png" href="{{ url_for('public.site_icon_png', v=icon_v) }}">
-  <link rel="shortcut icon" href="{{ url_for('public.favicon', v=icon_v) }}">
-  <link rel="apple-touch-icon" href="{{ url_for('public.site_icon_png', v=icon_v) }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% if social_image %}<meta name="twitter:image" content="{{ social_image }}">{% endif %}
+  {% set icon_v = settings.site_icon_updated_at.strftime('%Y%m%d%H%M%S') if settings and settings.site_icon_updated_at else static_version %}
+  {% set favicon_src = media_url(first_media(settings.favicon_image, settings.site_icon, settings.site_logo)) if settings else '' %}
+  {% if favicon_src %}
+  <link rel="icon" type="image/png" href="{{ favicon_src }}?v={{ icon_v }}">
+  <link rel="shortcut icon" href="{{ favicon_src }}?v={{ icon_v }}">
+  <link rel="apple-touch-icon" href="{{ favicon_src }}?v={{ icon_v }}">
+  {% endif %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=static_version) }}">
 
   <script type="application/ld+json">
   {
@@ -114,7 +119,12 @@
       </button>
 
       <a class="site-logo brand-with-icon" href="{{ url_for('public.home') }}" aria-label="Ana sayfa">
-        <img class="site-icon" src="{{ url_for('public.site_logo_png', v=icon_v) }}" loading="eager" decoding="async" alt="Diyetisyen Mısra Çakır ikon">
+        {% set logo_src = media_url(first_media(settings.site_logo, settings.site_icon)) if settings else '' %}
+        {% if logo_src %}
+          <img class="site-icon" src="{{ logo_src }}?v={{ icon_v }}" loading="eager" decoding="async" alt="Diyetisyen Mısra Çakır ikon">
+        {% else %}
+          <span class="site-icon site-icon-fallback" aria-hidden="true">M</span>
+        {% endif %}
         <span class="site-name">{{ content('site_brand_name') }}</span>
       </a>
     </div>
@@ -194,7 +204,7 @@
     </div>
   </footer>
 
-  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js', v=static_version) }}"></script>
   {% block extra_scripts %}{% endblock %}
 </body>
 </html>
