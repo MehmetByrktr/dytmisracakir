@@ -85,7 +85,7 @@
     {% if home_programs %}
       {% for program in home_programs %}
       <article class="p-card editorial-card">
-        <img src="{{ media_url(program.image or ('card-' ~ loop.index ~ '.jpg')) }}" alt="{{ program.title }}">
+        <img src="{{ media_url(program.image or ('card-' ~ loop.index ~ '.jpg')) }}" alt="{{ program.title }}" loading="lazy" decoding="async">
         <div class="p-body">
           <span class="card-no">{{ "%02d"|format(loop.index) }}</span>
           <h3>{{ program.title }}</h3>
@@ -97,7 +97,7 @@
     {% else %}
       {% for title, desc, img, link in fallback_cards %}
       <article class="p-card editorial-card">
-        <img src="{{ url_for('static', filename='images/' ~ img) }}" alt="{{ title }}">
+        <img src="{{ url_for('static', filename='images/' ~ img) }}" alt="{{ title }}" loading="lazy" decoding="async">
         <div class="p-body">
           <span class="card-no">{{ "%02d"|format(loop.index) }}</span>
           <h3>{{ title }}</h3>
@@ -127,7 +127,7 @@
     {% for p in posts %}
     <article class="post-card editorial-post-card">
       <div class="post-media">
-        <img src="{{ media_url(p.image) }}" alt="{{ p.title }}">
+        <img src="{{ media_url(p.image) }}" alt="{{ p.title }}" loading="lazy" decoding="async">
       </div>
 
       <div class="post-body">

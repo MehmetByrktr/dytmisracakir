@@ -72,17 +72,35 @@ CONTENT_DEFAULTS = {
 }
 
 
-def get_content(key):
-    """Return the stored value for a content key, or its default text."""
-    default = CONTENT_DEFAULTS.get(key, (None, None, None, ""))[3]
-    try:
-        row = SiteContent.query.filter_by(key=key).first()
-    except Exception:
-        return default
-    if row and row.value:
-        return row.value
-    return default
 
+
+def get_cached_content_map():
+    """Cache all editable page texts in one DB call."""
+    def _load():
+        try:
+            rows = SiteContent.query.all()
+            data = {row.key: row.value for row in rows}
+        except Exception:
+            data = {}
+
+        for key, (_, _, _, default) in CONTENT_DEFAULTS.items():
+            if not data.get(key):
+                data[key] = default
+        return data
+
+    return cache_get_or_set("site_content_map", _load, ttl=None)
+
+
+def get_cached_content(key):
+    group = get_cached_content_map()
+    if key in group:
+        return group[key]
+    if key in CONTENT_DEFAULTS:
+        return CONTENT_DEFAULTS[key][3]
+    return ""
+
+def get_content(key):
+    return get_cached_content(key)
 
 def get_all_content():
     """Return {key: value} for every known content key (DB value or default)."""

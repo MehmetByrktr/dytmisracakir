@@ -3,7 +3,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from config import Config
 from extensions import db
 from models import BlogPost, Myth, Appointment, DietProgram, MenuExample, SiteSettings
-from utils import get_settings, slugify, media_url, get_content
+from utils import get_settings, get_cached_settings, slugify, media_url, get_content
 from public_routes import public_bp
 from admin_routes import admin_bp
 import hmac
@@ -87,7 +87,7 @@ def create_app():
     @app.context_processor
     def inject_site_settings():
         try:
-            settings = get_settings()
+            settings = get_cached_settings()
         except Exception:
             settings = None
 
@@ -132,6 +132,12 @@ def create_app():
 
             if not session_token or not submitted_token or not hmac.compare_digest(session_token, submitted_token):
                 abort(400)
+
+    @app.after_request
+    def add_static_cache_headers(response):
+        if request.path.startswith("/static/"):
+            response.headers.setdefault("Cache-Control", "public, max-age=31536000, immutable")
+        return response
 
     @app.after_request
     def add_security_headers(response):
