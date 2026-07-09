@@ -2,6 +2,8 @@ import os
 import re
 import unicodedata
 import uuid
+from time import monotonic
+from types import SimpleNamespace
 from io import BytesIO
 
 import bleach
@@ -328,6 +330,62 @@ def make_unique_slug(title, post_id=None):
         slug = f"{base_slug}-{counter}"
         counter += 1
 
+
+
+# ----------------------------
+# Public site cache helpers
+# ----------------------------
+_PUBLIC_CACHE = {}
+
+
+def _cache_ttl(ttl=None):
+    if ttl is not None:
+        return ttl
+    try:
+        return int(current_app.config.get("PUBLIC_CACHE_TTL_SECONDS", 300))
+    except Exception:
+        return 300
+
+
+def cache_get_or_set(key, factory, ttl=None):
+    """Tiny per-process TTL cache for public pages.
+
+    This avoids hitting Supabase on every public page request. Admin writes call
+    clear_public_cache(), so edits become visible immediately after saving.
+    """
+    now = monotonic()
+    ttl_seconds = _cache_ttl(ttl)
+    cached = _PUBLIC_CACHE.get(key)
+
+    if cached:
+        expires_at, value = cached
+        if expires_at > now:
+            return value
+
+    value = factory()
+    _PUBLIC_CACHE[key] = (now + ttl_seconds, value)
+    return value
+
+
+def clear_public_cache():
+    _PUBLIC_CACHE.clear()
+
+
+def model_to_namespace(model, **extra):
+    """Convert SQLAlchemy model into a detached/light object usable in Jinja."""
+    data = {}
+    for column in model.__table__.columns:
+        data[column.name] = getattr(model, column.name)
+    data.update(extra)
+    return SimpleNamespace(**data)
+
+
+def get_cached_settings():
+    return cache_get_or_set(
+        "site_settings",
+        lambda: model_to_namespace(get_settings()),
+        ttl=None,
+    )
 
 def get_settings():
     settings = SiteSettings.query.first()

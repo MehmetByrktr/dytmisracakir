@@ -86,6 +86,7 @@ class SiteSettings(db.Model):
     )
     hero_image = db.Column(db.String(500), nullable=False, default="misra-hero.png")
     site_icon = db.Column(db.String(500), nullable=True, default="misra-icon.png")
+    site_icon_updated_at = db.Column(db.DateTime, nullable=True, default=datetime.utcnow)
 
     instagram_url = db.Column(db.String(250), nullable=True, default="https://instagram.com/dyt.misracakir")
     whatsapp_url = db.Column(db.String(250), nullable=True, default="https://wa.me/90XXXXXXXXXX")

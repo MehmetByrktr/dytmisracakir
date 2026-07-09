@@ -6,12 +6,23 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 
 from extensions import db
 from models import BlogPost, Myth, Appointment, DietProgram, MenuExample
-from utils import get_settings, media_url
+from utils import get_settings, get_cached_settings, cache_get_or_set, model_to_namespace, get_cached_settings, media_url, cache_get_or_set, model_to_namespace
 
 public_bp = Blueprint("public", __name__)
 
 _EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 _CONTACT_ATTEMPTS = {}
+
+
+def _icon_version(settings):
+    if settings and getattr(settings, "site_icon_updated_at", None):
+        return settings.site_icon_updated_at.strftime("%Y%m%d%H%M%S")
+    return "1"
+
+
+def _with_version(url, version):
+    separator = "&" if "?" in url else "?"
+    return f"{url}{separator}v={version}"
 
 
 def _client_key():
@@ -32,21 +43,90 @@ def _rate_limited():
     return False
 
 
-@public_bp.route("/")
-def home():
-    posts = BlogPost.query.order_by(BlogPost.created_at.desc()).limit(4).all()
-    home_programs = DietProgram.query.filter_by(is_active=True).order_by(
+
+
+def _program_payload(program):
+    return model_to_namespace(program, bullet_list=program.bullet_list)
+
+
+def _menu_payload(menu):
+    return model_to_namespace(menu, meal_list=menu.meal_list)
+
+
+def _all_active_programs_payload():
+    programs = DietProgram.query.filter_by(is_active=True).order_by(
+        DietProgram.order_no.asc(),
+        DietProgram.created_at.desc()
+    ).all()
+    return [_program_payload(program) for program in programs]
+
+
+def _home_programs_payload():
+    programs = DietProgram.query.filter_by(is_active=True).order_by(
         DietProgram.order_no.asc(),
         DietProgram.created_at.desc()
     ).limit(4).all()
-    settings = get_settings()
+    return [_program_payload(program) for program in programs]
+
+
+def _home_posts_payload():
+    posts = BlogPost.query.order_by(BlogPost.created_at.desc()).limit(4).all()
+    return [model_to_namespace(post) for post in posts]
+
+
+def _menus_payload():
+    menus = MenuExample.query.filter_by(is_active=True).order_by(
+        MenuExample.order_no.asc(),
+        MenuExample.created_at.desc()
+    ).all()
+    return [_menu_payload(menu) for menu in menus]
+
+
+def _menu_categories_payload():
+    return [
+        c[0] for c in db.session.query(MenuExample.category)
+        .filter(MenuExample.category.isnot(None))
+        .distinct()
+        .order_by(MenuExample.category.asc())
+        .all()
+        if c[0]
+    ]
+
+
+def _myths_payload():
+    myths = Myth.query.order_by(Myth.created_at.desc()).all()
+    return [model_to_namespace(myth) for myth in myths]
+
+
+def _blog_categories_payload():
+    return [
+        c[0] for c in db.session.query(BlogPost.category)
+        .distinct()
+        .order_by(BlogPost.category.asc())
+        .all()
+        if c[0]
+    ]
+
+@public_bp.route("/")
+def home():
+    posts = cache_get_or_set("home_posts_4", _home_posts_payload)
+    home_programs = cache_get_or_set("home_programs_4", _home_programs_payload)
+    settings = get_cached_settings()
     return render_template("index.html", posts=posts, settings=settings, home_programs=home_programs)
 
 
 @public_bp.route("/favicon.ico")
 def favicon():
-    settings = get_settings()
-    return redirect(media_url(settings.site_icon if settings and settings.site_icon else "misra-icon.png"), code=302)
+    settings = get_cached_settings()
+    icon_url = media_url(settings.site_icon if settings and settings.site_icon else "misra-icon.png")
+    return redirect(_with_version(icon_url, _icon_version(settings)), code=302)
+
+
+@public_bp.route("/site-icon.png")
+def site_icon_png():
+    settings = get_cached_settings()
+    icon_url = media_url(settings.site_icon if settings and settings.site_icon else "misra-icon.png")
+    return redirect(_with_version(icon_url, _icon_version(settings)), code=302)
 
 
 @public_bp.route("/hakkimda")
@@ -118,33 +198,20 @@ def iletisim():
 
 @public_bp.route("/diyet-sekilleri")
 def diyet_sekilleri():
-    programs = DietProgram.query.filter_by(is_active=True).order_by(
-        DietProgram.order_no.asc(),
-        DietProgram.created_at.desc()
-    ).all()
+    programs = cache_get_or_set("active_programs_all", _all_active_programs_payload)
     return render_template("diyet_sekilleri.html", programs=programs)
 
 
 @public_bp.route("/menuler")
 def menuler():
-    menus = MenuExample.query.filter_by(is_active=True).order_by(
-        MenuExample.order_no.asc(),
-        MenuExample.created_at.desc()
-    ).all()
-    categories = [
-        c[0] for c in db.session.query(MenuExample.category)
-        .filter(MenuExample.category.isnot(None))
-        .distinct()
-        .order_by(MenuExample.category.asc())
-        .all()
-        if c[0]
-    ]
+    menus = cache_get_or_set("active_menus_all", _menus_payload)
+    categories = cache_get_or_set("menu_categories", _menu_categories_payload)
     return render_template("menuler.html", menus=menus, categories=categories)
 
 
 @public_bp.route("/dogru-yanlis")
 def dogru_yanlis():
-    myths = Myth.query.order_by(Myth.created_at.desc()).all()
+    myths = cache_get_or_set("myths_all", _myths_payload)
     return render_template("dogru_yanlis.html", myths=myths)
 
 
@@ -172,13 +239,7 @@ def blog():
         error_out=False
     )
 
-    categories = [
-        c[0] for c in db.session.query(BlogPost.category)
-        .distinct()
-        .order_by(BlogPost.category.asc())
-        .all()
-        if c[0]
-    ]
+    categories = cache_get_or_set("blog_categories", _blog_categories_payload)
 
     return render_template(
         "blog.html",

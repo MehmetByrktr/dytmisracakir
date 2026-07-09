@@ -98,3 +98,6 @@ class Config:
 
     CONTACT_RATE_LIMIT_COUNT = int(os.getenv("CONTACT_RATE_LIMIT_COUNT", "5"))
     CONTACT_RATE_LIMIT_SECONDS = int(os.getenv("CONTACT_RATE_LIMIT_SECONDS", "600"))
+
+    # Public site cache: settings / homepage / list pages
+    PUBLIC_CACHE_TTL_SECONDS = int(os.getenv("PUBLIC_CACHE_TTL_SECONDS", "300"))

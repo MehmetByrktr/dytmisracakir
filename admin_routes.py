@@ -1,3 +1,4 @@
+from datetime import datetime
 from functools import wraps
 from time import time
 
@@ -231,6 +232,7 @@ def admin_blog_add():
 
         db.session.add(new_post)
         db.session.commit()
+        clear_public_cache()
 
         flash("Blog yazısı eklendi.", "success")
         return redirect(url_for("admin.admin_blog"))
@@ -266,6 +268,7 @@ def admin_blog_edit(post_id):
             post.image = uploaded_image
 
         db.session.commit()
+        clear_public_cache()
 
         flash("Blog yazısı güncellendi.", "success")
         return redirect(url_for("admin.admin_blog"))
@@ -279,6 +282,7 @@ def admin_blog_delete(post_id):
     post = BlogPost.query.get_or_404(post_id)
     db.session.delete(post)
     db.session.commit()
+    clear_public_cache()
     flash("Blog yazısı silindi.", "success")
     return redirect(url_for("admin.admin_blog"))
 
@@ -315,6 +319,7 @@ def admin_myth_add():
         new_myth = Myth(title=title, description=description, keywords=keywords)
         db.session.add(new_myth)
         db.session.commit()
+        clear_public_cache()
 
         flash("Mit eklendi.", "success")
         return redirect(url_for("admin.admin_myths"))
@@ -340,6 +345,7 @@ def admin_myth_edit(myth_id):
         myth.description = description
         myth.keywords = keywords
         db.session.commit()
+        clear_public_cache()
 
         flash("Mit güncellendi.", "success")
         return redirect(url_for("admin.admin_myths"))
@@ -353,6 +359,7 @@ def admin_myth_delete(myth_id):
     myth = Myth.query.get_or_404(myth_id)
     db.session.delete(myth)
     db.session.commit()
+    clear_public_cache()
     flash("Mit silindi.", "success")
     return redirect(url_for("admin.admin_myths"))
 
@@ -399,6 +406,7 @@ def admin_appointment_status(appointment_id):
     if new_status in allowed_statuses:
         appointment.status = new_status
         db.session.commit()
+        clear_public_cache()
         flash("Randevu durumu güncellendi.", "success")
 
     return redirect(url_for("admin.admin_appointments"))
@@ -410,6 +418,7 @@ def admin_appointment_delete(appointment_id):
     appointment = Appointment.query.get_or_404(appointment_id)
     db.session.delete(appointment)
     db.session.commit()
+    clear_public_cache()
     flash("Randevu talebi silindi.", "success")
     return redirect(url_for("admin.admin_appointments"))
 
@@ -450,6 +459,7 @@ def admin_program_add():
         )
         db.session.add(program)
         db.session.commit()
+        clear_public_cache()
         flash("Danışmanlık alanı eklendi.", "success")
         return redirect(url_for("admin.admin_programs"))
 
@@ -486,6 +496,7 @@ def admin_program_edit(program_id):
         program.is_active = bool(request.form.get("is_active"))
 
         db.session.commit()
+        clear_public_cache()
         flash("Danışmanlık alanı güncellendi.", "success")
         return redirect(url_for("admin.admin_programs"))
 
@@ -498,6 +509,7 @@ def admin_program_delete(program_id):
     program = DietProgram.query.get_or_404(program_id)
     db.session.delete(program)
     db.session.commit()
+    clear_public_cache()
     flash("Danışmanlık alanı silindi.", "success")
     return redirect(url_for("admin.admin_programs"))
 
@@ -530,6 +542,7 @@ def admin_menu_add():
         )
         db.session.add(menu)
         db.session.commit()
+        clear_public_cache()
         flash("Menü örneği eklendi.", "success")
         return redirect(url_for("admin.admin_menus"))
 
@@ -557,6 +570,7 @@ def admin_menu_edit(menu_id):
         menu.is_active = bool(request.form.get("is_active"))
 
         db.session.commit()
+        clear_public_cache()
         flash("Menü örneği güncellendi.", "success")
         return redirect(url_for("admin.admin_menus"))
 
@@ -569,6 +583,7 @@ def admin_menu_delete(menu_id):
     menu = MenuExample.query.get_or_404(menu_id)
     db.session.delete(menu)
     db.session.commit()
+    clear_public_cache()
     flash("Menü örneği silindi.", "success")
     return redirect(url_for("admin.admin_menus"))
 
@@ -587,9 +602,14 @@ def admin_settings():
             if uploaded_image:
                 settings.hero_image = uploaded_image
 
-            uploaded_icon = save_site_icon(request.files.get("site_icon"))
+            icon_file = request.files.get("site_icon")
+            uploaded_icon = save_site_icon(icon_file)
             if uploaded_icon:
                 settings.site_icon = uploaded_icon
+                settings.site_icon_updated_at = datetime.utcnow()
+                flash("Site ikonu / favicon güncellendi. Tarayıcı faviconu cache nedeniyle birkaç dakika eski görünebilir.", "success")
+            elif icon_file and icon_file.filename:
+                flash("Site ikonu yüklenemedi. PNG/JPG/WEBP/ICO formatında küçük kare bir görsel dene ve Cloudinary ayarlarını kontrol et.", "error")
 
             settings.instagram_url = request.form.get("instagram_url", "").strip()
             settings.whatsapp_url = request.form.get("whatsapp_url", "").strip()
@@ -604,6 +624,7 @@ def admin_settings():
             settings.counseling_description = request.form.get("counseling_description", "").strip()
 
             db.session.commit()
+            clear_public_cache()
             flash("Site ayarları güncellendi.", "success")
         except Exception:
             db.session.rollback()
@@ -629,6 +650,7 @@ def admin_content():
                         db.session.add(row)
                     row.value = sanitize_basic_html(value)
             db.session.commit()
+            clear_public_cache()
             flash("Sayfa metinleri güncellendi.", "success")
         except Exception:
             db.session.rollback()

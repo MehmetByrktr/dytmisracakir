@@ -32,10 +32,10 @@
   >
   <meta name="twitter:image" content="{{ media_url(settings.hero_image if settings else 'misra-hero.png', external=True) }}">
 
-  {% set favicon_url = media_url(settings.site_icon if settings and settings.site_icon else 'misra-icon.png') %}
-  <link rel="icon" type="image/png" href="{{ favicon_url }}">
-  <link rel="shortcut icon" href="{{ favicon_url }}">
-  <link rel="apple-touch-icon" href="{{ favicon_url }}">
+  {% set icon_v = settings.site_icon_updated_at.strftime('%Y%m%d%H%M%S') if settings and settings.site_icon_updated_at else '1' %}
+  <link rel="icon" type="image/png" href="{{ url_for('public.site_icon_png', v=icon_v) }}">
+  <link rel="shortcut icon" href="{{ url_for('public.favicon', v=icon_v) }}">
+  <link rel="apple-touch-icon" href="{{ url_for('public.site_icon_png', v=icon_v) }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
   <script type="application/ld+json">
@@ -116,7 +116,7 @@
       </button>
 
       <a class="site-logo brand-with-icon" href="{{ url_for('public.home') }}" aria-label="Ana sayfa">
-        <img class="site-icon" src="{{ media_url(settings.site_icon if settings and settings.site_icon else 'misra-icon.png') }}" alt="Diyetisyen Mısra Çakır ikon">
+        <img class="site-icon" src="{{ url_for('public.site_icon_png', v=icon_v) }}" alt="Diyetisyen Mısra Çakır ikon">
         <span class="site-name">{{ content('site_brand_name') }}</span>
       </a>
     </div>

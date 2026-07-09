@@ -3,7 +3,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from config import Config
 from extensions import db
 from models import BlogPost, Myth, Appointment, DietProgram, MenuExample, SiteSettings
-from utils import get_settings, slugify, media_url, get_content
+from utils import get_settings, get_cached_settings, slugify, media_url, get_content
 from public_routes import public_bp
 from admin_routes import admin_bp
 import hmac
@@ -52,6 +52,7 @@ def ensure_schema_upgrades():
 
     if "site_settings" in table_names:
         _add_column("site_settings", "site_icon", "site_icon VARCHAR(500) DEFAULT 'misra-icon.png'")
+        _add_column("site_settings", "site_icon_updated_at", "site_icon_updated_at TIMESTAMP")
         _add_column("site_settings", "counseling_kicker", "counseling_kicker VARCHAR(150) DEFAULT 'Danışmanlık alanları'")
         _add_column("site_settings", "counseling_title", "counseling_title VARCHAR(350) DEFAULT 'Hedefine göre sade, uygulanabilir ve takip edilebilir bir süreç.'")
         _add_column("site_settings", "counseling_description", "counseling_description TEXT DEFAULT 'Danışmanlık kartları admin paneldeki Danışmanlık Alanları bölümünden yönetilir.'")
@@ -60,6 +61,7 @@ def ensure_schema_upgrades():
 
         with db.engine.begin() as connection:
             connection.execute(text("UPDATE site_settings SET site_icon = 'misra-icon.png' WHERE site_icon IS NULL OR site_icon = ''"))
+            connection.execute(text("UPDATE site_settings SET site_icon_updated_at = CURRENT_TIMESTAMP WHERE site_icon_updated_at IS NULL"))
             connection.execute(text("UPDATE site_settings SET counseling_kicker = 'Danışmanlık alanları' WHERE counseling_kicker IS NULL OR counseling_kicker = ''"))
             connection.execute(text("UPDATE site_settings SET counseling_title = 'Hedefine göre sade, uygulanabilir ve takip edilebilir bir süreç.' WHERE counseling_title IS NULL OR counseling_title = ''"))
 
@@ -79,7 +81,7 @@ def create_app():
     @app.context_processor
     def inject_site_settings():
         try:
-            settings = get_settings()
+            settings = get_cached_settings()
         except Exception:
             settings = None
 
