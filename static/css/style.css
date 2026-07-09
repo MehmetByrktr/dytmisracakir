@@ -3842,3 +3842,33 @@ input::placeholder,textarea::placeholder{color:rgba(39,36,42,.42) !important;}
   gap:12px !important;
   align-items:flex-start !important;
 }
+
+
+/* V16 — Mehmet-style logo/favicon system inside existing Mısra UI */
+.remove-icon-row{
+  margin-top:10px !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  color:var(--admin-green,#526b5b) !important;
+  font-size:13px !important;
+  font-weight:800 !important;
+}
+
+.remove-icon-row input{
+  width:16px !important;
+  height:16px !important;
+  min-height:16px !important;
+  box-shadow:none !important;
+}
+
+.site-icon-preview-admin{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-start !important;
+}
+
+.site-icon-preview-admin img{
+  object-fit:cover !important;
+  background:#fffefb !important;
+}

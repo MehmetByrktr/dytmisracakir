@@ -17,7 +17,7 @@
   <aside class="admin-sidebar" aria-label="Admin menü">
     <div class="admin-brand-row">
       <a class="admin-brand" href="{{ url_for('admin.admin_dashboard') }}">
-        <img class="admin-brand-icon" src="{{ media_url(settings.site_icon if settings and settings.site_icon else 'misra-icon.png') }}" alt="">
+        <img class="admin-brand-icon" src="{{ url_for('public.site_logo_png') }}" alt="">
         <span>
           <strong>Mısra</strong>
           <em>Admin Panel</em>

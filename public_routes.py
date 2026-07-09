@@ -6,7 +6,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 
 from extensions import db
 from models import BlogPost, Myth, Appointment, DietProgram, MenuExample
-from utils import get_settings, get_cached_settings, cache_get_or_set, model_to_namespace, get_cached_settings, media_url, cache_get_or_set, model_to_namespace
+from utils import get_settings, get_cached_settings, cache_get_or_set, model_to_namespace, media_url
 
 public_bp = Blueprint("public", __name__)
 
@@ -23,6 +23,23 @@ def _icon_version(settings):
 def _with_version(url, version):
     separator = "&" if "?" in url else "?"
     return f"{url}{separator}v={version}"
+
+
+def _favicon_value(settings):
+    return (
+        getattr(settings, "favicon_image", None)
+        or getattr(settings, "site_icon", None)
+        or getattr(settings, "site_logo", None)
+        or "misra-icon.png"
+    )
+
+
+def _logo_value(settings):
+    return (
+        getattr(settings, "site_logo", None)
+        or getattr(settings, "site_icon", None)
+        or "misra-icon.png"
+    )
 
 
 def _client_key():
@@ -117,16 +134,23 @@ def home():
 
 @public_bp.route("/favicon.ico")
 def favicon():
-    settings = get_cached_settings()
-    icon_url = media_url(settings.site_icon if settings and settings.site_icon else "misra-icon.png")
+    settings = get_settings()
+    icon_url = media_url(_favicon_value(settings))
     return redirect(_with_version(icon_url, _icon_version(settings)), code=302)
 
 
 @public_bp.route("/site-icon.png")
 def site_icon_png():
-    settings = get_cached_settings()
-    icon_url = media_url(settings.site_icon if settings and settings.site_icon else "misra-icon.png")
+    settings = get_settings()
+    icon_url = media_url(_favicon_value(settings))
     return redirect(_with_version(icon_url, _icon_version(settings)), code=302)
+
+
+@public_bp.route("/site-logo.png")
+def site_logo_png():
+    settings = get_settings()
+    logo_url = media_url(_logo_value(settings))
+    return redirect(_with_version(logo_url, _icon_version(settings)), code=302)
 
 
 @public_bp.route("/hakkimda")

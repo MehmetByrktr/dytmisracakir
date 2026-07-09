@@ -91,17 +91,42 @@
 
         <div class="settings-file-box site-icon-upload-box">
           <div>
-            <label>Site İkonu / Favicon / Google İkonu</label>
-            <p>Navbar, tarayıcı sekmesi faviconu ve Google’da görünen site ikonu için kullanılır. Yüklenen ikon otomatik kare PNG’ye çevrilir. Google arama sonucu ikonu hemen değil, Google yeniden taradığında güncellenir. Mevcut ikon: <strong>{{ settings.site_icon or 'misra-icon.png' }}</strong></p>
+            <label>Site Logosu</label>
+            <p>Navbar ve admin panel sol üstündeki logo için kullanılır.</p>
+            {% if settings.site_logo or settings.site_icon %}
+            <label class="check-row remove-icon-row">
+              <input type="checkbox" name="remove_site_logo" value="1">
+              Logoyu kaldır
+            </label>
+            {% endif %}
           </div>
 
           <div class="site-icon-preview-admin">
-            <img src="{{ url_for('public.site_icon_png', v=icon_v) }}" alt="Mevcut site ikonu">
-            <input type="file" name="site_icon" accept=".jpg,.jpeg,.png,.webp,.ico">
+            <img src="{{ url_for('public.site_logo_png', v=icon_v) }}" alt="Mevcut site logosu">
+            <input type="file" name="site_logo_file" accept=".jpg,.jpeg,.png,.webp,.ico">
+          </div>
+        </div>
+
+        <div class="settings-file-box site-icon-upload-box">
+          <div>
+            <label>Favicon / Google İkonu</label>
+            <p>Tarayıcı sekmesi ve Google arama sonucu ikonu için kullanılır. Google tarafı yeniden taranınca güncellenir.</p>
+            {% if settings.favicon_image or settings.site_icon %}
+            <label class="check-row remove-icon-row">
+              <input type="checkbox" name="remove_favicon_image" value="1">
+              Faviconu kaldır
+            </label>
+            {% endif %}
+          </div>
+
+          <div class="site-icon-preview-admin">
+            <img src="{{ url_for('public.site_icon_png', v=icon_v) }}" alt="Mevcut favicon">
+            <input type="file" name="favicon_image_file" accept=".jpg,.jpeg,.png,.webp,.ico">
             <a class="btn ghost mini-favicon-check" href="{{ url_for('public.site_icon_png', v=icon_v) }}" target="_blank" rel="noopener noreferrer">Güncel faviconu aç</a>
           </div>
         </div>
       </div>
+
 
       <div class="settings-section">
         <div class="settings-section-title">

@@ -9,7 +9,7 @@ from extensions import db
 from models import BlogPost, Myth, Appointment, DietProgram, MenuExample, SiteContent
 from utils import (
     make_unique_slug, save_image, save_site_icon, get_settings,
-    sanitize_rich_content, sanitize_basic_html, CONTENT_DEFAULTS, get_all_content,
+    sanitize_rich_content, sanitize_basic_html, CONTENT_DEFAULTS, get_all_content, clear_public_cache,
 )
 
 
@@ -602,14 +602,35 @@ def admin_settings():
             if uploaded_image:
                 settings.hero_image = uploaded_image
 
-            icon_file = request.files.get("site_icon")
-            uploaded_icon = save_site_icon(icon_file)
-            if uploaded_icon:
-                settings.site_icon = uploaded_icon
+            # Mehmet'in sitesindeki mantık: logo ve favicon ayrı file inputlardan gelir.
+            # Geriye dönük uyumluluk için eski site_icon inputu da desteklenir.
+            if request.form.get("remove_site_logo") == "1":
+                settings.site_logo = ""
+            if request.form.get("remove_favicon_image") == "1":
+                settings.favicon_image = ""
+
+            logo_file = request.files.get("site_logo_file") or request.files.get("site_icon")
+            favicon_file = request.files.get("favicon_image_file") or request.files.get("site_icon")
+
+            uploaded_logo = save_site_icon(logo_file)
+            if uploaded_logo:
+                settings.site_logo = uploaded_logo
+                # Eski template/alanlarla uyum için site_icon da logo ile güncel tutulur.
+                settings.site_icon = uploaded_logo
                 settings.site_icon_updated_at = datetime.utcnow()
-                flash("Site ikonu / favicon güncellendi. Tarayıcı faviconu cache nedeniyle birkaç dakika eski görünebilir.", "success")
-            elif icon_file and icon_file.filename:
-                flash("Site ikonu yüklenemedi. PNG/JPG/WEBP/ICO formatında küçük kare bir görsel dene ve Cloudinary ayarlarını kontrol et.", "error")
+                flash("Site logosu güncellendi.", "success")
+            elif logo_file and logo_file.filename:
+                flash("Site logosu yüklenemedi. PNG/JPG/WEBP/ICO formatında küçük kare görsel dene.", "error")
+
+            uploaded_favicon = save_site_icon(favicon_file)
+            if uploaded_favicon:
+                settings.favicon_image = uploaded_favicon
+                # Eski tek ikon mantığıyla uyum için site_icon favicon ile de güncellenir.
+                settings.site_icon = uploaded_favicon
+                settings.site_icon_updated_at = datetime.utcnow()
+                flash("Favicon / Google ikonu güncellendi.", "success")
+            elif favicon_file and favicon_file.filename:
+                flash("Favicon yüklenemedi. PNG/JPG/WEBP/ICO formatında küçük kare görsel dene.", "error")
 
             settings.instagram_url = request.form.get("instagram_url", "").strip()
             settings.whatsapp_url = request.form.get("whatsapp_url", "").strip()
@@ -629,7 +650,7 @@ def admin_settings():
         except Exception:
             db.session.rollback()
             current_app.logger.exception("Site ayarları kaydedilirken hata oluştu.")
-            flash("Site ayarları kaydedilemedi. Lütfen görsel formatını/boyutunu kontrol edip tekrar dene. Sorun sürerse yöneticine haber ver.", "error")
+            flash("Site ayarları kaydedilemedi. Lütfen görsel formatını/boyutunu kontrol edip tekrar dene.", "error")
         return redirect(url_for("admin.admin_settings"))
 
     return render_template("admin/settings.html", settings=settings)
