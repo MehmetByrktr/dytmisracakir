@@ -87,9 +87,12 @@ main {
 
 .site-main [class~='bg-clay'] svg,
 .admin-main [class~='bg-clay'] svg,
-.admin-main aside svg,
 footer svg {
   color: theme('colors.porcelain') !important;
+}
+
+.admin-main aside svg {
+  color: currentColor !important;
 }
 
 [class*='text-red'] svg,
