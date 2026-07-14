@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { GraduationCap, Award, Stethoscope, HeartHandshake, MessageSquareText } from 'lucide-react';
 import SectionHeading from '@/components/ui/SectionHeading';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
@@ -15,7 +16,7 @@ export default async function AboutPage() {
   const portrait = site.aboutImage || site.heroImage;
   return <div className="bg-cream [&>section]:!bg-cream">
     <section className="pb-16 pt-36 sm:pt-44"><div className="container-site grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-      <RevealOnScroll><div className="aspect-[4/5] w-full max-w-sm overflow-hidden rounded-blob border border-ink/[0.06] bg-gradient-to-br from-sage-100 via-cream-deep to-clay-soft/30 shadow-soft">{portrait ? <img src={portrait} alt={`${site.name} portresi`} className="h-full w-full object-cover" /> : <div className="flex h-full items-center justify-center px-8 text-center font-display text-sm text-ink-faint">Diyetisyenin profesyonel fotoğrafı için görsel alanı</div>}</div></RevealOnScroll>
+      <RevealOnScroll><div className="relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-blob border border-ink/[0.06] bg-gradient-to-br from-sage-100 via-cream-deep to-clay-soft/30 shadow-soft">{portrait ? <Image src={portrait} alt={`${site.name} portresi`} fill sizes="(max-width: 1024px) 100vw, 384px" className="object-cover" /> : <div className="flex h-full items-center justify-center px-8 text-center font-display text-sm text-ink-faint">Diyetisyenin profesyonel fotoğrafı için görsel alanı</div>}</div></RevealOnScroll>
       <div><span className="eyebrow">{text.eyebrow}</span><h1 className="mt-3 text-balance font-display text-4xl font-medium leading-[1.1] text-ink sm:text-5xl">{text.title}</h1><p className="mt-6 max-w-xl text-balance leading-relaxed text-ink-soft">{text.intro}</p><div className="mt-8"><Button href="/randevu">{text.button}</Button></div></div>
     </div></section>
 

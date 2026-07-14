@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { CalendarDays, ChevronRight, Info, Utensils } from 'lucide-react';
@@ -36,7 +37,7 @@ export default async function MenuDetailPage({ params }: { params: Promise<{ slu
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <RevealOnScroll>
             <div className="paper-card sticky top-28 overflow-hidden p-6">
-              <div className="flex aspect-[4/3] items-center justify-center overflow-hidden rounded-xl bg-sage-50 font-mono text-xs uppercase tracking-wide text-sage-600">{menu.image ? <img src={menu.image} alt={menu.title} className="h-full w-full object-cover" /> : 'Menü görseli'}</div>
+              <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-xl bg-sage-50 font-mono text-xs uppercase tracking-wide text-sage-600">{menu.image ? <Image src={menu.image} alt={menu.title} fill sizes="(max-width: 1024px) 100vw, 36vw" className="object-cover" /> : 'Menü görseli'}</div>
               <div className="mt-6 flex flex-wrap gap-2">
                 {menu.categories.map((category) => (
                   <span key={category} className="rounded-full bg-clay/10 px-3 py-1 text-xs font-medium text-clay-deep">

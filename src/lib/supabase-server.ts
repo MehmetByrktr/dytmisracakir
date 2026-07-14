@@ -25,6 +25,9 @@ function normalizeSupabaseUrl(value: string) {
 
 export function readableSupabaseError(error: { message?: string } | null | undefined) {
   const message = error?.message?.trim() || 'Bilinmeyen Supabase hatası';
+  if (/JWT issued at future/i.test(message)) {
+    return 'Supabase JWT anahtarı geçersiz zaman bilgisi içeriyor. Render ortamında sb_secret_ ile başlayan yeni Secret key kullanılmalıdır.';
+  }
   if (/<!doctype html|<html/i.test(message)) {
     return 'Supabase API yerine HTML yanıtı alındı. SUPABASE_URL değerini kontrol edin.';
   }

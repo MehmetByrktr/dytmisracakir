@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { Leaf, Apple, Carrot, Ruler, ArrowRight, ShieldCheck } from 'lucide-react';
@@ -42,7 +43,7 @@ export default function Hero({ siteData = defaultSite }: { siteData?: typeof def
           <motion.div style={{ y: decorY }} className="absolute -left-6 -top-6 z-0 h-24 w-24 rounded-full bg-sage-100 sm:h-32 sm:w-32" aria-hidden />
           <motion.div style={{ y: imageY, x: shouldReduceMotion ? 0 : pointer.x * 10 }} className="relative z-10 h-full w-full overflow-hidden rounded-blob border border-ink/[0.06] shadow-soft">
             {site.heroImage ? (
-              <img src={site.heroImage} alt={`${site.name} profesyonel portresi`} className="h-full w-full object-cover" />
+              <Image src={site.heroImage} alt={`${site.name} profesyonel portresi`} fill priority sizes="(max-width: 1024px) 100vw, 45vw" className="object-cover" />
             ) : (
               <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-sage-100 via-cream-deep to-clay-soft/40 font-display text-sm text-ink-faint"><span className="px-10 text-center">Diyetisyenin profesyonel fotoğrafı için görsel alanı<br />(1000×1250px önerilir)</span></div>
             )}
