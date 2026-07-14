@@ -6,7 +6,7 @@ const config: Config = {
     extend: {
       colors: {
         cream: {
-          DEFAULT: '#F1E69F',
+          DEFAULT: '#F7F3ED',
           deep: '#E8D982',
           line: '#C6B85D',
         },
