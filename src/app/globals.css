@@ -82,11 +82,18 @@ main {
 }
 
 [class~='bg-clay'] {
+  color: theme('colors.ink.DEFAULT');
+}
+
+[class~='bg-clay']:hover {
   color: theme('colors.porcelain');
 }
 
 .site-main [class~='bg-clay'] svg,
-.admin-main [class~='bg-clay'] svg,
+.admin-main [class~='bg-clay'] svg {
+  color: currentColor !important;
+}
+
 footer svg {
   color: theme('colors.porcelain') !important;
 }

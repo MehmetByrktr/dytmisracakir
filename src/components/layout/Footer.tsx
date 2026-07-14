@@ -6,7 +6,7 @@ import { footerLinks, site as defaultSite } from '@/data/site';
 export default function Footer({ siteData = defaultSite }: { siteData?: typeof defaultSite }) {
   const site = siteData;
   return (
-    <footer className="relative overflow-hidden border-t border-sage-700 bg-sage text-porcelain [&_.eyebrow]:text-porcelain">
+    <footer className="relative overflow-hidden border-t border-clay-deep bg-footer text-porcelain [&_.eyebrow]:text-porcelain">
       <div className="container-site grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Link href="/" className="font-display text-2xl font-semibold text-porcelain">

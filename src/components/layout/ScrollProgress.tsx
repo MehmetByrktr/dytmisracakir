@@ -19,7 +19,7 @@ export default function ScrollProgress() {
       />
       <motion.div
         style={{ top: markerTop }}
-        className="absolute left-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-clay shadow-[0_0_0_4px_rgba(247,243,237,1)]"
+        className="absolute left-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-clay shadow-[0_0_0_4px_rgba(252,248,248,1)]"
       />
     </div>
   );
