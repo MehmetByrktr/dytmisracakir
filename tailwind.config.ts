@@ -15,7 +15,7 @@ const config: Config = {
           50: '#EEF1E3',
           100: '#DCE3C7',
           300: '#BFCB86',
-          DEFAULT: '#A6B13C',
+          DEFAULT: '#80627F',
           600: '#8E992D',
           700: '#727D20',
         },
