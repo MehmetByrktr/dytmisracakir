@@ -1,22 +1,51 @@
 'use client';
 
-import { Mail } from 'lucide-react';
+import { Instagram, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
+import TikTokIcon from '@/components/icons/TikTokIcon';
 
-export default function EmailButton({ email }: { email: string }) {
+interface SocialRailProps {
+  email: string;
+  instagram: string;
+  tiktok: string;
+}
+
+export default function EmailButton({ email, instagram, tiktok }: SocialRailProps) {
   const subject = encodeURIComponent('Beslenme danışmanlığı hakkında bilgi');
   const body = encodeURIComponent('Merhaba Mısra Hanım, danışmanlık hakkında bilgi almak istiyorum.');
+  const items = [
+    { href: instagram, label: 'Instagram', title: 'Instagram', Icon: Instagram, external: true },
+    { href: tiktok, label: 'TikTok', title: 'TikTok', Icon: TikTokIcon, external: true },
+    {
+      href: `mailto:${email}?subject=${subject}&body=${body}`,
+      label: 'E-posta ile hızlı iletişim',
+      title: 'E-posta gönder',
+      Icon: Mail,
+      external: false,
+    },
+  ].filter((item) => item.href);
+
   return (
-    <motion.a
-      href={`mailto:${email}?subject=${subject}&body=${body}`}
-      aria-label="E-posta ile hızlı iletişim"
-      title="E-posta gönder"
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.7, duration: 0.35 }}
-      className="fixed bottom-5 right-5 z-40 flex h-12 w-12 items-center justify-center rounded-full border border-sage-300/40 bg-sage-700 text-cream shadow-soft transition hover:-translate-y-0.5 hover:bg-clay-deep motion-reduce:transition-none"
+    <motion.div
+      initial={{ opacity: 0, x: 16 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: 0.55, duration: 0.4 }}
+      className="fixed right-3 top-1/2 z-40 flex -translate-y-1/2 flex-col gap-2 sm:right-5"
+      aria-label="Hızlı iletişim bağlantıları"
     >
-      <Mail className="h-5 w-5" />
-    </motion.a>
+      {items.map(({ href, label, title, Icon, external }) => (
+        <a
+          key={label}
+          href={href}
+          aria-label={label}
+          title={title}
+          target={external ? '_blank' : undefined}
+          rel={external ? 'noopener noreferrer' : undefined}
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-sage-700/20 bg-sage text-porcelain shadow-card transition duration-300 hover:-translate-x-1 hover:bg-sage-700 hover:shadow-soft sm:h-12 sm:w-12"
+        >
+          <Icon className="h-5 w-5" />
+        </a>
+      ))}
+    </motion.div>
   );
 }

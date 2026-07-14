@@ -4,7 +4,6 @@ import { usePathname } from 'next/navigation';
 import type { site as defaultSite } from '@/data/site';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import ScrollProgress from '@/components/layout/ScrollProgress';
 import EmailButton from '@/components/ui/EmailButton';
 import ScrollToTop from '@/components/ui/ScrollToTop';
 
@@ -26,11 +25,10 @@ export default function SiteChrome({ siteData, children }: { siteData: SiteData;
       >
         İçeriğe geç
       </a>
-      <ScrollProgress />
       <Navbar siteName={siteData.name} logo={siteData.logo} />
       <main id="ana-icerik" className="site-main bg-cream">{children}</main>
       <Footer siteData={siteData} />
-      <EmailButton email={siteData.email} />
+      <EmailButton email={siteData.email} instagram={siteData.social.instagram} tiktok={siteData.social.youtube} />
       <ScrollToTop />
     </>
   );

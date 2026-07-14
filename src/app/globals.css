@@ -82,7 +82,7 @@ main {
 }
 
 [class~='bg-clay'] {
-  color: theme('colors.ink.DEFAULT');
+  color: theme('colors.porcelain');
 }
 
 [class~='bg-clay']:hover {
@@ -159,12 +159,12 @@ select:focus-visible,
 
 .site-main .paper-card h2,
 .site-main .paper-card h3 {
-  color: theme('colors.sage.DEFAULT') !important;
+  color: theme('colors.ink.DEFAULT') !important;
 }
 
 .admin-main [class~='bg-card'] h2,
 .admin-main [class~='bg-card'] h3 {
-  color: theme('colors.sage.DEFAULT') !important;
+  color: theme('colors.ink.DEFAULT') !important;
 }
 
 .section-pad {
@@ -172,7 +172,7 @@ select:focus-visible,
 }
 
 .eyebrow {
-  @apply font-mono text-[11px] uppercase tracking-[0.18em] text-sage-700;
+  @apply font-mono text-[11px] uppercase tracking-[0.18em] text-ink;
 }
 
 /* Rich blog content created in the admin editor */

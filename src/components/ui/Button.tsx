@@ -34,7 +34,7 @@ export default function Button({
   };
 
   const variants = {
-    primary: 'bg-clay text-ink shadow-soft hover:bg-clay-deep hover:text-porcelain hover:scale-[1.03] active:scale-[0.98]',
+    primary: 'bg-clay text-porcelain shadow-soft hover:bg-clay-deep hover:text-porcelain hover:scale-[1.03] active:scale-[0.98]',
     secondary:
       'bg-transparent text-ink border border-ink/20 hover:border-sage-600 hover:text-sage-700 hover:scale-[1.02]',
     ghost: 'bg-sage-50 text-sage-700 hover:bg-sage-100 hover:scale-[1.02]',
