@@ -15,20 +15,20 @@ export default function SiteChrome({ siteData, children }: { siteData: SiteData;
   const isAdmin = pathname.startsWith('/admin');
 
   if (isAdmin) {
-    return <main id="ana-icerik" className="min-h-screen bg-cream">{children}</main>;
+    return <main id="ana-icerik" className="admin-main min-h-screen bg-cream">{children}</main>;
   }
 
   return (
     <>
       <a
         href="#ana-icerik"
-        className="fixed left-4 top-4 z-[60] -translate-y-24 rounded-full bg-clay px-5 py-2.5 text-sm font-semibold text-cream transition-transform focus:translate-y-0"
+        className="fixed left-4 top-4 z-[60] -translate-y-24 rounded-full bg-clay px-5 py-2.5 text-sm font-semibold text-ink transition-transform focus:translate-y-0"
       >
         İçeriğe geç
       </a>
       <ScrollProgress />
       <Navbar siteName={siteData.name} logo={siteData.logo} />
-      <main id="ana-icerik" className="bg-cream">{children}</main>
+      <main id="ana-icerik" className="site-main bg-cream">{children}</main>
       <Footer siteData={siteData} />
       <EmailButton email={siteData.email} />
       <ScrollToTop />

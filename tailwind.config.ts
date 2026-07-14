@@ -6,27 +6,32 @@ const config: Config = {
     extend: {
       colors: {
         cream: {
-          DEFAULT: '#F7F3ED',
-          deep: '#E3D6BF',
-          line: '#9F9679',
+          DEFAULT: '#F1E69F',
+          deep: '#E8D982',
+          line: '#C6B85D',
         },
         sage: {
-          50: '#EEF1E8',
-          100: '#AABAAE',
-          300: '#9F9679',
-          DEFAULT: '#839958',
-          600: '#657A45',
-          700: '#0A3323',
+          50: '#EEF0C8',
+          100: '#D8DD8B',
+          300: '#BBC45B',
+          DEFAULT: '#A6B13C',
+          600: '#8E992D',
+          700: '#727D20',
         },
         clay: {
-          DEFAULT: '#933B5B',
-          soft: '#B5728A',
-          deep: '#742D48',
+          DEFAULT: '#AA9FBE',
+          soft: '#C9C0D5',
+          deep: '#817592',
+        },
+        illusion: {
+          DEFAULT: '#FB9FC5',
+          soft: '#FBC5DC',
+          deep: '#D977A0',
         },
         ink: {
-          DEFAULT: '#0A3323',
-          soft: '#3F4D43',
-          faint: '#6C756D',
+          DEFAULT: '#59392C',
+          soft: '#705043',
+          faint: '#896B5E',
         },
       },
       fontFamily: {
@@ -36,9 +41,9 @@ const config: Config = {
         mono: ['SFMono-Regular', 'Consolas', 'Liberation Mono', 'monospace'],
       },
       boxShadow: {
-        card: '0 1px 2px rgba(10,51,35,0.04), 0 10px 30px -12px rgba(10,51,35,0.12)',
-        'card-hover': '0 5px 16px rgba(10,51,35,0.06), 0 28px 56px -20px rgba(10,51,35,0.20)',
-        soft: '0 18px 52px -24px rgba(10,51,35,0.28)',
+        card: '0 1px 2px rgba(89,57,44,0.08), 0 12px 30px -14px rgba(89,57,44,0.28)',
+        'card-hover': '0 6px 18px rgba(89,57,44,0.10), 0 30px 58px -22px rgba(89,57,44,0.36)',
+        soft: '0 18px 52px -24px rgba(89,57,44,0.34)',
       },
       borderRadius: { xl2: '1.25rem', blob: '63% 37% 54% 46% / 43% 45% 55% 57%' },
       backgroundImage: {
@@ -47,7 +52,7 @@ const config: Config = {
       keyframes: {
         marquee: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
         floaty: { '0%, 100%': { transform: 'translateY(0) rotate(0deg)' }, '50%': { transform: 'translateY(-10px) rotate(2deg)' } },
-        pulseSoft: { '0%, 100%': { boxShadow: '0 0 0 0 rgba(147,59,91,0.30)' }, '50%': { boxShadow: '0 0 0 10px rgba(147,59,91,0)' } },
+        pulseSoft: { '0%, 100%': { boxShadow: '0 0 0 0 rgba(170,159,190,0.40)' }, '50%': { boxShadow: '0 0 0 10px rgba(170,159,190,0)' } },
       },
       animation: { marquee: 'marquee 28s linear infinite', floaty: 'floaty 6s ease-in-out infinite', 'pulse-soft': 'pulseSoft 2.6s ease-in-out infinite' },
     },

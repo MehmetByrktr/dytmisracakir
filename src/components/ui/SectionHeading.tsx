@@ -25,11 +25,11 @@ export default function SectionHeading({
       <SplitHeading
         text={title}
         as="h2"
-        className="mt-3 text-balance font-display text-3xl font-medium leading-[1.15] text-ink sm:text-4xl lg:text-[2.75rem]"
+        className="mt-3 text-balance font-display text-4xl font-medium leading-[1.08] text-illusion sm:text-5xl lg:text-[3.35rem]"
       />
       {description && (
         <RevealOnScroll delay={0.15}>
-          <p className="mt-5 text-balance text-base leading-relaxed text-ink-soft">{description}</p>
+          <p className="mt-5 text-balance text-sm leading-relaxed text-ink-soft">{description}</p>
         </RevealOnScroll>
       )}
     </div>
