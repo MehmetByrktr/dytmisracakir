@@ -98,7 +98,7 @@ footer svg {
   color: theme('colors.porcelain') !important;
 }
 
-.admin-main aside svg {
+#ana-icerik.admin-main aside svg {
   color: currentColor !important;
 }
 
