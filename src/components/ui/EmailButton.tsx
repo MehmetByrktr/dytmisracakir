@@ -41,7 +41,7 @@ export default function EmailButton({ email, instagram, tiktok }: SocialRailProp
           title={title}
           target={external ? '_blank' : undefined}
           rel={external ? 'noopener noreferrer' : undefined}
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-sage-700/20 bg-sage text-porcelain shadow-card transition duration-300 hover:-translate-x-1 hover:bg-sage-700 hover:shadow-soft sm:h-12 sm:w-12"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-sage/35 bg-transparent text-sage-700 shadow-card backdrop-blur-sm transition duration-300 hover:-translate-x-1 hover:border-sage-700 hover:bg-sage/10 hover:shadow-soft sm:h-12 sm:w-12"
         >
           <Icon className="h-5 w-5" />
         </a>
