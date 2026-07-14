@@ -95,7 +95,7 @@ main {
 }
 
 footer svg {
-  color: theme('colors.porcelain') !important;
+  color: theme('colors.sage.DEFAULT') !important;
 }
 
 #ana-icerik.admin-main aside svg {
