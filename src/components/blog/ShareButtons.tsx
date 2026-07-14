@@ -1,9 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { Link2, Check, Twitter, Linkedin } from 'lucide-react';
+import { Check, Instagram, Link2 } from 'lucide-react';
+import TikTokIcon from '@/components/icons/TikTokIcon';
 
-export default function ShareButtons({ title, url }: { title: string; url: string }) {
+interface ShareButtonsProps {
+  url: string;
+  instagramUrl: string;
+  tiktokUrl: string;
+}
+
+export default function ShareButtons({ url, instagramUrl, tiktokUrl }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false);
 
   async function copyLink() {
@@ -12,35 +19,34 @@ export default function ShareButtons({ title, url }: { title: string; url: strin
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // clipboard unavailable — silently ignore
+      // Clipboard kullanılamıyorsa sayfanın çalışmasını etkileme.
     }
   }
+
+  const socialClass =
+    'flex h-9 w-9 items-center justify-center rounded-full border border-ink/10 text-ink-soft transition-colors hover:border-clay hover:text-clay';
 
   return (
     <div className="flex items-center gap-2">
       <a
-        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`}
+        href={instagramUrl}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="X'te paylaş"
-        className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/10 text-ink-soft transition-colors hover:border-clay hover:text-clay"
+        aria-label="Instagram profilini aç"
+        className={socialClass}
       >
-        <Twitter className="h-4 w-4" />
+        <Instagram className="h-4 w-4" />
       </a>
       <a
-        href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`}
+        href={tiktokUrl}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="LinkedIn'de paylaş"
-        className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/10 text-ink-soft transition-colors hover:border-clay hover:text-clay"
+        aria-label="TikTok profilini aç"
+        className={socialClass}
       >
-        <Linkedin className="h-4 w-4" />
+        <TikTokIcon className="h-4 w-4" />
       </a>
-      <button
-        onClick={copyLink}
-        aria-label="Bağlantıyı kopyala"
-        className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/10 text-ink-soft transition-colors hover:border-clay hover:text-clay"
-      >
+      <button onClick={copyLink} aria-label="Bağlantıyı kopyala" className={socialClass}>
         {copied ? <Check className="h-4 w-4 text-sage-600" /> : <Link2 className="h-4 w-4" />}
       </button>
     </div>

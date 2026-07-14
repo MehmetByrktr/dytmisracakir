@@ -43,7 +43,7 @@ export default function Navbar({ siteName, logo }: { siteName: string; logo?: st
       <nav className="container-site flex h-20 items-center justify-between">
         <Link href="/" className="flex items-center gap-3 text-ink" aria-label={`Dyt. ${siteName} ana sayfa`}>
           {logo ? <Image src={logo} alt="" width={44} height={44} className="h-11 w-11 shrink-0 object-contain" /> : null}
-          <span className="font-brand text-[1.35rem] font-normal tracking-[-0.02em] sm:text-2xl">
+          <span className="font-brand text-[1.4rem] font-medium tracking-[-0.035em] sm:text-[1.65rem]">
             Dyt. {siteName}
           </span>
         </Link>
@@ -106,7 +106,7 @@ export default function Navbar({ siteName, logo }: { siteName: string; logo?: st
             <div className="flex items-center justify-between">
               <Link href="/" className="flex items-center gap-3" onClick={() => setMenuOpen(false)}>
                 {logo ? <Image src={logo} alt="" width={40} height={40} className="h-10 w-10 object-contain" /> : null}
-                <span className="font-brand text-xl">Dyt. {siteName}</span>
+                <span className="font-brand text-[1.35rem] font-medium tracking-[-0.035em]">Dyt. {siteName}</span>
               </Link>
               <button
                 aria-label="Menüyü kapat"

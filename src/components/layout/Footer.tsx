@@ -9,8 +9,8 @@ export default function Footer({ siteData = defaultSite }: { siteData?: typeof d
     <footer className="relative overflow-hidden border-t border-cream-line bg-footer text-ink [&_.eyebrow]:text-ink">
       <div className="container-site grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <Link href="/" className="font-display text-2xl font-semibold text-ink">
-            {site.name}
+          <Link href="/" className="font-brand text-[1.65rem] font-medium tracking-[-0.035em] text-ink">
+            Dyt. {site.name}
           </Link>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink/75">
             {site.footerDescription}

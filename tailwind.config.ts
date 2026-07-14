@@ -40,7 +40,7 @@ const config: Config = {
       },
       fontFamily: {
         display: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
-        brand: ['Palatino Linotype', 'Book Antiqua', 'Palatino', 'Georgia', 'serif'],
+        brand: ['Baskerville', 'Libre Baskerville', 'Georgia', 'Cambria', 'serif'],
         body: ['Inter', 'Avenir Next', 'Segoe UI', 'Arial', 'sans-serif'],
         mono: ['SFMono-Regular', 'Consolas', 'Liberation Mono', 'monospace'],
       },

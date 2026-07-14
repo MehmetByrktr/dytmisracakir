@@ -162,6 +162,11 @@ select:focus-visible,
   color: theme('colors.ink.DEFAULT') !important;
 }
 
+.site-main .paper-card h2 {
+  font-size: clamp(1.3rem, 2vw, 1.65rem) !important;
+  line-height: 1.2 !important;
+}
+
 .admin-main [class~='bg-card'] h2,
 .admin-main [class~='bg-card'] h3 {
   color: theme('colors.ink.DEFAULT') !important;

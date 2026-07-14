@@ -34,9 +34,9 @@ export default async function MenuDetailPage({ params }: { params: Promise<{ slu
           <span className="text-ink-soft">{menu.title}</span>
         </nav>
 
-        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <RevealOnScroll>
-            <div className="paper-card sticky top-28 overflow-hidden p-6">
+        <div className="grid items-start gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+          <RevealOnScroll className="min-w-0">
+            <div className="paper-card overflow-hidden p-6">
               <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-xl bg-sage-50 font-mono text-xs uppercase tracking-wide text-sage-600">{menu.image ? <Image src={menu.image} alt={menu.title} fill sizes="(max-width: 1024px) 100vw, 36vw" className="object-cover" /> : 'Menü görseli'}</div>
               <div className="mt-6 flex flex-wrap gap-2">
                 {menu.categories.map((category) => (
