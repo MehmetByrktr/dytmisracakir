@@ -133,7 +133,12 @@ select:focus-visible,
 }
 
 .paper-card {
-  @apply relative rounded-xl2 border border-ink/20 bg-[#F7F3ED] backdrop-blur-sm shadow-card;
+  @apply relative rounded-xl2 border border-ink/20 bg-[#EFE6F5] backdrop-blur-sm shadow-card;
+}
+
+.site-main .paper-card h2,
+.site-main .paper-card h3 {
+  color: theme('colors.sage.DEFAULT') !important;
 }
 
 .section-pad {

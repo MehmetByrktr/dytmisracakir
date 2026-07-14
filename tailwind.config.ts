@@ -5,16 +5,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        white: '#F7F3ED',
+        white: '#EFE6F5',
         cream: {
-          DEFAULT: '#F2E7E4',
-          deep: '#E5D6D2',
-          line: '#D1BFBA',
+          DEFAULT: '#F7F3ED',
+          deep: '#EDE6DC',
+          line: '#D8CEC4',
         },
         sage: {
-          50: '#EEF0C8',
-          100: '#D8DD8B',
-          300: '#BBC45B',
+          50: '#EEF1E3',
+          100: '#DCE3C7',
+          300: '#BFCB86',
           DEFAULT: '#A6B13C',
           600: '#8E992D',
           700: '#727D20',
@@ -25,9 +25,9 @@ const config: Config = {
           deep: '#AD7082',
         },
         illusion: {
-          DEFAULT: '#A6B13C',
-          soft: '#BBC45B',
-          deep: '#727D20',
+          DEFAULT: '#C98FA0',
+          soft: '#DCB5C0',
+          deep: '#AD7082',
         },
         ink: {
           DEFAULT: '#59392C',
