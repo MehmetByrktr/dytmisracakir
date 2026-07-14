@@ -133,7 +133,7 @@ select:focus-visible,
 }
 
 .paper-card {
-  @apply relative rounded-xl2 border border-ink/25 bg-[#F8F0B9] backdrop-blur-sm shadow-card;
+  @apply relative rounded-xl2 border border-ink/20 bg-[#F7F3ED] backdrop-blur-sm shadow-card;
 }
 
 .section-pad {

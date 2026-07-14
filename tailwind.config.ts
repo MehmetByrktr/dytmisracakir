@@ -5,10 +5,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        white: '#F7F3ED',
         cream: {
-          DEFAULT: '#EFD3CB',
-          deep: '#E8D982',
-          line: '#C6B85D',
+          DEFAULT: '#F2E7E4',
+          deep: '#E5D6D2',
+          line: '#D1BFBA',
         },
         sage: {
           50: '#EEF0C8',
@@ -19,14 +20,14 @@ const config: Config = {
           700: '#727D20',
         },
         clay: {
-          DEFAULT: '#AA9FBE',
-          soft: '#C9C0D5',
-          deep: '#817592',
+          DEFAULT: '#C98FA0',
+          soft: '#DCB5C0',
+          deep: '#AD7082',
         },
         illusion: {
-          DEFAULT: '#DDA8A5',
-          soft: '#FBC5DC',
-          deep: '#D977A0',
+          DEFAULT: '#A6B13C',
+          soft: '#BBC45B',
+          deep: '#727D20',
         },
         ink: {
           DEFAULT: '#59392C',
@@ -52,7 +53,7 @@ const config: Config = {
       keyframes: {
         marquee: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
         floaty: { '0%, 100%': { transform: 'translateY(0) rotate(0deg)' }, '50%': { transform: 'translateY(-10px) rotate(2deg)' } },
-        pulseSoft: { '0%, 100%': { boxShadow: '0 0 0 0 rgba(170,159,190,0.40)' }, '50%': { boxShadow: '0 0 0 10px rgba(170,159,190,0)' } },
+        pulseSoft: { '0%, 100%': { boxShadow: '0 0 0 0 rgba(201,143,160,0.40)' }, '50%': { boxShadow: '0 0 0 10px rgba(201,143,160,0)' } },
       },
       animation: { marquee: 'marquee 28s linear infinite', floaty: 'floaty 6s ease-in-out infinite', 'pulse-soft': 'pulseSoft 2.6s ease-in-out infinite' },
     },
