@@ -95,7 +95,7 @@ main {
 }
 
 footer svg {
-  color: theme('colors.sage.DEFAULT') !important;
+  color: theme('colors.powder') !important;
 }
 
 #ana-icerik.admin-main aside svg {
@@ -159,12 +159,12 @@ select:focus-visible,
 
 .site-main .paper-card h2,
 .site-main .paper-card h3 {
-  color: theme('colors.ink.DEFAULT') !important;
+  color: theme('colors.sage.DEFAULT') !important;
 }
 
 .admin-main [class~='bg-card'] h2,
 .admin-main [class~='bg-card'] h3 {
-  color: theme('colors.ink.DEFAULT') !important;
+  color: theme('colors.sage.DEFAULT') !important;
 }
 
 .section-pad {
@@ -172,7 +172,7 @@ select:focus-visible,
 }
 
 .eyebrow {
-  @apply font-mono text-[11px] uppercase tracking-[0.18em] text-ink;
+  @apply font-mono text-[11px] uppercase tracking-[0.18em] text-powder;
 }
 
 /* Rich blog content created in the admin editor */
