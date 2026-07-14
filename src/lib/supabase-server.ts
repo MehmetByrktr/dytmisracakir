@@ -11,7 +11,10 @@ function normalizeSupabaseUrl(value: string) {
     throw new Error('SUPABASE_URL geçerli bir URL olmalıdır.');
   }
 
-  if (url.pathname !== '/' || url.search || url.hash) {
+  const apiPath = url.pathname.replace(/\/+$/, '');
+  const isSupportedApiPath = apiPath === '' || apiPath === '/rest/v1';
+
+  if (!isSupportedApiPath || url.search || url.hash) {
     throw new Error(
       'SUPABASE_URL panel bağlantısı değil, yalnızca proje API kök adresi olmalıdır (https://proje-ref.supabase.co).',
     );
