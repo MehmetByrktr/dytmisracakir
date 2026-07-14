@@ -33,7 +33,7 @@
     "typescript": "^5.5.4"
   },
   "engines": {
-    "node": "20.x"
+    "node": "22.x"
   },
   "overrides": { "postcss": "^8.5.10" }
 }

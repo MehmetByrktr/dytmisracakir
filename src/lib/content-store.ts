@@ -7,7 +7,7 @@ import { services } from '@/data/services';
 import { blogPosts } from '@/data/blogPosts';
 import { menus } from '@/data/menus';
 import { faqItems } from '@/data/faq';
-import { getSupabaseAdmin, hasSupabaseConfig } from '@/lib/supabase-server';
+import { getSupabaseAdmin, hasSupabaseConfig, readableSupabaseError } from '@/lib/supabase-server';
 import type { AppointmentRecord, BlogPost, ContactRecord, FaqItem, MenuPlan, Service } from '@/types';
 
 export interface ContentData {
@@ -144,12 +144,12 @@ export async function getContent(): Promise<ContentData> {
   ]);
 
   const error = contentResult.error || appointmentsResult.error || messagesResult.error || metricsResult.error;
-  if (error) throw new Error(`Supabase verisi okunamadı: ${error.message}`);
+  if (error) throw new Error(`Supabase verisi okunamadı: ${readableSupabaseError(error)}`);
 
   if (!contentResult.data) {
     const initial = fs.existsSync(contentFile) ? getLocalContent() : defaults();
     const { error: seedError } = await supabase.from('site_content').upsert({ id: 'main', content: { ...initial, appointments: [], messages: [] } });
-    if (seedError) throw new Error(`Başlangıç içeriği oluşturulamadı: ${seedError.message}`);
+    if (seedError) throw new Error(`Başlangıç içeriği oluşturulamadı: ${readableSupabaseError(seedError)}`);
     const initialMetrics = initial.blogPosts.map((post) => ({ slug: post.slug, views: Number(post.views || 0), likes: Number(post.likes || 0) }));
     if (initialMetrics.length) await supabase.from('blog_metrics').upsert(initialMetrics, { onConflict: 'slug', ignoreDuplicates: true });
     return initial;
@@ -206,7 +206,7 @@ export async function saveContent(content: ContentData): Promise<ContentData> {
   const metricRows = next.blogPosts.map((post) => ({ slug: post.slug, views: Number(post.views || 0), likes: Number(post.likes || 0) }));
 
   const { error } = await supabase.from('site_content').upsert({ id: 'main', content: core, updated_at: next.updatedAt });
-  if (error) throw new Error(`İçerik kaydedilemedi: ${error.message}`);
+  if (error) throw new Error(`İçerik kaydedilemedi: ${readableSupabaseError(error)}`);
   await Promise.all([
     syncRows('appointments', appointmentRows, next.appointments.map((item) => item.id)),
     syncRows('contact_messages', messageRows, next.messages.map((item) => item.id)),
@@ -225,7 +225,7 @@ export async function createAppointment(record: AppointmentRecord) {
     id: record.id, created_at: record.createdAt, status: record.status, service: record.service, date: record.date, time: record.time,
     format: record.format, name: record.name, phone: record.phone, email: record.email, note: record.note,
   });
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(readableSupabaseError(error));
 }
 
 export async function createContactMessage(record: ContactRecord) {
@@ -237,7 +237,7 @@ export async function createContactMessage(record: ContactRecord) {
   const { error } = await getSupabaseAdmin().from('contact_messages').insert({
     id: record.id, created_at: record.createdAt, status: record.status, name: record.name, email: record.email, phone: record.phone, message: record.message,
   });
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(readableSupabaseError(error));
 }
 
 export async function incrementBlogMetric(slug: string, metric: 'views' | 'likes'): Promise<number | null> {
@@ -253,6 +253,6 @@ export async function incrementBlogMetric(slug: string, metric: 'views' | 'likes
     return value;
   }
   const { data, error } = await getSupabaseAdmin().rpc('increment_blog_metric', { target_slug: slug, metric_name: metric });
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(readableSupabaseError(error));
   return typeof data === 'number' ? data : Number(data ?? 0);
 }

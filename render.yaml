@@ -9,7 +9,7 @@ services:
     autoDeploy: true
     envVars:
       - key: NODE_VERSION
-        value: 20.18.1
+        value: 22.17.0
       - key: NEXT_PUBLIC_SITE_URL
         sync: false
       - key: SUPABASE_URL
