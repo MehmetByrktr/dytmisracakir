@@ -1,0 +1,10 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
+import { getContent } from '@/lib/content-store';
+import { iconMap } from '@/lib/icon-map';
+import SectionHeading from '@/components/ui/SectionHeading';
+import RevealOnScroll from '@/components/ui/RevealOnScroll';
+export const dynamic = 'force-dynamic';
+export const metadata: Metadata = { title: 'Danışmanlıklar', description: 'Online ve yüz yüze beslenme danışmanlığı hizmetlerini keşfedin.' };
+export default async function ServicesPage() { const { services, site } = await getContent(); const text = site.texts.servicesPage; return <div className="pb-24 pt-36 sm:pt-44"><div className="container-site"><SectionHeading eyebrow={text.eyebrow} title={text.title} description={text.description} className="mb-16" /><div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{services.map((service, i) => { const Icon = iconMap[service.icon]; return <RevealOnScroll key={service.slug} delay={(i % 3) * 0.08}><Link href={`/danismanliklar/${service.slug}`} className="paper-card group flex h-full flex-col p-7 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover"><div className="flex h-12 w-12 items-center justify-center rounded-full bg-clay/10 transition-transform duration-300 group-hover:scale-110">{Icon && <Icon className="h-5 w-5 text-clay" />}</div><h2 className="mt-5 font-display text-xl text-ink">{service.title}</h2><p className="mt-2 flex-1 text-sm leading-relaxed text-ink-soft">{service.shortDescription}</p><div className="mt-5 flex items-center justify-between gap-3 text-xs text-ink-faint"><span>{service.duration}</span><span className="text-right">{service.format}</span></div><span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-clay">Detayları İncele<ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" /></span></Link></RevealOnScroll>; })}</div></div></div>; }

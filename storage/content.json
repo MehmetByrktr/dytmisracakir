@@ -1,0 +1,698 @@
+{
+  "site": {
+    "name": "Mısra Çakır",
+    "title": "Mısra Çakır | Diyetisyen",
+    "shortTitle": "Mısra Çakır Beslenme Danışmanlığı",
+    "tagline": "Yasaklarla değil, size uygun bir beslenme düzeniyle tanışın.",
+    "description": "Bilimsel, sürdürülebilir ve kişiye özel beslenme programlarıyla hedeflerinize sağlıklı adımlarla ulaşın. Online ve yüz yüze diyetisyen danışmanlığı.",
+    "url": "https://m-sra-web.onrender.com",
+    "locale": "tr_TR",
+    "phone": "+90 532 000 00 00",
+    "phoneDisplay": "0532 000 00 00",
+    "email": "info@misracakir.com",
+    "whatsapp": "905320000000",
+    "siteIcon": "/logo-mark.svg",
+    "logo": "/api/uploads/1783955645350-6386b0e5.png",
+    "heroImage": "",
+    "aboutImage": "",
+    "footerDescription": "Bilimsel, sürdürülebilir ve kişiye özel beslenme danışmanlığıyla sağlıklı ve dengeli bir yaşama eşlik ediyorum.",
+    "address": {
+      "street": "Randevu onayı sonrası paylaşılır",
+      "district": "İstanbul",
+      "city": "İstanbul",
+      "postalCode": "34710",
+      "country": "TR"
+    },
+    "workingHours": [
+      {
+        "day": "Pazartesi – Cuma",
+        "hours": "09:00 – 19:00"
+      },
+      {
+        "day": "Cumartesi",
+        "hours": "10:00 – 15:00"
+      },
+      {
+        "day": "Pazar",
+        "hours": "Kapalı"
+      }
+    ],
+    "social": {
+      "instagram": "https://instagram.com/misracakir",
+      "linkedin": "https://linkedin.com/in/misracakir",
+      "youtube": "https://tiktok.com/@misracakir"
+    },
+    "texts": {
+      "home": {
+        "heroEyebrow": "Bilim temelli, kişiye özel beslenme",
+        "heroTitle": "Yasaklarla Değil, Size Uygun Bir Beslenme Düzeniyle Tanışın.",
+        "heroDescription": "Bilimsel, sürdürülebilir ve kişiye özel beslenme programlarıyla hedeflerinize sağlıklı adımlarla ulaşın. Online ve yüz yüze diyetisyen danışmanlığı.",
+        "heroPrimaryButton": "Online Randevu Al",
+        "heroSecondaryButton": "Danışmanlıkları İncele",
+        "aboutEyebrow": "Hakkımda",
+        "aboutTitle": "Beslenme yolculuğunu bilimsel ve sürdürülebilir bir yaklaşımla ele alıyorum.",
+        "aboutDescription": "Diyetisyenlik yalnızca bir liste hazırlamak değil; yaşam biçimini, sağlık öyküsünü ve hedefleri birlikte değerlendirmektir. Süreci uygulanabilir ve kişiye özel adımlarla yürütmeyi önemsiyorum.",
+        "aboutButton": "Hakkımda Detaylı Bilgi",
+        "aboutCards": [
+          {
+            "icon": "GraduationCap",
+            "title": "Eğitim",
+            "text": "Beslenme ve Diyetetik eğitimi, güncel bilimsel literatür ve mesleki gelişim çalışmaları."
+          },
+          {
+            "icon": "Award",
+            "title": "Sertifikalar",
+            "text": "Farklı yaşam dönemleri ve uzmanlık alanlarında mesleki gelişim eğitimleri."
+          },
+          {
+            "icon": "Stethoscope",
+            "title": "Uzmanlık Alanları",
+            "text": "Kilo yönetimi, metabolik hastalıklarda beslenme, sporcu beslenmesi, gebelik ve emzirme dönemi."
+          },
+          {
+            "icon": "HeartHandshake",
+            "title": "Çalışma Yaklaşımı",
+            "text": "Yasak listesi değil; sürdürülebilir alışkanlık. Her danışan için ayrı bir beslenme yolculuğu."
+          }
+        ],
+        "servicesEyebrow": "Danışmanlıklar",
+        "servicesTitle": "Her yaşam biçimine uygun bir danışmanlık yolu",
+        "servicesDescription": "İhtiyacınıza göre online ya da yüz yüze; tek seferlik ya da düzenli takipli danışmanlık seçenekleri arasından size uygun olanı seçin.",
+        "processEyebrow": "Süreç",
+        "processTitle": "Nasıl İlerliyoruz",
+        "processDescription": "Danışmanlık sürecimiz dört net aşamadan oluşur; her aşama bir öncekinin üzerine inşa edilir.",
+        "processSteps": [
+          {
+            "icon": "PhoneCall",
+            "title": "Ön Görüşme",
+            "description": "Kısa bir görüşmeyle hedeflerinizi, beklentilerinizi ve uygun danışmanlık türünü belirliyoruz."
+          },
+          {
+            "icon": "ClipboardList",
+            "title": "Sağlık ve Beslenme Değerlendirmesi",
+            "description": "Beslenme geçmişiniz, yaşam biçiminiz ve varsa sağlık verileriniz detaylı biçimde değerlendirilir."
+          },
+          {
+            "icon": "NotebookPen",
+            "title": "Kişiye Özel Program",
+            "description": "Değerlendirme sonucuna göre size özel, uygulanabilir bir beslenme programı hazırlanır."
+          },
+          {
+            "icon": "RefreshCcw",
+            "title": "Düzenli Takip ve Güncelleme",
+            "description": "Süreç boyunca düzenli aralıklarla görüşerek programı ilerlemenize göre güncelliyoruz."
+          }
+        ],
+        "approachEyebrow": "Yaklaşımım",
+        "approachTitle": "Beslenmeyi kısıtlama değil, denge üzerine kuruyorum.",
+        "approachItems": [
+          "Yasak listeleri yerine sürdürülebilir alışkanlıklar",
+          "Hazır programlar yerine kişiye özel planlama",
+          "Sadece kilo değil, bütüncül sağlık yaklaşımı",
+          "Bilimsel ve güncel bilgiler",
+          "Düzenli takip ve iletişim"
+        ],
+        "blogEyebrow": "Blog",
+        "blogTitle": "Güncel yazılar",
+        "blogDescription": "Beslenme bilimi hakkında güvenilir, uygulanabilir içerikler.",
+        "blogButton": "Tüm Yazılar",
+        "ctaEyebrow": "Sağlıklı adımın ilk günü",
+        "ctaTitle": "Size özel beslenme yolculuğunuz bir randevu uzağınızda.",
+        "ctaDescription": "Uygun tarih ve saati seçin, birkaç dakikada randevunuzu oluşturun.",
+        "ctaButton": "Randevu Al"
+      },
+      "about": {
+        "eyebrow": "Hakkımda",
+        "title": "Beslenmeyi bilimle, yaşamı sürdürülebilirlikle buluşturuyorum.",
+        "intro": "Beslenme alışkanlıklarını kısıtlayıcı ve kısa süreli listeler yerine, sürdürülebilir değişimlerle ele alıyorum. Amacım yalnızca ağırlık değişimi değil; kişinin besinle kurduğu ilişkiyi, günlük düzenini ve sağlık hedeflerini birlikte değerlendirmek.",
+        "button": "Randevu Al",
+        "timelineEyebrow": "Eğitim ve Sertifikalar",
+        "timelineTitle": "Yolculuğum",
+        "timeline": [
+          {
+            "year": "2026",
+            "title": "Beslenme ve Diyetetik",
+            "text": "Lisans eğitimi ve mesleki uygulamalar"
+          },
+          {
+            "year": "2026",
+            "title": "Bilimsel Çalışmalar",
+            "text": "Kadın sağlığı, menopoz ve beslenme kalitesi üzerine akademik çalışmalar"
+          },
+          {
+            "year": "2026",
+            "title": "Danışmanlık Yaklaşımı",
+            "text": "Bilimsel, sürdürülebilir ve kişiye özel beslenme odağı"
+          }
+        ],
+        "methodEyebrow": "Çalışma Yöntemim",
+        "methodTitle": "Danışanlarımla nasıl çalışıyorum",
+        "methods": [
+          {
+            "icon": "MessageSquareText",
+            "title": "Dinlemekle başlarım",
+            "text": "Her danışanın yaşam biçimi, kısıtları ve önceki deneyimleri farklıdır; süreç bunu anlamakla başlar."
+          },
+          {
+            "icon": "Stethoscope",
+            "title": "Veriye dayanırım",
+            "text": "Kan tahlili, vücut analizi ve beslenme günlüğü gibi somut verilerle program şekillenir."
+          },
+          {
+            "icon": "HeartHandshake",
+            "title": "Birlikte ilerlerim",
+            "text": "Program tek taraflı verilmez; danışanla birlikte gözden geçirilir ve gerektiğinde revize edilir."
+          }
+        ],
+        "educationTitle": "Eğitim",
+        "educationText": "Beslenme ve Diyetetik eğitimi · Güncel bilimsel literatür ve mesleki gelişim çalışmaları",
+        "certificatesTitle": "Sertifikalar",
+        "certificatesText": "Mesleki gelişim eğitimleri · Bilimsel yayın takibi · Farklı yaşam dönemlerinde beslenme çalışmaları"
+      },
+      "servicesPage": {
+        "eyebrow": "Danışmanlıklar",
+        "title": "Size uygun danışmanlığı seçin",
+        "description": "İhtiyacınıza uygun danışmanlık alanını inceleyin. Emin değilseniz ön görüşmede birlikte belirleyebiliriz."
+      },
+      "blogPage": {
+        "eyebrow": "Blog",
+        "title": "Beslenme üzerine yazılar",
+        "description": "Bilimsel kaynaklara dayanan, günlük hayata uygulanabilir beslenme içerikleri.",
+        "searchPlaceholder": "Yazılarda ara...",
+        "filterButton": "Filtrele",
+        "categoryButton": "Kategori"
+      },
+      "menusPage": {
+        "eyebrow": "Menüler",
+        "title": "Hedefinize uygun örnek menüler",
+        "description": "Menüler bilgilendirme amaçlıdır. Porsiyonlar, sağlık durumu ve günlük gereksinimler kişiye özel değerlendirilmelidir.",
+        "searchPlaceholder": "Menülerde ara...",
+        "filterButton": "Filtrele",
+        "categoryButton": "Kategori"
+      },
+      "faqPage": {
+        "eyebrow": "Sık Sorulan Sorular",
+        "title": "Merak edilenler",
+        "description": "Aradığınız cevabı bulamadıysanız, doğrudan iletişime geçebilirsiniz.",
+        "button": "Başka Bir Sorum Var"
+      },
+      "contactPage": {
+        "eyebrow": "İletişim",
+        "title": "Sorularınız için buradayım",
+        "description": "Aşağıdaki kanallardan istediğinizi kullanarak bana ulaşabilirsiniz.",
+        "infoTitle": "İletişim Bilgileri",
+        "hoursTitle": "Çalışma Saatleri",
+        "socialTitle": "Sosyal Medya",
+        "mapText": "Harita alanı"
+      },
+      "appointmentPage": {
+        "eyebrow": "Randevu Al",
+        "title": "Beslenme yolculuğunuza bugün başlayın",
+        "description": "Danışmanlık türünü, tarih ve saati seçerek randevu talebinizi oluşturun. Talebiniz onaylandığında size dönüş yapılacaktır."
+      }
+    },
+    "stats": []
+  },
+  "services": [
+    {
+      "slug": "online-beslenme-danismanligi",
+      "title": "Online Beslenme Danışmanlığı",
+      "shortDescription": "Görüntülü görüşme ile her yerden, düzenli takip ve esnek program güncellemeleriyle.",
+      "description": "Yaşadığınız şehir fark etmeksizin, görüntülü görüşme üzerinden detaylı bir değerlendirme yapıyor ve size özel bir beslenme programı hazırlıyorum. Program, yaşam temponuza göre esnek biçimde güncellenir; sorularınızı mesaj yoluyla istediğiniz an iletebilirsiniz.",
+      "icon": "Video",
+      "duration": "45 dakika",
+      "format": "Görüntülü görüşme",
+      "highlights": [
+        "İlk görüşmede detaylı sağlık ve beslenme geçmişi analizi",
+        "Haftalık mesaj üzerinden takip desteği",
+        "2 haftada bir program güncellemesi",
+        "Uygulama üzerinden öğün takibi"
+      ],
+      "image": "/images/services/online-danismanlik.jpg"
+    },
+    {
+      "slug": "yuz-yuze-danismanlik",
+      "title": "Yüz Yüze Danışmanlık",
+      "shortDescription": "Kadıköy’deki ofisimde, vücut analizi ve birebir değerlendirme ile derinlemesine görüşme.",
+      "description": "Ofisimde gerçekleştirdiğimiz görüşmelerde vücut analiz cihazıyla ölçüm alıyor, bulgularınızı birlikte yorumluyor ve programınızı yüz yüze planlıyoruz. Sürecin her adımında sorularınızı doğrudan yanıtlıyorum.",
+      "icon": "Users",
+      "duration": "60 dakika",
+      "format": "Yüz yüze, Kadıköy",
+      "highlights": [
+        "Biyoelektrik empedans analizi ile vücut kompozisyonu ölçümü",
+        "Detaylı beslenme alışkanlığı görüşmesi",
+        "Basılı ve dijital program",
+        "Randevu sonrası 15 gün mesaj desteği"
+      ],
+      "image": "/images/services/yuz-yuze-danismanlik.jpg"
+    },
+    {
+      "slug": "kilo-yonetimi",
+      "title": "Kilo Yönetimi",
+      "shortDescription": "Sürdürülebilir alışkanlıklarla kalıcı sonuç odaklı, esnek kilo verme/alma programı.",
+      "description": "Hızlı ama kalıcı olmayan çözümler yerine, uzun vadede sürdürebileceğiniz bir beslenme düzeni kuruyoruz. Metabolik hızınız, hareket düzeyiniz ve yaşam tarzınız birlikte değerlendirilerek gerçekçi bir hedef planı oluşturulur.",
+      "icon": "TrendingDown",
+      "duration": "45 dakika",
+      "format": "Online veya yüz yüze",
+      "highlights": [
+        "Kişiye özel kalori ve makro planlaması",
+        "Davranış değişikliği odaklı takip",
+        "Plato dönemlerinde program revizyonu",
+        "Sürdürülebilirlik odaklı hedef belirleme"
+      ],
+      "image": "/images/services/kilo-yonetimi.jpg"
+    },
+    {
+      "slug": "sporcu-beslenmesi",
+      "title": "Sporcu Beslenmesi",
+      "shortDescription": "Performans, toparlanma ve vücut kompozisyonu hedeflerine göre planlanan spor beslenmesi.",
+      "description": "Antrenman yükünüze, branşınıza ve müsabaka takviminize göre enerji ve makro besin planlaması yapıyorum. Performans artışı, toparlanma süresi ve vücut kompozisyonu hedefleri birlikte ele alınır.",
+      "icon": "Dumbbell",
+      "duration": "45 dakika",
+      "format": "Online veya yüz yüze",
+      "highlights": [
+        "Antrenman periyoduna göre karbonhidrat döngüsü",
+        "Müsabaka öncesi ve sonrası beslenme planı",
+        "Takviye kullanımı hakkında bilimsel değerlendirme",
+        "Toparlanma odaklı öğün zamanlaması"
+      ],
+      "image": "/images/services/sporcu-beslenmesi.jpg"
+    },
+    {
+      "slug": "hastaliklarda-beslenme",
+      "title": "Hastalıklarda Beslenme",
+      "shortDescription": "Diyabet, tiroid, hipertansiyon ve sindirim rahatsızlıklarında tıbbi beslenme tedavisi.",
+      "description": "Diyabet, tiroid hastalıkları, hipertansiyon, reflü ve irritabl bağırsak sendromu gibi durumlarda, hekiminizin tedavi planıyla uyumlu bir beslenme programı hazırlıyorum. Gerekli görüldüğünde kan tahlili sonuçlarınız birlikte değerlendirilir.",
+      "icon": "HeartPulse",
+      "duration": "50 dakika",
+      "format": "Online veya yüz yüze",
+      "highlights": [
+        "Kan tahlili sonuçlarının beslenme açısından yorumlanması",
+        "Tedavi sürecinizle uyumlu program tasarımı",
+        "Semptom takibi ile beslenme güncellemesi",
+        "Gerektiğinde ilgili hekiminizle koordineli çalışma"
+      ],
+      "image": "/images/services/hastaliklarda-beslenme.jpg"
+    },
+    {
+      "slug": "gebelik-ve-emzirme-donemi",
+      "title": "Gebelik ve Emzirme Döneminde Beslenme",
+      "shortDescription": "Anne ve bebek sağlığını gözeten, trimesterlere özel beslenme planlaması.",
+      "description": "Gebelik dönemindeki her trimesterin farklı besin ihtiyaçlarını, emzirme sürecinin gerektirdiği enerji ve besin öğesi artışını göz önünde bulundurarak size özel bir plan hazırlıyorum. Amaç, hem anne hem bebek için güvenli ve dengeli bir beslenme düzeni kurmak.",
+      "icon": "Baby",
+      "duration": "45 dakika",
+      "format": "Online veya yüz yüze",
+      "highlights": [
+        "Trimesterlere özel besin öğesi planlaması",
+        "Gebelik diyabeti riskine yönelik takip",
+        "Emzirme döneminde süt üretimini destekleyen beslenme",
+        "Bulantı ve iştahsızlık dönemlerine yönelik pratik öneriler"
+      ],
+      "image": "/images/services/gebelik-beslenmesi.jpg"
+    },
+    {
+      "slug": "cocuk-ve-ergen-beslenmesi",
+      "title": "Çocuk ve Ergen Beslenmesi",
+      "shortDescription": "Büyüme çağına uygun, seçici yeme davranışlarını da gözeten aile odaklı beslenme desteği.",
+      "description": "Çocuğunuzun yaşına, büyüme eğrisine ve varsa seçici yeme alışkanlıklarına uygun bir beslenme planı hazırlıyorum. Süreç, aileyle birlikte yürütülür; evde uygulanabilir pratik öneriler sunulur.",
+      "icon": "Sprout",
+      "duration": "45 dakika",
+      "format": "Online veya yüz yüze",
+      "highlights": [
+        "Büyüme eğrisi takibi",
+        "Seçici yeme davranışına yönelik aile rehberliği",
+        "Okul çağı için pratik beslenme çantası önerileri",
+        "Ebeveyn görüşmeleriyle desteklenen süreç"
+      ],
+      "image": "/images/services/cocuk-beslenmesi.jpg"
+    },
+    {
+      "slug": "kurumsal-beslenme-danismanligi",
+      "title": "Kurumsal Beslenme Danışmanlığı",
+      "shortDescription": "Şirket çalışanlarına yönelik grup seminerleri ve bireysel danışmanlık paketleri.",
+      "description": "Şirketinizin çalışan sağlığı programlarına, beslenme seminerleri ve bireysel danışmanlık paketleriyle katkı sağlıyorum. İçerik, çalışma temposu ve ofis ortamına uygun, uygulanabilir öneriler etrafında kurgulanır.",
+      "icon": "Building2",
+      "duration": "Pakete göre değişir",
+      "format": "Şirket lokasyonu veya online",
+      "highlights": [
+        "Çalışanlara yönelik beslenme seminerleri",
+        "Bireysel danışmanlık paketleri",
+        "Ofis ortamına uygun pratik öneriler",
+        "Şirket etkinliklerinde sağlıklı beslenme atölyeleri"
+      ],
+      "image": "/images/services/kurumsal-danismanlik.jpg"
+    }
+  ],
+  "blogPosts": [
+    {
+      "slug": "sürdürülebilir-kilo-verme-neden-yavas-olmali",
+      "title": "Sürdürülebilir Kilo Verme Neden Yavaş Olmalı?",
+      "category": "Kilo Yönetimi",
+      "excerpt": "Hızlı kilo verme programlarının neden kalıcı olmadığını ve haftada 0,5-1 kg vermenin uzun vadede neden daha etkili olduğunu anlatıyoruz.",
+      "readMinutes": 6,
+      "publishedAt": "2026-06-02",
+      "author": "Mısra Çakır",
+      "coverImage": "/images/blog/yavas-kilo-verme.jpg",
+      "content": [
+        "Sosyal medyada sıkça karşılaştığımız \"2 haftada 10 kilo\" başlıklı programlar kulağa cazip gelse de, vücudumuzun fizyolojisiyle uyumlu değildir. Hızlı kilo kaybı büyük oranda su ve kas kütlesinden gelir, yağ kütlesinden değil.",
+        "Haftada 0,5-1 kilogramlık bir kayıp hedefi, vücudun yağ kütlesini korurken kas kütlesini kaybetmeden ilerlemesine olanak tanır. Bu da bazal metabolizma hızının korunması anlamına gelir.",
+        "Yavaş ilerleyen bir süreçte alışkanlıklar kalıcı hale gelir. Program bittiğinde eski düzene dönme riski, hızlı diyetlere kıyasla belirgin şekilde azalır.",
+        "Kalıcı sonuç için üç unsur öne çıkar: gerçekçi kalori açığı, yeterli protein alımı ve düzenli takip. Bu üçü bir arada olmadan verilen kilolar genellikle geri alınır.",
+        "Sürecin bir parte de sabır göstermek, tartıdaki sayıdan çok haftalık ortalamalara bakmaktır. Su tutulumu, hormonal döngü ve tuz alımı gibi etkenler günlük dalgalanmalara neden olabilir."
+      ],
+      "status": "published",
+      "views": 0,
+      "likes": 0,
+      "contentHtml": "<nav data-blog-toc=\"true\" class=\"blog-toc\"><br><ol></ol></nav><p>Sosyal medyada sıkça karşılaştığımız \"2 haftada 10 kilo\" başlıklı programlar kulağa cazip gelse de, vücudumuzun fizyolojisiyle uyumlu değildir. Hızlı kilo kaybı büyük oranda su ve kas kütlesinden gelir, yağ kütlesinden değil.</p><p>Haftada 0,5-1 kilogramlık bir kayıp hedefi, vücudun yağ kütlesini korurken kas kütlesini kaybetmeden ilerlemesine olanak tanır. Bu da bazal metabolizma hızının korunması anlamına gelir.</p><p>Yavaş ilerleyen bir süreçte alışkanlıklar kalıcı hale gelir. Program bittiğinde eski düzene dönme riski, hızlı diyetlere kıyasla belirgin şekilde azalır.</p><p>Kalıcı sonuç için üç unsur öne çıkar: gerçekçi kalori açığı, yeterli protein alımı ve düzenli takip. Bu üçü bir arada olmadan verilen kilolar genellikle geri alınır.</p><p>Sürecin bir parte de sabır göstermek, tartıdaki sayıdan çok haftalık ortalamalara bakmaktır. Su tutulumu, hormonal döngü ve tuz alımı gibi etkenler günlük dalgalanmalara neden olabilir.</p>"
+    },
+    {
+      "slug": "protein-ihtiyaci-gercekten-ne-kadar",
+      "title": "Protein İhtiyacı Gerçekten Ne Kadar?",
+      "category": "Sağlıklı Beslenme",
+      "excerpt": "Protein tozu reklamlarının ötesinde, günlük protein ihtiyacınızı vücut ağırlığınıza ve aktivite düzeyinize göre nasıl hesaplayacağınızı anlatıyoruz.",
+      "readMinutes": 5,
+      "publishedAt": "2026-05-18",
+      "author": "Mısra Çakır",
+      "coverImage": "/images/blog/protein-ihtiyaci.jpg",
+      "content": [
+        "Sedanter bir yetişkin için günlük protein ihtiyacı, kilogram başına ortalama 0,8-1 gram olarak kabul edilir. Düzenli spor yapanlarda bu miktar 1,2-2 grama kadar çıkabilir.",
+        "Protein ihtiyacını karşılamak için illa toz takviyeye ihtiyaç yoktur. Yumurta, baklagiller, yoğurt, tavuk, balık ve kırmızı et gibi besinlerle günlük ihtiyaç büyük ölçüde karşılanabilir.",
+        "Tek öğünde çok yüksek miktarda protein tüketmek yerine, gün içine yayarak almak kas protein sentezi açısından daha verimlidir.",
+        "Böbrek fonksiyonlarında bilinen bir sorun yoksa, dengeli beslenen sağlıklı bireyler için yüksek protein alımı güvenlidir; ancak kronik bir rahatsızlığınız varsa mutlaka danışmanınıza bilgi vermelisiniz."
+      ],
+      "status": "published",
+      "views": 2,
+      "likes": 0
+    },
+    {
+      "slug": "aksam-atistirmalarini-kontrol-altina-almak",
+      "title": "Akşam Atıştırmalarını Kontrol Altına Almak",
+      "category": "Beslenme Mitleri",
+      "excerpt": "Akşam saatlerinde ortaya çıkan atıştırma isteğinin gerçek nedenleri ve bu isteği yönetmek için uygulanabilir stratejiler.",
+      "readMinutes": 4,
+      "publishedAt": "2026-05-04",
+      "author": "Mısra Çakır",
+      "coverImage": "/images/blog/aksam-atistirmasi.jpg",
+      "content": [
+        "Akşam atıştırma isteğinin en sık nedeni, gün içinde yeterince doyurucu öğün tüketilmemesidir. Özellikle protein ve lif açısından zayıf öğünler, akşam saatlerinde açlık hissini artırır.",
+        "Bir diğer önemli etken ise duygusal açlıktır. Yorgunluk, stres veya sıkılma anlarında ortaya çıkan yeme isteği, fiziksel açlıktan farklıdır ve genellikle belirli bir besine yönelik yoğun bir istek şeklinde kendini gösterir.",
+        "Akşam öğününe yeterli miktarda sebze ve protein eklemek, atıştırma isteğini büyük ölçüde azaltır. Ayrıca uyku düzeninin bozuk olması da açlık hormonlarını olumsuz etkileyerek gece atıştırmalarını tetikleyebilir.",
+        "Atıştırma isteği geldiğinde bir bardak su içip 10 dakika beklemek, isteğin fiziksel mi yoksa duygusal mı olduğunu ayırt etmede yardımcı olabilir."
+      ],
+      "status": "published",
+      "views": 0,
+      "likes": 0
+    },
+    {
+      "slug": "gebelikte-hangi-besinlere-dikkat-etmeli",
+      "title": "Gebelikte Hangi Besinlere Dikkat Etmeli?",
+      "category": "Kadın Sağlığı",
+      "excerpt": "Gebelik döneminde artan besin öğesi ihtiyaçları ve dikkat edilmesi gereken gıda güvenliği konuları.",
+      "readMinutes": 7,
+      "publishedAt": "2026-04-20",
+      "author": "Mısra Çakır",
+      "coverImage": "/images/blog/gebelik-beslenmesi.jpg",
+      "content": [
+        "Gebelik döneminde folat, demir, kalsiyum, iyot ve D vitamini ihtiyacı belirgin şekilde artar. Bu ihtiyaçların büyük kısmı dengeli beslenmeyle karşılanabilir; bazı durumlarda hekim önerisiyle takviye gerekebilir.",
+        "Az pişmiş et, pastörize edilmemiş süt ürünleri ve çiğ deniz ürünleri, gebelik döneminde enfeksiyon riski nedeniyle dikkatle tüketilmelidir.",
+        "Merkür oranı yüksek balık türlerinden (örneğin köpekbalığı, kılıçbalığı) kaçınılması, buna karşın somon ve sardalya gibi düşük merkürlü balıkların haftada 2 porsiyona kadar tüketilmesi önerilir.",
+        "Bulantının yoğun olduğu ilk trimesterde küçük porsiyonlarla sık öğün tüketmek, kan şekerini dengede tutarak bulantıyı hafifletebilir."
+      ],
+      "status": "published",
+      "views": 0,
+      "likes": 0
+    },
+    {
+      "slug": "antrenman-oncesi-ve-sonrasi-beslenme",
+      "title": "Antrenman Öncesi ve Sonrası Beslenme",
+      "category": "Sporcu Beslenmesi",
+      "excerpt": "Performansı artırmak ve toparlanmayı hızlandırmak için antrenman çevresinde uygulanabilecek beslenme stratejileri.",
+      "readMinutes": 5,
+      "publishedAt": "2026-04-06",
+      "author": "Mısra Çakır",
+      "coverImage": "/images/blog/antrenman-beslenmesi.jpg",
+      "content": [
+        "Antrenmandan 2-3 saat önce kompleks karbonhidrat ve orta düzey protein içeren bir öğün, performans için yeterli enerji deposu sağlar.",
+        "Antrenmana çok yakın saatte ağır ve yağlı öğünler tüketmek, sindirim rahatsızlığına yol açabileceğinden önerilmez. Bunun yerine muz veya yulaf gibi hafif seçenekler tercih edilebilir.",
+        "Antrenman sonrası 30-60 dakika içinde tüketilen protein ve karbonhidrat kombinasyonu, kas onarımını ve glikojen depolarının yenilenmesini hızlandırır.",
+        "Sıvı kaybının fazla olduğu antrenmanlarda, sadece su değil elektrolit dengesini de gözeten bir sıvı alımı toparlanma sürecini destekler."
+      ],
+      "status": "published",
+      "views": 0,
+      "likes": 0
+    },
+    {
+      "slug": "diyabette-karbonhidrat-secimi",
+      "title": "Diyabette Karbonhidrat Seçimi Nasıl Yapılmalı?",
+      "category": "Hastalıklarda Beslenme",
+      "excerpt": "Tip 2 diyabet yönetiminde karbonhidrat miktarı kadar türünün ve glisemik yükünün de önemini ele alıyoruz.",
+      "readMinutes": 6,
+      "publishedAt": "2026-03-22",
+      "author": "Mısra Çakır",
+      "coverImage": "/images/blog/diyabet-karbonhidrat.jpg",
+      "content": [
+        "Diyabet yönetiminde sıklıkla karbonhidratın tamamen kesilmesi gerektiği düşünülür; oysa doğru yaklaşım, karbonhidrat miktarını ve türünü dengelemektir.",
+        "Yüksek lifli tam tahıllar, baklagiller ve sebzelerden gelen karbonhidratlar, kan şekerinde işlenmiş ürünlere kıyasla çok daha yavaş ve dengeli bir yükselişe neden olur.",
+        "Öğünlerde karbonhidratı tek başına değil; protein, lif ve sağlıklı yağla birlikte tüketmek, kan şekeri yanıtını belirgin şekilde yumuşatır.",
+        "Glisemik indeksin yanı sıra porsiyon miktarını da içeren glisemik yük kavramı, gerçek hayatta besin seçiminde daha kullanışlı bir rehberdir."
+      ],
+      "status": "published",
+      "views": 0,
+      "likes": 0
+    }
+  ],
+  "menus": [
+    {
+      "slug": "dengeli-beslenme-7-gunluk-menu",
+      "title": "7 Günlük Dengeli Beslenme Menüsü",
+      "categories": [
+        "Dengeli Beslenme"
+      ],
+      "durationDays": 7,
+      "mealsPerDay": 5,
+      "calories": "Kişiye göre düzenlenir",
+      "image": "/images/menus/dengeli-menu.jpg",
+      "summary": "Günlük rutine uyarlanabilen, ana ve ara öğünleri dengeli şekilde planlayan örnek haftalık menü.",
+      "days": [
+        {
+          "day": "1. Gün",
+          "meals": [
+            {
+              "name": "Kahvaltı",
+              "description": "Yumurta, peynir, tam tahıllı ekmek ve mevsim sebzeleri"
+            },
+            {
+              "name": "Ara Öğün",
+              "description": "Yoğurt ve taze meyve"
+            },
+            {
+              "name": "Öğle",
+              "description": "Izgara tavuklu bol yeşillikli salata ve ayran"
+            },
+            {
+              "name": "Ara Öğün",
+              "description": "Çiğ badem ve bitki çayı"
+            },
+            {
+              "name": "Akşam",
+              "description": "Zeytinyağlı sebze yemeği, yoğurt ve bulgur pilavı"
+            }
+          ]
+        },
+        {
+          "day": "2. Gün",
+          "meals": [
+            {
+              "name": "Kahvaltı",
+              "description": "Yoğurtlu yulaf kasesi, tarçın ve meyve"
+            },
+            {
+              "name": "Ara Öğün",
+              "description": "Kefir"
+            },
+            {
+              "name": "Öğle",
+              "description": "Mercimek çorbası, tam tahıllı ekmek ve salata"
+            },
+            {
+              "name": "Ara Öğün",
+              "description": "Meyve ve ceviz"
+            },
+            {
+              "name": "Akşam",
+              "description": "Fırında balık, sebze ve roka salatası"
+            }
+          ]
+        }
+      ],
+      "notes": [
+        "Bu menü örnek amaçlıdır; porsiyonlar kişisel gereksinime göre düzenlenmelidir.",
+        "Sağlık durumu ve ilaç kullanımı bulunan kişiler kişisel danışmanlık almalıdır."
+      ]
+    },
+    {
+      "slug": "kilo-kontrolu-ornek-menu",
+      "title": "Kilo Kontrolüne Yönelik Örnek Menü",
+      "categories": [
+        "Kilo Kontrolü"
+      ],
+      "durationDays": 3,
+      "mealsPerDay": 4,
+      "calories": "Kişiye göre düzenlenir",
+      "image": "/images/menus/kilo-kontrolu.jpg",
+      "summary": "Tokluk, öğün düzeni ve sürdürülebilir porsiyon kontrolünü merkeze alan üç günlük örnek plan.",
+      "days": [
+        {
+          "day": "1. Gün",
+          "meals": [
+            {
+              "name": "Kahvaltı",
+              "description": "Sebzeli omlet ve tam tahıllı ekmek"
+            },
+            {
+              "name": "Öğle",
+              "description": "Baklagil salatası ve ayran"
+            },
+            {
+              "name": "Ara Öğün",
+              "description": "Meyve ve yoğurt"
+            },
+            {
+              "name": "Akşam",
+              "description": "Izgara köfte, fırın sebze ve cacık"
+            }
+          ]
+        }
+      ],
+      "notes": [
+        "Uzun süreli açlık yerine düzenli ve yeterli öğün yaklaşımı benimsenmiştir."
+      ]
+    },
+    {
+      "slug": "vejetaryen-haftalik-menu",
+      "title": "Vejetaryen Haftalık Menü",
+      "categories": [
+        "Vejetaryen",
+        "Dengeli Beslenme"
+      ],
+      "durationDays": 7,
+      "mealsPerDay": 5,
+      "calories": "Kişiye göre düzenlenir",
+      "image": "/images/menus/vejetaryen.jpg",
+      "summary": "Bitkisel protein çeşitliliği, demir ve kalsiyum kaynakları gözetilerek hazırlanmış örnek menü.",
+      "days": [
+        {
+          "day": "1. Gün",
+          "meals": [
+            {
+              "name": "Kahvaltı",
+              "description": "Peynirli tost, domates ve yeşillik"
+            },
+            {
+              "name": "Ara Öğün",
+              "description": "Meyve ve kabak çekirdeği"
+            },
+            {
+              "name": "Öğle",
+              "description": "Nohutlu kinoa salatası"
+            },
+            {
+              "name": "Ara Öğün",
+              "description": "Kefir veya yoğurt"
+            },
+            {
+              "name": "Akşam",
+              "description": "Yeşil mercimek yemeği, bulgur ve salata"
+            }
+          ]
+        }
+      ],
+      "notes": [
+        "B12, demir ve D vitamini düzeyleri kişisel olarak değerlendirilmelidir."
+      ]
+    },
+    {
+      "slug": "sporcu-beslenmesi-antrenman-gunu",
+      "title": "Antrenman Günü Sporcu Menüsü",
+      "categories": [
+        "Sporcu"
+      ],
+      "durationDays": 1,
+      "mealsPerDay": 6,
+      "calories": "Antrenman yüküne göre",
+      "image": "/images/menus/sporcu.jpg",
+      "summary": "Antrenman öncesi enerji, antrenman sonrası toparlanma ve yeterli hidrasyonu destekleyen örnek gün.",
+      "days": [
+        {
+          "day": "Antrenman Günü",
+          "meals": [
+            {
+              "name": "Kahvaltı",
+              "description": "Yulaf, süt, muz ve fıstık ezmesi"
+            },
+            {
+              "name": "Ara Öğün",
+              "description": "Peynirli sandviç"
+            },
+            {
+              "name": "Öğle",
+              "description": "Tavuk, pirinç ve sebze"
+            },
+            {
+              "name": "Antrenman Öncesi",
+              "description": "Muz ve yoğurt"
+            },
+            {
+              "name": "Antrenman Sonrası",
+              "description": "Süt veya kefir ve meyve"
+            },
+            {
+              "name": "Akşam",
+              "description": "Balık, patates ve salata"
+            }
+          ]
+        }
+      ],
+      "notes": [
+        "Sıvı ve elektrolit gereksinimi terleme düzeyine göre kişiselleştirilmelidir."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "question": "Online danışmanlık nasıl gerçekleşiyor?",
+      "answer": "Randevu oluşturduktan sonra tercih ettiğiniz görüntülü görüşme uygulaması üzerinden bağlanıyoruz. İlk görüşmede beslenme geçmişinizi, sağlık durumunuzu ve hedeflerinizi birlikte değerlendiriyoruz; sonrasında programınız 2-3 iş günü içinde dijital olarak size ulaşıyor."
+    },
+    {
+      "question": "Programlar ne sıklıkla güncelleniyor?",
+      "answer": "Standart takip periyodu 2 haftada bir güncellemedir. İhtiyaç duyduğunuzda bu süre, hedefinize ve sürecinize göre daha sık veya daha seyrek olacak şekilde birlikte belirlenebilir."
+    },
+    {
+      "question": "Görüşmeler ne kadar sürüyor?",
+      "answer": "İlk görüşme ortalama 45-60 dakika sürer. Takip görüşmeleri genellikle 20-30 dakika arasında tamamlanır; sürece göre bu süre değişebilir."
+    },
+    {
+      "question": "Herhangi bir besin tamamen yasaklanıyor mu?",
+      "answer": "Hayır. Çalışma prensibim, sürdürülebilir alışkanlıklar kurmak üzerine kurulu. Tıbbi bir zorunluluk olmadıkça hiçbir besin grubu tamamen yasaklanmaz; dengeli tüketim ve porsiyon kontrolü esas alınır."
+    },
+    {
+      "question": "Kan tahlili gerekli mi?",
+      "answer": "Zorunlu değildir, ancak özellikle hastalık durumlarında ve kilo yönetiminde süreci daha isabetli planlamamıza yardımcı olur. Elinizde güncel bir tahlil varsa görüşmeye getirmeniz yeterlidir; yoksa ihtiyaç halinde yönlendirme yapılır."
+    },
+    {
+      "question": "Randevumu nasıl oluşturabilirim?",
+      "answer": "Sitedeki \"Randevu Al\" butonuna tıklayarak danışmanlık türünü, uygun tarih ve saati seçip iletişim bilgilerinizi bırakmanız yeterli. Talebiniz onaylandığında size e-posta veya WhatsApp üzerinden dönüş yapılır."
+    },
+    {
+      "question": "Yüz yüze görüşme nerede yapılıyor?",
+      "answer": "Yüz yüze görüşmeler İstanbul Kadıköy’deki ofisimde gerçekleştirilir. Adres bilgisi randevu onayı ile birlikte tarafınıza iletilir."
+    },
+    {
+      "question": "Ödeme ve iptal koşulları nelerdir?",
+      "answer": "Ödeme, randevu onayından sonra size iletilen bilgiler doğrultusunda alınır. Randevunuzu en geç 24 saat öncesinden bildirdiğiniz takdirde ücretsiz olarak yeniden planlayabilirsiniz."
+    }
+  ],
+  "appointments": [],
+  "messages": [],
+  "updatedAt": "2026-07-13T15:25:33.022Z"
+}

@@ -1,0 +1,6 @@
+import { Ban, UserCheck, HeartPulse, BookOpenCheck, MessageCircleHeart } from 'lucide-react';
+import SectionHeading from '@/components/ui/SectionHeading';
+import RevealOnScroll from '@/components/ui/RevealOnScroll';
+import { site as defaultSite } from '@/data/site';
+const icons = [Ban, UserCheck, HeartPulse, BookOpenCheck, MessageCircleHeart];
+export default function ApproachSection({ siteData = defaultSite }: { siteData?: typeof defaultSite }) { const text = siteData.texts.home; return <section className="section-pad bg-cream text-ink"><div className="container-site"><SectionHeading eyebrow={text.approachEyebrow} title={text.approachTitle} align="center" className="mx-auto mb-14 max-w-2xl [&_.eyebrow]:text-sage-700 [&_h2]:text-ink" /><div className="mx-auto flex max-w-4xl flex-wrap justify-center gap-4">{text.approachItems.map((title, i) => { const Icon = icons[i % icons.length]; return <RevealOnScroll key={`${title}-${i}`} delay={i * 0.08}><div className="group flex items-center gap-3 rounded-full border border-clay/20 bg-white px-6 py-4 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-clay/40 hover:shadow-card-hover"><Icon className="h-5 w-5 shrink-0 text-clay" /><span className="font-display text-base leading-snug text-ink sm:text-lg">{title}</span></div></RevealOnScroll>; })}</div></div></section>; }
