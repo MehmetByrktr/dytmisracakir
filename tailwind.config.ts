@@ -6,7 +6,7 @@ const config: Config = {
     extend: {
       colors: {
         cream: {
-          DEFAULT: '#F7F3ED',
+          DEFAULT: '#EFD3CB',
           deep: '#E8D982',
           line: '#C6B85D',
         },
@@ -24,7 +24,7 @@ const config: Config = {
           deep: '#817592',
         },
         illusion: {
-          DEFAULT: '#FB9FC5',
+          DEFAULT: '#DDA8A5',
           soft: '#FBC5DC',
           deep: '#D977A0',
         },
