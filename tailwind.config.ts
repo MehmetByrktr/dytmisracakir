@@ -5,34 +5,36 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        white: '#EFE6F5',
+        white: '#FFF9F5',
+        porcelain: '#FFF9F5',
+        card: '#F1EAF4',
         cream: {
           DEFAULT: '#F7F3ED',
-          deep: '#EDE6DC',
-          line: '#D8CEC4',
+          deep: '#EEE7E2',
+          line: '#D8CBC7',
         },
         sage: {
-          50: '#EEF1E3',
-          100: '#DCE3C7',
-          300: '#BFCB86',
-          DEFAULT: '#80627F',
-          600: '#8E992D',
-          700: '#727D20',
+          50: '#F1EAF4',
+          100: '#DDD0DF',
+          300: '#A990A8',
+          DEFAULT: '#72576F',
+          600: '#60475E',
+          700: '#4F394D',
         },
         clay: {
-          DEFAULT: '#C98FA0',
-          soft: '#DCB5C0',
-          deep: '#AD7082',
+          DEFAULT: '#9A5D74',
+          soft: '#CFA9B7',
+          deep: '#854C63',
         },
         illusion: {
-          DEFAULT: '#C98FA0',
-          soft: '#DCB5C0',
-          deep: '#AD7082',
+          DEFAULT: '#9A5D74',
+          soft: '#CFA9B7',
+          deep: '#854C63',
         },
         ink: {
-          DEFAULT: '#59392C',
-          soft: '#705043',
-          faint: '#896B5E',
+          DEFAULT: '#4E342E',
+          soft: '#755E57',
+          faint: '#8C746C',
         },
       },
       fontFamily: {
@@ -42,9 +44,9 @@ const config: Config = {
         mono: ['SFMono-Regular', 'Consolas', 'Liberation Mono', 'monospace'],
       },
       boxShadow: {
-        card: '0 1px 2px rgba(89,57,44,0.08), 0 12px 30px -14px rgba(89,57,44,0.28)',
-        'card-hover': '0 6px 18px rgba(89,57,44,0.10), 0 30px 58px -22px rgba(89,57,44,0.36)',
-        soft: '0 18px 52px -24px rgba(89,57,44,0.34)',
+        card: '0 1px 2px rgba(78,52,46,0.08), 0 12px 30px -14px rgba(78,52,46,0.24)',
+        'card-hover': '0 6px 18px rgba(78,52,46,0.10), 0 30px 58px -22px rgba(78,52,46,0.32)',
+        soft: '0 18px 52px -24px rgba(78,52,46,0.30)',
       },
       borderRadius: { xl2: '1.25rem', blob: '63% 37% 54% 46% / 43% 45% 55% 57%' },
       backgroundImage: {
@@ -53,7 +55,7 @@ const config: Config = {
       keyframes: {
         marquee: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
         floaty: { '0%, 100%': { transform: 'translateY(0) rotate(0deg)' }, '50%': { transform: 'translateY(-10px) rotate(2deg)' } },
-        pulseSoft: { '0%, 100%': { boxShadow: '0 0 0 0 rgba(201,143,160,0.40)' }, '50%': { boxShadow: '0 0 0 10px rgba(201,143,160,0)' } },
+        pulseSoft: { '0%, 100%': { boxShadow: '0 0 0 0 rgba(154,93,116,0.40)' }, '50%': { boxShadow: '0 0 0 10px rgba(154,93,116,0)' } },
       },
       animation: { marquee: 'marquee 28s linear infinite', floaty: 'floaty 6s ease-in-out infinite', 'pulse-soft': 'pulseSoft 2.6s ease-in-out infinite' },
     },

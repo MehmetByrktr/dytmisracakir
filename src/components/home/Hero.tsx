@@ -49,7 +49,7 @@ export default function Hero({ siteData = defaultSite }: { siteData?: typeof def
             )}
           </motion.div>
           {[{ Icon: Leaf, pos: 'left-[-10%] top-[8%]' }, { Icon: Apple, pos: 'right-[-6%] top-[18%]' }, { Icon: Carrot, pos: 'left-[-8%] bottom-[16%]' }, { Icon: Ruler, pos: 'right-[2%] bottom-[-4%]' }].map(({ Icon, pos }, i) => (
-            <motion.div key={i} style={{ x: shouldReduceMotion ? 0 : pointer.x * (10 + i * 4) * -1, y: shouldReduceMotion ? 0 : pointer.y * (10 + i * 4) * -1 }} className={`absolute z-20 ${pos} flex h-12 w-12 items-center justify-center rounded-full border border-ink/[0.06] bg-white/80 shadow-card backdrop-blur-sm animate-floaty`}>
+            <motion.div key={i} style={{ x: shouldReduceMotion ? 0 : pointer.x * (10 + i * 4) * -1, y: shouldReduceMotion ? 0 : pointer.y * (10 + i * 4) * -1 }} className={`absolute z-20 ${pos} flex h-12 w-12 items-center justify-center rounded-full border border-cream-line bg-card/90 shadow-card backdrop-blur-sm animate-floaty`}>
               <Icon className="h-5 w-5 text-sage-700" />
             </motion.div>
           ))}

@@ -29,7 +29,7 @@ export default function SectionHeading({
       />
       {description && (
         <RevealOnScroll delay={0.15}>
-          <p className="mt-5 text-balance text-sm leading-relaxed text-ink-soft">{description}</p>
+          <p className="mt-5 text-balance text-base leading-relaxed text-ink-soft">{description}</p>
         </RevealOnScroll>
       )}
     </div>

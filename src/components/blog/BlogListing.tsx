@@ -35,7 +35,7 @@ export default function BlogListing({ posts, labels }: { posts: BlogPost[]; labe
   const hasFilter = Boolean(query || category !== 'Tümü');
 
   return <div>
-    <form onSubmit={applyFilters} className="mb-10 rounded-xl2 border border-ink/[0.07] bg-white/55 p-3 shadow-card backdrop-blur-sm sm:p-4">
+    <form onSubmit={applyFilters} className="mb-10 rounded-xl2 border border-cream-line bg-card/80 p-3 shadow-card backdrop-blur-sm sm:p-4">
       <div className="grid gap-3 md:grid-cols-[1fr_240px_auto]">
         <label className="relative block"><span className="sr-only">Blog yazılarında ara</span><Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-clay" /><input value={queryDraft} onChange={(e) => setQueryDraft(e.target.value)} placeholder={labels?.searchPlaceholder || 'Yazılarda ara...'} className="h-12 w-full rounded-full border border-ink/10 bg-cream/70 pl-11 pr-4 text-sm text-ink outline-none transition focus:border-clay focus:ring-2 focus:ring-clay/10" /></label>
         <label className="relative block"><span className="sr-only">Kategori seç</span><select value={categoryDraft} onChange={(e) => setCategoryDraft(e.target.value)} className="h-12 w-full appearance-none rounded-full border border-ink/10 bg-cream/70 px-5 pr-11 text-sm font-medium text-ink outline-none transition focus:border-clay focus:ring-2 focus:ring-clay/10"><option value="Tümü">{labels?.categoryButton || 'Kategori'}: Tümü</option>{categories.filter((x) => x !== 'Tümü').map((item) => <option key={item} value={item}>{item}</option>)}</select><ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-clay" /></label>
