@@ -51,6 +51,11 @@ main {
   line-height: 1.04 !important;
 }
 
+.site-main .hero-title {
+  font-size: clamp(2.25rem, 4vw, 2.75rem) !important;
+  line-height: 1.1 !important;
+}
+
 .site-main h2 {
   font-size: clamp(2.25rem, 4vw, 2.75rem) !important;
   line-height: 1.1 !important;

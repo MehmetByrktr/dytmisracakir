@@ -28,7 +28,7 @@ export default function Hero({ siteData = defaultSite }: { siteData?: typeof def
       <div className="container-site grid items-center gap-16 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="relative">
           <RevealOnScroll><span className="eyebrow inline-flex items-center gap-2"><ShieldCheck className="h-3.5 w-3.5" /> {text.heroEyebrow}</span></RevealOnScroll>
-          <h1 className="mt-5 text-balance font-display text-[2.5rem] font-medium leading-[1.08] text-ink sm:text-5xl lg:text-6xl">
+          <h1 className="hero-title mt-5 text-balance font-display font-medium text-ink">
             {text.heroTitle}
           </h1>
           <RevealOnScroll delay={0.4}><p className="mt-6 max-w-lg text-balance text-base leading-relaxed text-ink-soft sm:text-lg">{text.heroDescription}</p></RevealOnScroll>
