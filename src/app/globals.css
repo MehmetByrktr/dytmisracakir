@@ -73,7 +73,7 @@ main {
 .site-main > section + section,
 .site-main > div > section + section,
 .section-pad + .section-pad {
-  border-top: 1px solid rgb(140 107 137 / 28%);
+  border-top: 1px solid theme('colors.cream.line');
 }
 
 .site-main svg:not([class*='text-red']):not([class*='text-green']),

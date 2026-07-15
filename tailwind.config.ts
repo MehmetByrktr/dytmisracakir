@@ -5,14 +5,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        white: '#C6B0C3',
-        porcelain: '#E3DAD8',
-        card: '#C6B0C3',
-        footer: '#C1A8BD',
+        white: '#F7F3ED',
+        porcelain: '#F7F3ED',
+        card: '#F7F3ED',
+        footer: '#F7F3ED',
         cream: {
-          DEFAULT: '#CEBACB',
-          deep: '#C4ACC1',
-          line: '#B598B1',
+          DEFAULT: '#F7F3ED',
+          deep: '#F1EBE7',
+          line: '#D9CED5',
         },
         sage: {
           50: '#D9C9D6',
@@ -33,9 +33,9 @@ const config: Config = {
           deep: '#896682',
         },
         ink: {
-          DEFAULT: '#E3DAD8',
-          soft: '#D9CDCF',
-          faint: '#C8B8BE',
+          DEFAULT: '#55434F',
+          soft: '#715F6A',
+          faint: '#8B7883',
         },
       },
       fontFamily: {
