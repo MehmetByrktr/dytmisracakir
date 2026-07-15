@@ -10,7 +10,7 @@ interface FormState {
   service: string;
   date: string;
   time: string;
-  format: 'Online' | 'Yüz Yüze';
+  format: 'Online';
   name: string;
   phone: string;
   email: string;
@@ -125,22 +125,8 @@ export default function AppointmentForm({ services }: { services: Service[] }) {
 
         <div>
           <span className="mb-2 block text-sm font-medium text-ink">Görüşme Biçimi</span>
-          <div className="flex gap-3">
-            {(['Online', 'Yüz Yüze'] as const).map((opt) => (
-              <button
-                key={opt}
-                type="button"
-                onClick={() => update('format', opt)}
-                aria-pressed={form.format === opt}
-                className={`flex-1 rounded-lg border px-4 py-3 text-sm font-medium transition-colors ${
-                  form.format === opt
-                    ? 'border-clay bg-clay/10 text-clay-deep'
-                    : 'border-ink/15 text-ink-soft hover:border-clay/40'
-                }`}
-              >
-                {opt}
-              </button>
-            ))}
+          <div className="rounded-lg border border-clay bg-clay/10 px-4 py-3 text-sm font-medium text-clay-deep">
+            Online
           </div>
         </div>
 
