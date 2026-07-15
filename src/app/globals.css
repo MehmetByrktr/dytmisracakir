@@ -73,7 +73,7 @@ main {
 .site-main > section + section,
 .site-main > div > section + section,
 .section-pad + .section-pad {
-  border-top: 1px solid rgb(78 52 46 / 18%);
+  border-top: 1px solid rgb(140 107 137 / 28%);
 }
 
 .site-main svg:not([class*='text-red']):not([class*='text-green']),
@@ -159,7 +159,7 @@ select:focus-visible,
 
 .site-main .paper-card h2,
 .site-main .paper-card h3 {
-  color: theme('colors.ink.DEFAULT') !important;
+  color: theme('colors.illusion.DEFAULT') !important;
 }
 
 .site-main .paper-card h2 {
@@ -169,7 +169,7 @@ select:focus-visible,
 
 .admin-main [class~='bg-card'] h2,
 .admin-main [class~='bg-card'] h3 {
-  color: theme('colors.ink.DEFAULT') !important;
+  color: theme('colors.illusion.DEFAULT') !important;
 }
 
 .section-pad {
