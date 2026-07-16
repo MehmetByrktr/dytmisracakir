@@ -51,8 +51,8 @@ export default function RichTextEditor({ value, onChange }: { value: string; onC
     onChange(editor.innerHTML);
   }
 
-  return <div className="overflow-hidden rounded-xl border border-ink/10 bg-white">
-    <div className="flex flex-wrap gap-1.5 border-b border-ink/[0.07] bg-cream-deep/55 p-2.5">
+  return <div className="rounded-xl border border-ink/10 bg-white">
+    <div className="sticky top-0 z-30 flex flex-wrap gap-1.5 rounded-t-xl border-b border-ink/[0.07] bg-cream-deep/95 p-2.5 shadow-card backdrop-blur-md">
       <button type="button" className={buttonClass} title="Geri al" onMouseDown={(e) => e.preventDefault()} onClick={() => execute('undo')}><Undo2 className="h-4 w-4" /></button>
       <button type="button" className={buttonClass} title="Yinele" onMouseDown={(e) => e.preventDefault()} onClick={() => execute('redo')}><Redo2 className="h-4 w-4" /></button>
       <select aria-label="Metin biçimi" className="h-9 rounded-lg border border-ink/10 bg-white px-2 text-xs text-ink" defaultValue="p" onChange={(e) => execute('formatBlock', e.target.value)}><option value="p">Paragraf</option><option value="h2">Başlık H2</option><option value="h3">Başlık H3</option><option value="blockquote">Alıntı</option></select>
