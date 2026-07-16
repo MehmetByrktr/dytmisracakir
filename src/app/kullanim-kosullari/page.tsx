@@ -16,7 +16,7 @@ export default function TermsPage() {
           </p>
           <h2 className="font-display text-lg text-ink">İçeriğin Amacı</h2>
           <p>
-            Sitede yer alan blog yazıları, menüler ve genel beslenme bilgileri yalnızca bilgilendirme
+            Sitede yer alan blog yazıları, tarifler ve genel beslenme bilgileri yalnızca bilgilendirme
             amaçlıdır ve bireysel bir tıbbi teşhis veya tedavi yerine geçmez. Sağlık durumunuza özel kararlar
             için mutlaka bir uzmana danışınız.
           </p>

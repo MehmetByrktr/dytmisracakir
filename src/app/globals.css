@@ -185,6 +185,10 @@ select:focus-visible,
   @apply font-mono text-[11px] uppercase tracking-[0.18em] text-ink;
 }
 
+.home-page .eyebrow {
+  font-weight: 700;
+}
+
 /* Rich blog content created in the admin editor */
 .blog-rich-content {
   @apply text-base leading-8 text-ink-soft;

@@ -29,7 +29,7 @@ export default async function MenuDetailPage({ params }: { params: Promise<{ slu
         <nav aria-label="breadcrumb" className="mb-8 flex items-center gap-1.5 text-xs text-ink-faint">
           <Link href="/" className="hover:text-clay">Ana Sayfa</Link>
           <ChevronRight className="h-3 w-3" />
-          <Link href="/menuler" className="hover:text-clay">Menüler</Link>
+          <Link href="/menuler" className="hover:text-clay">Tarifler</Link>
           <ChevronRight className="h-3 w-3" />
           <span className="text-ink-soft">{menu.title}</span>
         </nav>
@@ -37,7 +37,7 @@ export default async function MenuDetailPage({ params }: { params: Promise<{ slu
         <div className="grid items-start gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <RevealOnScroll className="min-w-0">
             <div className="paper-card overflow-hidden p-6">
-              <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-xl bg-sage-50 font-mono text-xs uppercase tracking-wide text-sage-600">{menu.image ? <Image src={menu.image} alt={menu.title} fill sizes="(max-width: 1024px) 100vw, 36vw" className="object-cover" /> : 'Menü görseli'}</div>
+              <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-xl bg-sage-50 font-mono text-xs uppercase tracking-wide text-sage-600">{menu.image ? <Image src={menu.image} alt={menu.title} fill sizes="(max-width: 1024px) 100vw, 36vw" className="object-cover" /> : 'Tarif görseli'}</div>
               <div className="mt-6 flex flex-wrap gap-2">
                 {menu.categories.map((category) => (
                   <span key={category} className="rounded-full bg-clay/10 px-3 py-1 text-xs font-medium text-clay-deep">
@@ -95,7 +95,7 @@ export default async function MenuDetailPage({ params }: { params: Promise<{ slu
 
       {others.length > 0 && (
         <div className="container-site mt-24">
-          <h2 className="font-display text-2xl text-ink">Diğer menüler</h2>
+          <h2 className="font-display text-2xl text-ink">Diğer tarifler</h2>
           <div className="mt-6 grid gap-5 sm:grid-cols-3">
             {others.map((item) => <MenuCard key={item.slug} menu={item} />)}
           </div>

@@ -123,10 +123,10 @@ export const site = {
       categoryButton: 'Kategori',
     },
     menusPage: {
-      eyebrow: 'Menüler',
-      title: 'Hedefinize uygun örnek menüler',
-      description: 'Menüler bilgilendirme amaçlıdır. Porsiyonlar, sağlık durumu ve günlük gereksinimler kişiye özel değerlendirilmelidir.',
-      searchPlaceholder: 'Menülerde ara...',
+      eyebrow: 'Tarifler',
+      title: 'Hedefinize uygun örnek tarifler',
+      description: 'Tarifler bilgilendirme amaçlıdır. Porsiyonlar, sağlık durumu ve günlük gereksinimler kişiye özel değerlendirilmelidir.',
+      searchPlaceholder: 'Tariflerde ara...',
       filterButton: 'Filtrele',
       categoryButton: 'Kategori',
     },
@@ -159,7 +159,7 @@ export const navLinks = [
   { href: '/hakkimda', label: 'Hakkımda' },
   { href: '/danismanliklar', label: 'Danışmanlıklar' },
   { href: '/blog', label: 'Blog' },
-  { href: '/menuler', label: 'Menüler' },
+  { href: '/menuler', label: 'Tarifler' },
   { href: '/sss', label: 'Sık Sorulan Sorular' },
   { href: '/iletisim', label: 'İletişim' },
 ];
@@ -168,7 +168,7 @@ export const footerLinks = {
   quick: [
     { href: '/hakkimda', label: 'Hakkımda' },
     { href: '/blog', label: 'Blog' },
-    { href: '/menuler', label: 'Menüler' },
+    { href: '/menuler', label: 'Tarifler' },
     { href: '/sss', label: 'Sık Sorulan Sorular' },
     { href: '/randevu', label: 'Randevu Al' },
   ],

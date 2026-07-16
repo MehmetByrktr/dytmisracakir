@@ -10,7 +10,7 @@ export default function MenuCard({ menu }: { menu: MenuPlan }) {
       className="paper-card group flex h-full flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover"
     >
       <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-sage-50">
-        {menu.image ? <Image src={menu.image} alt={menu.title} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover transition duration-500 group-hover:scale-[1.04]" /> : <span className="px-6 text-center font-mono text-[11px] uppercase tracking-wide text-sage-600">Menü görseli</span>}
+        {menu.image ? <Image src={menu.image} alt={menu.title} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover transition duration-500 group-hover:scale-[1.04]" /> : <span className="px-6 text-center font-mono text-[11px] uppercase tracking-wide text-sage-600">Tarif görseli</span>}
         <span className="absolute left-4 top-4 rounded-full bg-cream/90 px-3 py-1 font-mono text-[11px] uppercase tracking-wide text-clay-deep">
           {menu.categories[0]}
         </span>
@@ -25,7 +25,7 @@ export default function MenuCard({ menu }: { menu: MenuPlan }) {
           <span className="flex items-center gap-1"><Utensils className="h-3.5 w-3.5" /> Günde {menu.mealsPerDay} öğün</span>
         </div>
         <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-clay">
-          Menüyü İncele
+          Tarifi İncele
           <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
         </span>
       </div>
