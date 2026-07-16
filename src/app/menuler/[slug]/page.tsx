@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const menu = (await getContent()).menus.find((item) => item.slug === slug);
+  const menu = (await getContent()).menus.find((item) => item.slug === slug && item.status !== 'draft');
   if (!menu) return {};
   return { title: menu.title, description: menu.summary };
 }
@@ -19,9 +19,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function MenuDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const { menus } = await getContent();
-  const menu = menus.find((item) => item.slug === slug);
+  const publishedMenus = menus.filter((item) => item.status !== 'draft');
+  const menu = publishedMenus.find((item) => item.slug === slug);
   if (!menu) notFound();
-  const others = menus.filter((item) => item.slug !== menu.slug).slice(0, 3);
+  const others = publishedMenus.filter((item) => item.slug !== menu.slug).slice(0, 3);
 
   return (
     <div className="pb-24 pt-32 sm:pt-40">
@@ -64,7 +65,9 @@ export default async function MenuDetailPage({ params }: { params: Promise<{ slu
           </RevealOnScroll>
 
           <div className="space-y-8">
-            {menu.days.map((day, dayIndex) => (
+            {menu.contentHtml ? (
+              <article className="blog-rich-content paper-card p-6 sm:p-8" dangerouslySetInnerHTML={{ __html: menu.contentHtml }} />
+            ) : menu.days.map((day, dayIndex) => (
               <RevealOnScroll key={`${day.day}-${dayIndex}`} delay={dayIndex * 0.08}>
                 <section className="paper-card p-6 sm:p-8">
                   <span className="eyebrow">Gün Planı</span>

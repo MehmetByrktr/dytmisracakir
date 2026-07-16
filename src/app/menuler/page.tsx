@@ -15,6 +15,7 @@ function renameMenuTerms(value: string) {
 
 export default async function MenusPage() {
   const { menus, site } = await getContent();
+  const publishedMenus = menus.filter((item) => item.status !== 'draft');
   const savedText = site.texts.menusPage;
   const text = {
     ...savedText,
@@ -28,7 +29,7 @@ export default async function MenusPage() {
     <div className="pb-24 pt-36 sm:pt-44">
       <div className="container-site">
         <SectionHeading eyebrow={text.eyebrow} title={text.title} description={text.description} className="mb-14" />
-        <MenuFilter menus={menus} labels={text} />
+        <MenuFilter menus={publishedMenus} labels={text} />
       </div>
     </div>
   );

@@ -66,6 +66,9 @@ export interface MenuPlan {
   calories: string;
   image: string;
   summary: string;
+  /** Zengin metin editörüyle hazırlanan tarif içeriği. Eski kayıtlar days alanını kullanmaya devam eder. */
+  contentHtml?: string;
+  status?: BlogStatus;
   days: MenuDay[];
   notes: string[];
 }

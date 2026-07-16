@@ -35,6 +35,16 @@ function normalizePosts(posts: BlogPost[]): BlogPost[] {
   }));
 }
 
+function normalizeMenus(items: MenuPlan[]): MenuPlan[] {
+  return items.map((item) => ({
+    ...item,
+    status: item.status || 'published',
+    days: Array.isArray(item.days) ? item.days : [],
+    notes: Array.isArray(item.notes) ? item.notes : [],
+    contentHtml: item.contentHtml ? sanitizeBlogHtml(item.contentHtml) : undefined,
+  }));
+}
+
 function sanitizeBlogHtml(html: string) {
   return sanitizeHtml(html, {
     allowedTags: ['p', 'br', 'h2', 'h3', 'strong', 'b', 'em', 'i', 'u', 's', 'blockquote', 'ul', 'ol', 'li', 'a', 'img', 'div', 'span', 'font', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
@@ -66,7 +76,7 @@ function defaults(): ContentData {
     site,
     services,
     blogPosts: normalizePosts(blogPosts),
-    menus,
+    menus: normalizeMenus(menus),
     faq: faqItems,
     appointments: [],
     messages: [],
@@ -96,7 +106,7 @@ function mergeContent(patch: Partial<ContentData>): ContentData {
     site: deepMerge(base.site, patch.site || {}),
     services: Array.isArray(patch.services) ? patch.services : base.services,
     blogPosts: normalizePosts(Array.isArray(patch.blogPosts) ? patch.blogPosts : base.blogPosts),
-    menus: Array.isArray(patch.menus) ? patch.menus : base.menus,
+    menus: normalizeMenus(Array.isArray(patch.menus) ? patch.menus : base.menus),
     faq: Array.isArray(patch.faq) ? patch.faq : base.faq,
     appointments: Array.isArray(patch.appointments) ? patch.appointments : [],
     messages: Array.isArray(patch.messages) ? patch.messages : [],
@@ -116,7 +126,7 @@ function getLocalContent(): ContentData {
 
 function saveLocalContent(content: ContentData): ContentData {
   if (!fs.existsSync(storageDirectory)) fs.mkdirSync(storageDirectory, { recursive: true });
-  const next = { ...content, blogPosts: normalizePosts(content.blogPosts), updatedAt: new Date().toISOString() };
+  const next = { ...content, blogPosts: normalizePosts(content.blogPosts), menus: normalizeMenus(content.menus), updatedAt: new Date().toISOString() };
   const temporaryFile = `${contentFile}.tmp`;
   fs.writeFileSync(temporaryFile, JSON.stringify(next, null, 2), 'utf8');
   fs.renameSync(temporaryFile, contentFile);
@@ -188,7 +198,7 @@ async function syncRows(table: 'appointments' | 'contact_messages', rows: Array<
 }
 
 export async function saveContent(content: ContentData): Promise<ContentData> {
-  const next = { ...content, blogPosts: normalizePosts(content.blogPosts), updatedAt: new Date().toISOString() };
+  const next = { ...content, blogPosts: normalizePosts(content.blogPosts), menus: normalizeMenus(content.menus), updatedAt: new Date().toISOString() };
   if (!hasSupabaseConfig()) {
     requireProductionDatabase();
     return saveLocalContent(next);
