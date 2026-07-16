@@ -37,7 +37,7 @@ export default function Navbar({ siteName, logo }: { siteName: string; logo?: st
     <header
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-all duration-500',
-        scrolled ? 'bg-cream/80 shadow-[0_1px_0_0_rgba(112,83,109,0.18)] backdrop-blur-md' : 'bg-transparent'
+        scrolled ? 'bg-cream/80 shadow-[0_1px_0_0_rgba(10,51,35,0.06)] backdrop-blur-md' : 'bg-transparent'
       )}
     >
       <nav className="container-site flex h-20 items-center justify-between">
