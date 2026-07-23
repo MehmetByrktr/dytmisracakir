@@ -19,11 +19,11 @@ export async function PUT(request: NextRequest) {
   if (!hasValidAdminSession(request)) return unauthorized();
   if (!assertSameOrigin(request)) return NextResponse.json({ error: 'Geçersiz istek.' }, { status: 403, headers: noStoreHeaders() });
   const length = Number(request.headers.get('content-length') || 0);
-  if (length > 2 * 1024 * 1024) return NextResponse.json({ error: 'İstek çok büyük.' }, { status: 413, headers: noStoreHeaders() });
+  if (length > 5 * 1024 * 1024) return NextResponse.json({ error: 'Kaydedilecek içerik 5 MB sınırını aşıyor.' }, { status: 413, headers: noStoreHeaders() });
 
   try {
     const body = await request.json();
-    if (!body || typeof body !== 'object' || !body.site || !Array.isArray(body.blogPosts) || !Array.isArray(body.services)) {
+    if (!body || typeof body !== 'object' || !body.site || !Array.isArray(body.blogPosts) || !Array.isArray(body.services) || !Array.isArray(body.menus)) {
       return NextResponse.json({ error: 'Geçersiz içerik yapısı.' }, { status: 400, headers: noStoreHeaders() });
     }
     const current = await getContent();
@@ -42,6 +42,7 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json(saved, { headers: noStoreHeaders() });
   } catch (error) {
     console.error('Admin content save failed', error);
-    return NextResponse.json({ error: 'İçerik kaydedilemedi.' }, { status: 500, headers: noStoreHeaders() });
+    const message = error instanceof Error ? error.message : 'İçerik kaydedilemedi.';
+    return NextResponse.json({ error: message }, { status: 500, headers: noStoreHeaders() });
   }
 }

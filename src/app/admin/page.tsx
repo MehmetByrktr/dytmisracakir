@@ -105,9 +105,25 @@ export default function AdminPage() {
     if (!nextContent) return;
     setSaving(true); setNotice(''); setError('');
     try {
-      const response = await fetch('/api/admin/content', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin', body: JSON.stringify(nextContent) });
-      if (!response.ok) throw new Error('Değişiklikler kaydedilemedi.');
-      const data = await response.json() as AdminContent;
+      const requestBody = JSON.stringify(nextContent);
+      const sendSaveRequest = () => fetch('/api/admin/content', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin', body: requestBody });
+      let response = await sendSaveRequest();
+
+      if (response.status === 401) {
+        const reauthPassword = window.prompt('Oturum süreniz doldu. Değişiklikleri kaybetmeden kaydetmek için yönetici şifrenizi tekrar girin:');
+        if (!reauthPassword) throw new Error('Oturum süresi doldu. Değişiklikleriniz ekranda duruyor; kaydetmek için tekrar deneyip şifrenizi girin.');
+        const loginResponse = await fetch('/api/admin/session', { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin', body: JSON.stringify({ password: reauthPassword }) });
+        if (!loginResponse.ok) throw new Error(loginResponse.status === 429 ? 'Çok fazla giriş denemesi yapıldı. Lütfen biraz bekleyip tekrar deneyin.' : 'Yönetici şifresi hatalı. Değişiklikleriniz henüz kaydedilmedi.');
+        response = await sendSaveRequest();
+      }
+
+      const result = await response.json().catch(() => ({})) as { error?: string } & Partial<AdminContent>;
+      if (!response.ok) {
+        if (response.status === 413) throw new Error('Kaydedilecek içerik çok büyük. Büyük görselleri editöre yapıştırmak yerine görsel yükleme alanını kullanın.');
+        if (response.status === 403) throw new Error('Güvenlik doğrulaması başarısız oldu. Sayfayı yenileyip tekrar giriş yapın.');
+        throw new Error(result.error || `Değişiklikler kaydedilemedi (hata ${response.status}).`);
+      }
+      const data = result as AdminContent;
       setContent(data); setNotice('Değişiklikler kaydedildi ve siteye yansıtıldı.');
       window.setTimeout(() => setNotice(''), 3500);
     } catch (err) { setError(err instanceof Error ? err.message : 'Kaydetme başarısız.'); }
